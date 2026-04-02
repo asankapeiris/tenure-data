@@ -1,0 +1,41 @@
+{
+  "examples": {
+    "error-growth": {
+      "score8": {
+        "problem": "Order errors are rising (3%), and negative reviews are scaling with volume.",
+        "constraint": "We can only lead one major change this quarter: fix errors or launch the campaign.",
+        "options": "Fix errors now (misses revenue goals) or launch the campaign (scales errors to 300/week).",
+        "recommendation": "I recommend we delay the campaign to build the automation. Sustainable growth is impossible with a 3% error rate.",
+        "metric": "Error rate returns to 1.5% baseline within 6 weeks."
+      },
+      "score10": {
+        "problem": "The business is prioritizing immediate revenue, but launching now will scale negative brand sentiment beyond the point of recovery.",
+        "constraint": "One-initiative limit; political pressure for revenue vs. technical need for fulfillment stability.",
+        "options": "Launch on time to hit targets (accepting ~300 errors/week) or delay to protect the brand (accepting a revenue miss).",
+        "recommendation": "I am explicitly choosing brand health over quarterly revenue. We will delay the launch until the fulfillment automation is live.",
+        "metric": "Refund costs return to 1.5% baseline; revenue recovery target set for next quarter.",
+        "backfire": "If the automation fails to move these metrics or the revenue miss exceeds the long-term benefit, I accept that leadership will question my decision-making authority."
+      }
+    },
+    "intake-triage": {
+      "score9": {
+        "problem": "Turnaround time is up to 9 days. Automation is a quick fix, but Sales data quality is the root cause.",
+        "constraint": "Limited to one major change this quarter.",
+        "options": "Automate routing (hides bad data) or fix Sales intake (slows revenue but solves the root cause).",
+        "recommendation": "We must push back on Sales to fix intake quality. I am prioritizing clean data over a fast automation fix.",
+        "metric": "Sales submission error rate drops by 50% in 30 days.",
+        "risk": "I accept the risk that slowing down submissions will cause immediate friction with Sales during a strong revenue quarter."
+      }
+    },
+    "dashboard-incentive": {
+      "score10": {
+        "problem": "The current metric rewards volume, causing the team to ignore complex cases and inflating the turnaround time.",
+        "constraint": "One structural change limit; executives want visible output progress.",
+        "options": "Build a dashboard (visibility without fix) or change metrics (fixes behavior but visible output will drop).",
+        "recommendation": "We will change the performance metric to reward case age. I am not building the dashboard this quarter.",
+        "metric": "Average age of cases in queue drops from 10 days to 5 days by year-end.",
+        "backfire": "If changing the metric drops volume without actually improving turnaround time, I accept that leadership will view my decision as an operational failure."
+      }
+    }
+  }
+}
