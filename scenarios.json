@@ -1,53 +1,40 @@
 {
   "scenarios": [
     {
-      "id": "error-growth",
-      "title": "The Growth Trap",
-      "description": "Fulfillment errors are at 3%. A new marketing campaign is ready to launch. Do you fix the foundation or chase the revenue?",
-      "difficulty": "Intermediate",
-      "context": "You are the Operations Lead. Error rates are rising, and the brand is taking a hit in reviews. Engineering says they need 4 weeks to automate fulfillment. Marketing wants to launch a huge campaign today."
-    },
-    {
       "id": "intake-triage",
-      "title": "The Triage Tangle",
-      "description": "Internal requests are taking 9 days to process. Is the answer a better dashboard, or a harder conversation with Sales?",
-      "difficulty": "Advanced",
-      "context": "Turnaround time is lagging. Sales is submitting messy data, but Leadership just wants a dashboard to 'see' the problem. You only have resources for one project."
+      "title": "The Routing System",
+      "text": "Your operations team processes about 1,000 requests per month. Turnaround time has increased from 6 days to 9 days over the past two quarters. Leadership has publicly committed to bringing it back under 7 days before year-end.\n\nYou can build a routing system that scores and assigns incoming requests automatically. It would cut manual handling on straightforward cases and likely bring turnaround time down.\n\nHowever, Sales submits requests with inconsistent and often incorrect information. When a request is misclassified at submission, your team has to catch and fix it manually.\n\nSenior team members are warning you: if you automate now, bad submissions don't slow down — they move faster into the wrong place and become harder to unwind later.\n\nFixing how Sales submits requests would require pushing back on Sales leadership directly. It would also temporarily slow new submissions during a strong revenue quarter.\n\nYou can realistically lead only one major change this quarter."
     },
     {
       "id": "automation-hiring",
-      "title": "The Hiring Huddle",
-      "description": "The team is underwater. Do you hire more people to tread water, or stop to build the automation that saves them?",
-      "difficulty": "Intermediate",
-      "context": "Your team is working 60-hour weeks. You have budget for one new hire, OR you can spend that money on a software license that automates 40% of the work, but takes 3 months to set up."
+      "title": "The Backlog",
+      "text": "Your team handles about 1,200 customer cases per month. Average turnaround time is 12 days. Sales data shows renewal rates drop sharply when responses exceed 10 days.\n\nCase volume has been rising steadily and is expected to increase another 15% during peak season.\n\nYou can build an automation that makes each case faster to handle. It would likely bring average turnaround from 12 days down to 9–10 days within six weeks — getting you under the renewal risk threshold.\n\nAlternatively, you can hire two junior team members who can start within four weeks. They would handle more cases per month but each case would still take 12 days — renewal risk stays live this quarter.\n\nYou can personally lead only one initiative before peak season begins in eight weeks.\n\nIf you automate and volume spikes 15%, backlog may still grow even if individual cases move faster. If you hire first, you have more capacity but turnaround stays above 10 days and renewals stay at risk.\n\nYou must choose which pressure you are solving."
     },
     {
       "id": "reporting-definitions",
-      "title": "The Definition Duel",
-      "description": "Finance and Operations have different versions of 'Profit.' Who do you align with, and how do you break the news?",
-      "difficulty": "Expert",
-      "context": "The Board meeting is in two days. Finance says profit is X, you say it's Y because of how you calculate churn. You need a unified front without looking disorganized."
+      "title": "The Weekly Report",
+      "text": "Your team produces a weekly performance report used by senior leadership to track revenue and portfolio exposure. The report takes two days to prepare manually. Leadership says the delay slows their ability to react to market changes.\n\nDifferent departments calculate exposure slightly differently. No one disputes the overall trend, but the definitions don't match.\n\nLast quarter, two regional leaders looked at the same data and made different pricing decisions because they were working from different definitions of the same metric.\n\nYou can automate the report in three weeks using current definitions. Preparation time would drop by 40% and two analysts would be freed up for other work.\n\nHowever, automating now locks in the current calculation logic. If definitions need to change later, it means system updates and cross-team coordination to fix it.\n\nAlternatively, you can push to align definitions across departments before automating. Two department heads have already pushed back on this in prior meetings. That work would likely take at least two months.\n\nLeadership is split — some care more about speed, others care more about consistency.\n\nYou can realistically lead only one major initiative right now."
+    },
+    {
+      "id": "error-growth",
+      "title": "The Campaign Launch",
+      "text": "Your online business processes about 8,000 orders per week. Order errors have risen from 1.5% to 3% over the past quarter — roughly 240 errors per week at current volume. Refund costs are up and negative reviews are increasing.\n\nYou can build process automation to reduce fulfillment errors. It would take about six weeks to complete.\n\nMarketing is preparing a campaign expected to increase order volume by 25% starting next month. Quarterly revenue targets assume the campaign launches on time.\n\nIf the campaign launches before the automation is done, you'll be running at roughly 300 errors per week on higher volume — and refund costs scale with every order.\n\nIf you delay the campaign to fix errors first, you risk missing quarterly revenue targets and leadership is expecting visible movement immediately.\n\nYou cannot prioritize both."
     },
     {
       "id": "the-kickoff",
-      "title": "The Project Pivot",
-      "description": "A high-priority project just lost its executive sponsor. Do you push forward in the dark or halt everything?",
-      "difficulty": "Intermediate",
-      "context": "The VP who championed your automation project just left the company. The rest of the leadership team is skeptical. You have a kickoff meeting in one hour."
+      "title": "The Kickoff",
+      "text": "You've been assigned to lead a new internal platform project. Three senior stakeholders are involved, all at the same level, all with a say in the outcome.\n\nYou had a kickoff meeting last week. All three were in the room. Here is what each one said success looks like:\n\nThe Operations lead wants automation that reduces manual work for her team. She's been waiting two years for this. For her, success is her team spending less time on repetitive tasks by end of quarter.\n\nThe Customer lead wants faster turnaround. His team is getting complaints about response times and he needs the platform to cut end-to-end processing time. For him, success is speed — he wants results in weeks not months.\n\nThe Team lead isn't against the project. But she's worried that if too much gets automated, her people will lose the ability to do the work manually. She's seen it before — automation goes down and nobody on the team knows how to do the work until it's back up.\n\nYou have four weeks to deliver a first version. You cannot fully satisfy all three. Nobody has told you which stakeholder takes priority. Nobody agreed on a shared definition of success in the meeting.\n\nYou have a conversation with your manager tomorrow."
     },
     {
       "id": "the-reorg",
-      "title": "The Culture Shift",
-      "description": "A reorg has merged two teams with completely different cultures. How do you set the new standard?",
-      "difficulty": "Advanced",
-      "context": "Team A is 'move fast and break things.' Team B is 'perfection or nothing.' You are now managing both, and they are clashing on every single process."
+      "title": "The Reorg",
+      "text": "Your team of eight is going through a restructure. Two developers will be moved to another team. The decision is largely driven by headcount balance across the org, not performance.\n\nYou have some influence — you can advocate to keep one of them. But only one. And both developers will eventually find out who you went to bat for and who you didn't.\n\nOne developer consistently delivers. They're technically strong and never miss a deadline. They're also difficult — blunt in reviews, dismissive of junior team members, and regularly creates tension in team meetings. Several people have complained. The other developer is slower, misses things, and needs more hand-holding than the role requires. But they're the person you'd call if something went wrong at 11pm. They've had your back and you've had theirs.\n\nYou have one conversation with your manager tomorrow to make your case.",
+      "q5": "How will you know in 90 days this was the right call?"
     },
     {
       "id": "dashboard-incentive",
-      "title": "The Metric Menace",
-      "description": "The team is hitting their 'volume' targets, but customer satisfaction is plummeting. How do you fix the incentive?",
-      "difficulty": "Expert",
-      "context": "Your current dashboard tracks 'Tickets Closed.' The team is closing easy tickets and ignoring hard ones. You need to propose a structural change to how performance is measured."
+      "title": "The Queue",
+      "text": "Leadership wants faster turnaround across the operations team. Current performance metrics reward total volume per person — whoever closes the most cases scores highest.\n\nThe result: people are picking up simple cases because they're faster to close. Complex cases sit in the queue longer because touching them hurts your numbers.\n\nYou can build a dashboard that shows workload distribution and flags which cases have been waiting longest. It would make the imbalance visible within weeks.\n\nBut unless the performance metrics change, people will keep optimizing for volume. The dashboard shows the problem — it doesn't fix it.\n\nChanging the metrics requires sign-off from executives who may not want to see output numbers drop this quarter. And in the short term, output numbers probably will drop.\n\nYou have support for only one structural change right now.\n\nIf you build the dashboard without changing the metrics, behavior probably doesn't shift. If you change the metrics first, short-term output numbers decline and executives will notice.\n\nYou must decide what you are actually trying to fix."
     }
   ]
 }
