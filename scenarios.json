@@ -1,0 +1,53 @@
+{
+  "scenarios": [
+    {
+      "id": "error-growth",
+      "title": "The Growth Trap",
+      "description": "Fulfillment errors are at 3%. A new marketing campaign is ready to launch. Do you fix the foundation or chase the revenue?",
+      "difficulty": "Intermediate",
+      "context": "You are the Operations Lead. Error rates are rising, and the brand is taking a hit in reviews. Engineering says they need 4 weeks to automate fulfillment. Marketing wants to launch a huge campaign today."
+    },
+    {
+      "id": "intake-triage",
+      "title": "The Triage Tangle",
+      "description": "Internal requests are taking 9 days to process. Is the answer a better dashboard, or a harder conversation with Sales?",
+      "difficulty": "Advanced",
+      "context": "Turnaround time is lagging. Sales is submitting messy data, but Leadership just wants a dashboard to 'see' the problem. You only have resources for one project."
+    },
+    {
+      "id": "automation-hiring",
+      "title": "The Hiring Huddle",
+      "description": "The team is underwater. Do you hire more people to tread water, or stop to build the automation that saves them?",
+      "difficulty": "Intermediate",
+      "context": "Your team is working 60-hour weeks. You have budget for one new hire, OR you can spend that money on a software license that automates 40% of the work, but takes 3 months to set up."
+    },
+    {
+      "id": "reporting-definitions",
+      "title": "The Definition Duel",
+      "description": "Finance and Operations have different versions of 'Profit.' Who do you align with, and how do you break the news?",
+      "difficulty": "Expert",
+      "context": "The Board meeting is in two days. Finance says profit is X, you say it's Y because of how you calculate churn. You need a unified front without looking disorganized."
+    },
+    {
+      "id": "the-kickoff",
+      "title": "The Project Pivot",
+      "description": "A high-priority project just lost its executive sponsor. Do you push forward in the dark or halt everything?",
+      "difficulty": "Intermediate",
+      "context": "The VP who championed your automation project just left the company. The rest of the leadership team is skeptical. You have a kickoff meeting in one hour."
+    },
+    {
+      "id": "the-reorg",
+      "title": "The Culture Shift",
+      "description": "A reorg has merged two teams with completely different cultures. How do you set the new standard?",
+      "difficulty": "Advanced",
+      "context": "Team A is 'move fast and break things.' Team B is 'perfection or nothing.' You are now managing both, and they are clashing on every single process."
+    },
+    {
+      "id": "dashboard-incentive",
+      "title": "The Metric Menace",
+      "description": "The team is hitting their 'volume' targets, but customer satisfaction is plummeting. How do you fix the incentive?",
+      "difficulty": "Expert",
+      "context": "Your current dashboard tracks 'Tickets Closed.' The team is closing easy tickets and ignoring hard ones. You need to propose a structural change to how performance is measured."
+    }
+  ]
+}
