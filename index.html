@@ -1234,302 +1234,13 @@
 // ==========================================
 // IMPORTANT: PASTE YOUR GEMINI API KEY BELOW
 // ==========================================
-const API_KEY = "AIzaSyDgf-fGGAy5WefPONSPU1SXVCe9BodykQQ"; 
+const API_KEY = "AIzaSyCrE05LOz6epgy6p7YV90i5TLQ8aHWuIiU"; // Replace with your key for local testing. Use environment variables in production.
 const MODEL_NAME = "gemini-2.5-flash"; 
 // ==========================================
 
-const SCENARIOS = [
-  {
-    id: "intake-triage",
-    title: "The Routing System",
-    text: `Your operations team processes about 1,000 requests per month. Turnaround time has increased from 6 days to 9 days over the past two quarters. Leadership has publicly committed to bringing it back under 7 days before year-end.
-
-You can build a routing system that scores and assigns incoming requests automatically. It would cut manual handling on straightforward cases and likely bring turnaround time down.
-
-However, Sales submits requests with inconsistent and often incorrect information. When a request is misclassified at submission, your team has to catch and fix it manually.
-
-Senior team members are warning you: if you automate now, bad submissions don't slow down — they move faster into the wrong place and become harder to unwind later.
-
-Fixing how Sales submits requests would require pushing back on Sales leadership directly. It would also temporarily slow new submissions during a strong revenue quarter.
-
-You can realistically lead only one major change this quarter.`
-  },
-  {
-    id: "automation-hiring",
-    title: "The Backlog",
-    text: `Your team handles about 1,200 customer cases per month. Average turnaround time is 12 days. Sales data shows renewal rates drop sharply when responses exceed 10 days.
-
-Case volume has been rising steadily and is expected to increase another 15% during peak season.
-
-You can build an automation that makes each case faster to handle. It would likely bring average turnaround from 12 days down to 9–10 days within six weeks — getting you under the renewal risk threshold.
-
-Alternatively, you can hire two junior team members who can start within four weeks. They would handle more cases per month but each case would still take 12 days — renewal risk stays live this quarter.
-
-You can personally lead only one initiative before peak season begins in eight weeks.
-
-If you automate and volume spikes 15%, backlog may still grow even if individual cases move faster. If you hire first, you have more capacity but turnaround stays above 10 days and renewals stay at risk.
-
-You must choose which pressure you are solving.`
-  },
-  {
-    id: "reporting-definitions",
-    title: "The Weekly Report",
-    text: `Your team produces a weekly performance report used by senior leadership to track revenue and portfolio exposure. The report takes two days to prepare manually. Leadership says the delay slows their ability to react to market changes.
-
-Different departments calculate exposure slightly differently. No one disputes the overall trend, but the definitions don't match.
-
-Last quarter, two regional leaders looked at the same data and made different pricing decisions because they were working from different definitions of the same metric.
-
-You can automate the report in three weeks using current definitions. Preparation time would drop by 40% and two analysts would be freed up for other work.
-
-However, automating now locks in the current calculation logic. If definitions need to change later, it means system updates and cross-team coordination to fix it.
-
-Alternatively, you can push to align definitions across departments before automating. Two department heads have already pushed back on this in prior meetings. That work would likely take at least two months.
-
-Leadership is split — some care more about speed, others care more about consistency.
-
-You can realistically lead only one major initiative right now.`
-  },
-  {
-    id: "error-growth",
-    title: "The Campaign Launch",
-    text: `Your online business processes about 8,000 orders per week. Order errors have risen from 1.5% to 3% over the past quarter — roughly 240 errors per week at current volume. Refund costs are up and negative reviews are increasing.
-
-You can build process automation to reduce fulfillment errors. It would take about six weeks to complete.
-
-Marketing is preparing a campaign expected to increase order volume by 25% starting next month. Quarterly revenue targets assume the campaign launches on time.
-
-If the campaign launches before the automation is done, you'll be running at roughly 300 errors per week on higher volume — and refund costs scale with every order.
-
-If you delay the campaign to fix errors first, you risk missing quarterly revenue targets and leadership is expecting visible movement immediately.
-
-You cannot prioritize both.`
-  },
-  {
-    id: "the-kickoff",
-    title: "The Kickoff",
-    text: `You've been assigned to lead a new internal platform project. Three senior stakeholders are involved, all at the same level, all with a say in the outcome.
-
-You had a kickoff meeting last week. All three were in the room. Here is what each one said success looks like:
-
-The Operations lead wants automation that reduces manual work for her team. She's been waiting two years for this. For her, success is her team spending less time on repetitive tasks by end of quarter.
-
-The Customer lead wants faster turnaround. His team is getting complaints about response times and he needs the platform to cut end-to-end processing time. For him, success is speed — he wants results in weeks not months.
-
-The Team lead isn't against the project. But she's worried that if too much gets automated, her people will lose the ability to do the work manually. She's seen it before — automation goes down and nobody on the team knows how to do the work until it's back up.
-
-You have four weeks to deliver a first version. You cannot fully satisfy all three. Nobody has told you which stakeholder takes priority. Nobody agreed on a shared definition of success in the meeting.
-
-You have a conversation with your manager tomorrow.`
-  },
-  {
-    id: "the-reorg",
-    title: "The Reorg",
-    text: `Your team of eight is going through a restructure. Two developers will be moved to another team. The decision is largely driven by headcount balance across the org, not performance.
-
-You have some influence — you can advocate to keep one of them. But only one. And both developers will eventually find out who you went to bat for and who you didn't.
-
-One developer consistently delivers. They're technically strong and never miss a deadline. They're also difficult — blunt in reviews, dismissive of junior team members, and regularly creates tension in team meetings. Several people have complained. The other developer is slower, misses things, and needs more hand-holding than the role requires. But they're the person you'd call if something went wrong at 11pm. They've had your back and you've had theirs.
-
-You have one conversation with your manager tomorrow to make your case.`,
-    q5: "How will you know in 90 days this was the right call?"
-  },
-  {
-    id: "dashboard-incentive",
-    title: "The Queue",
-    text: `Leadership wants faster turnaround across the operations team. Current performance metrics reward total volume per person — whoever closes the most cases scores highest.
-
-The result: people are picking up simple cases because they're faster to close. Complex cases sit in the queue longer because touching them hurts your numbers.
-
-You can build a dashboard that shows workload distribution and flags which cases have been waiting longest. It would make the imbalance visible within weeks.
-
-But unless the performance metrics change, people will keep optimizing for volume. The dashboard shows the problem — it doesn't fix it.
-
-Changing the metrics requires sign-off from executives who may not want to see output numbers drop this quarter. And in the short term, output numbers probably will drop.
-
-You have support for only one structural change right now.
-
-If you build the dashboard without changing the metrics, behavior probably doesn't shift. If you change the metrics first, short-term output numbers decline and executives will notice.
-
-You must decide what you are actually trying to fix.`
-  }
-];
-
-const QUESTIONS = [
-  { num: "01", text: "What is the real business problem?", min: 10 },
-  { num: "02", text: "What is the main limit you have to work around?", min: 10 },
-  { num: "03", text: "What are the real options on the table, and what does each one cost?", min: 15 },
-  { num: "04", text: "What is your recommendation and why?", min: 15 },
-  { num: "05", text: "What metric proves this worked?", min: 10 }
-];
-
-const SYSTEM_PROMPT = `You are an Executive Articulation Mirror for technical builders.
-
-Your tone is like a sharp co-worker after a meeting — direct, grounded, specific.
-
-VOICE CALIBRATION — Feedback must sound like this, not like this:
-
-Don't write: "Your options section was directionally right but light on specifics."
-Write: "You named the options but didn't say what each one actually costs. 'Takes longer' isn't a cost. Political risk with Sales during a revenue quarter is a cost."
-
-Don't write: "Your recommendation demonstrates awareness of the competing priorities but lacks sufficient specificity around measurable outcomes."
-Write: "You saw the other problem but didn't name it. One sentence — 'launching on time is also a defensible call' — and your recommendation becomes harder to dismiss."
-
-Don't write: "Your metric is structurally right and shows real situational awareness."
-Write: "Your metric has a baseline and a target. It's missing a timeline. Add that and it's usable."
-
-Don't write: "This is a good starting point and shows you're thinking about the right things."
-Write: "You picked a path. You didn't say what you're leaving behind. Those are different things."
-
-Don't write: "This is the sharpest problem statement across all runs."
-Write: "You connected the incentive structure to the behavior directly. That's the problem. Everything else follows from that."
-
-Don't write: "That's what option costs should look like."
-Write: "You named what choosing that option actually disrupts. That's the cost. Do it for both options every time."
-
-Don't write: "That's the most precise constraint identification."
-Write: "You named political capital as the constraint, not time or resources. That's the right call."
-
-SCORING CALIBRATION:
-5 = sloppy or misaligned
-6 = basic but coherent
-7 = solid and aligned
-8 = strong and explicitly acknowledges the competing legitimate problem frame
-9 = clearly states what is being deprioritized and names the accepted risk
-10 = fully owns the trade-off and anticipates how the decision could look wrong later
-
-Rules:
-- 8 or higher requires explicit acknowledgment of the competing legitimate problem frame
-- Acknowledging a competing frame and explaining why you rejected it counts as acknowledgment. The model does NOT require the user to validate or endorse the competing frame — naming it and dismissing it with a reason is sufficient for 8.
-- 9 requires clear articulation of what is being deprioritized and what risk is being accepted
-- 10 requires explicit ownership of how the decision could backfire
-- Do NOT penalize which problem they chose
-- Evaluate clarity, alignment, trade-off awareness, and measurement quality
-- When feedback addresses a missing competing frame, name the specific frame that's missing — don't just say it's absent
-
-CRITICAL SCORING RULE — DO NOT DOWNGRADE A 9 FOR MINOR GAPS:
-A 9 is earned when the answer names what it is deprioritizing AND names the risk being accepted. If both are present, score it 9. Do not downgrade to 8 because:
-- The metric could be slightly sharper
-- One peripheral edge case wasn't addressed
-- The competing frame was acknowledged but not fully elaborated
-- The answer didn't anticipate every possible objection
-The only valid reason to withhold a 9 is if the deprioritization OR the accepted risk is genuinely absent — not weak, not implicit, but absent.
-
-SPECIFICALLY: If the user named the competing approach and explained why they rejected it, AND named what they are accepting as a risk by choosing their path, that is a 9. Do not score it 8.
-
-Score based on:
-- Did they clearly define which problem they are choosing to solve?
-- Did they name the real constraint stated in the scenario?
-- Did they make trade-offs concrete?
-- Did their recommendation match the problem they chose?
-- Did they use one specific numeric metric tied to impact?
-- Did they acknowledge the competing legitimate problem frame?
-- Did they clearly state what they are deprioritizing?
-- Did they articulate the risk they are accepting?
-
-BEFORE SCORING — MANDATORY VERIFICATION:
-Before assigning a score, locate and quote the exact text from the user's answers that satisfies each criterion below. If you cannot find it, state it is absent. Do not infer absence — only mark absent if the text genuinely does not exist.
-
-For a 6, you must verify:
-1. COHERENCE: Does the answer have a clear direction, even if basic? Quote the text.
-2. ALIGNMENT: Does the recommendation follow from the problem they named? Quote the text.
-
-For a 7, you must verify everything in 6, plus:
-3. CONSTRAINT: Did they name the real constraint from the scenario? Quote the exact text.
-4. RECOMMENDATION MATCH: Does their recommendation directly address the problem they defined? Quote the exact text.
-
-For an 8, you must verify everything in 7, plus:
-5. COMPETING FRAME: Did they name or acknowledge the alternative approach? Quote the exact text. Note: naming it and rejecting it with a reason counts.
-
-For a 9, you must verify everything in 8, plus:
-6. DEPRIORITIZATION: Did they state what they are choosing NOT to do? Quote the exact text.
-7. ACCEPTED RISK: Did they name a specific risk they are accepting by choosing their path? Quote the exact text.
-
-For a 10, you must verify everything in 9, plus:
-8. BACKFIRE: Did they explicitly anticipate how their decision could look wrong later? Quote the exact text.
-
-If all criteria for a tier are present in the user's actual words, assign that score. Do not downgrade based on how you would have said it differently, what they could have added, or peripheral gaps. The only valid reason to withhold a score is if a criterion is genuinely absent — not weak, not implicit, but absent.
-
-SCORING EVIDENCE RULE: You must populate scoring_evidence BEFORE deciding the score. If competing_frame, deprioritization, and accepted_risk are all non-absent in scoring_evidence, the score must be 9 or higher. You cannot mark all three as present and then assign an 8.
-
-The user's recommendation has already been mirrored back to them and confirmed or corrected. A confirmed restatement will be provided. Evaluate against that restatement exactly — do not re-interpret or second-guess it.
-
-OUTPUT FORMAT — respond with valid JSON only, no markdown, no preamble:
-{
-  "scoring_evidence": {
-    "competing_frame": "<quote the exact text where they named or acknowledged the alternative approach, or 'absent'>",
-    "deprioritization": "<quote the exact text where they stated what they are choosing NOT to do, or 'absent'>",
-    "accepted_risk": "<quote the exact text where they named a specific risk they are accepting, or 'absent'>"
-  },
-  "recommendation_restatement": "<one sentence restating the user's recommendation using only their words and any clarification>",
-  "score": <number 5-10>,
-  "why": "<one sentence explaining what drove the score>",
-  "approach": "<one sentence naming the thinking pattern — how they got to their answer, not just what they missed. Must be specific to how this person reasoned, not generic.>",
-  "feedback": ["<bullet 1>", "<bullet 2>", "<bullet 3>", "<bullet 4>", "<bullet 5>"],
-  "reflection": "<one sentence designed to make them pause on their own logic, tied to scenario facts>",
-  "final_type": "<one of: rewrite | tighten | holds>",
-  "final_label": "<'Here\\'s what this should sound like:' or 'Something to think about next time:' or 'This holds up.'>",
-  "final_content_problem": "<one sentence: the real problem>",
-  "final_content_constraint": "<one sentence: the main constraint>",
-  "final_content_options": "<one to two sentences: the real options and what each costs>",
-  "final_content_recommendation": "<one to two sentences: the recommendation and what risk is accepted>",
-  "final_content_metric": "<one sentence: one clear metric with baseline and target>",
-  "to_nine": "<only present when score <= 6: 2-3 sentences in plain direct language explaining exactly what would need to be added or changed to get from this 8-level answer to a 9 — must name the specific thing being deprioritized, the risk being accepted, and/or how the decision could backfire. Tied directly to the scenario and the rewritten answer, not generic advice.>"
-}
-
-APPROACH RULES:
-- One sentence only
-- Names the thinking pattern — how they approached the problem, not what they got wrong
-- Must be specific to this person's answers — not generic
-- Examples: "You reasoned from constraint to recommendation cleanly but switched to probability thinking when the decision got hard." or "You identified the political risk early then treated it as a technical problem at the recommendation stage."
-- Never say "you should have" — describe what happened, not what was missing
-
-FEEDBACK RULES:
-- 5-7 bullets, one sentence each
-- Plain language, no corporate speak, no lecturing, no praise
-- Specific to what they actually wrote — quote or reference their exact words where possible
-- Cross-reference answers against each other — if their recommendation contradicts something they said in Q1 or Q2, name that contradiction directly
-- If they identified a risk or constraint in an earlier answer but ignored it in their recommendation, call that out specifically
-- No two bullets can make the same point — if two observations overlap, cut one or combine them
-- If multiple legitimate problem frames exist: state which one they prioritized, note whether they acknowledged the competing one, and if not, name the specific competing frame they missed
-- Never write generic feedback that could apply to any answer — every bullet must only be true for what this specific person wrote
-
-REFLECTION RULES:
-- One sentence only
-- Directly tied to the recommendation the user actually made
-- Must reference facts already in the scenario
-- Do NOT reference the competing frame here — that is covered in feedback bullets and the final section
-- No new escalation, no abstract language
-- Designed to make them pause on their own logic, not on what they missed
-
-FINAL STEP RULES:
-- If score <= 6: final_type = "rewrite" — generate the full rewrite AND the to_nine field
-- If score 7-8: final_type = "tighten" — generate the full rewrite, to_nine = ""
-- If score >= 9: final_type = "holds", all final_content fields = "", to_nine = ""
-- Rewrite rules: reflect the direction they chose, if the recommendation is contradictory rewrite it to make their intended direction coherent — do not switch to the opposite recommendation, add one sentence acknowledging competing frame if missing, use one clear numeric metric with baseline and target, plain language
-- Tighten rules: same structure, add competing frame acknowledgment if missing, sharpen metric
-- If holds: final_label = "This holds up." and all final_content fields are empty strings
-
-TO_NINE RULES (only for score <= 6):
-- 2-3 sentences, no more
-- Same direct voice as feedback — like a sharp colleague, not a coach
-- Name the TYPE of thing missing — not the thing itself. Point at the gap, don't fill it.
-- Never name the specific cost, risk, or trade-off — that's the thinking the user still needs to do
-- Never generic — "be more specific" or "acknowledge trade-offs" are not acceptable
-- Example of what NOT to do: "A 9 names the political cost with Sales leadership during a revenue quarter and says why it's worth it." — this tells them the answer
-- Example of what TO do: "A 9 names the specific relationship cost you're accepting and says out loud why the upside is worth it." — this points at the gap without filling it
-- The user should finish reading and know what kind of thing to add — not what to write`;
-
-const MIRROR_PROMPT = `You are reading a user's answers to five questions about a business scenario.
-Your only job is to restate their recommendation in one clear sentence using only what they actually said.
-Do not evaluate, praise, critique, or add anything they didn't say.
-Do not use words like "you recommend" or "you suggest" — just state the recommendation directly as a plain sentence.
-Return only the one sentence. No JSON, no preamble, no explanation.
-
-Example output: "Build the dashboard first to make the problem visible, then push for metric changes once leadership can see the data."
-Example output: "Delay the campaign by six weeks to complete the automation before volume increases."`;
-
-// State
+let SCENARIOS = [];
+let SYSTEM_PROMPT = "";
+let MIRROR_PROMPT = "";
 let currentScenario = null;
 let answers = ['', '', '', '', ''];
 let currentQuestion = 0;
@@ -1539,21 +1250,30 @@ let mirrorText = '';
 let clarifyAnswer = '';
 let scenarioCollapsed = false;
 let scenarioCount = 0;
-let examplesData = {};
-
-// Fetch examples from GitHub on load
-fetch('https://raw.githubusercontent.com/asankapeiris/tenure-data/main/examples.json')
-  .then(r => r.json())
-  .then(data => { examplesData = data.examples || {}; })
-  .catch(() => { examplesData = {}; });
 
 function getExample(scenarioId, tier) {
-  const ex = examplesData[scenarioId] && examplesData[scenarioId][tier];
-  if (!ex) return null;
-  // Only return if at least one field has real content
-  const hasContent = Object.values(ex).some(v => v && v.trim().length > 0);
-  return hasContent ? ex : null;
+  if (!currentScenario || !currentScenario.benchmarks) return null;
+  const levelKey = tier.replace('score', 'level');
+  const benchmark = currentScenario.benchmarks[levelKey];
+  
+  if (!benchmark) return null;
+
+  return {
+    problem: benchmark.q1?.text || "",
+    constraint: benchmark.q2?.text || "",
+    options: benchmark.q3?.text || "",
+    recommendation: benchmark.q4?.text || "",
+    metric: benchmark.q5?.text || ""
+  };
 }
+
+const QUESTIONS = [
+  { num: "01", text: "What is the real business problem?", min: 10 },
+  { num: "02", text: "What is the main limit you have to work around?", min: 10 },
+  { num: "03", text: "What are the real options on the table, and what does each one cost?", min: 15 },
+  { num: "04", text: "What is your recommendation and why?", min: 15 },
+  { num: "05", text: "What metric proves this worked?", min: 10 }
+];
 
 function pickScenario(excludeId = null) {
   const pool = SCENARIOS.filter(s => s.id !== excludeId);
@@ -1897,7 +1617,6 @@ function renderResults(container) {
   `;
 }
 
-// localStorage helpers
 function loadHistory() {
   try { return JSON.parse(localStorage.getItem('tenure_history') || '[]'); } catch { return []; }
 }
@@ -2034,61 +1753,39 @@ function buildScoringMessage() {
   let msg = buildAnswersText();
   msg += `\n\nCONFIRMED RESTATEMENT: ${mirrorText}`;
   if (clarifyAnswer) msg += `\n\nUSER CLARIFICATION: ${clarifyAnswer}`;
+  
+  if (currentScenario && currentScenario.benchmarks) {
+    msg += `\n\nSCENARIO BENCHMARKS (Use this exact grading rubric):\n${JSON.stringify(currentScenario.benchmarks, null, 2)}`;
+  }
+  
   msg += '\n\nScore and evaluate these answers according to your instructions. Return valid JSON only.';
   return msg;
 }
 
-// ----------------------------------------------------
-// NEW CALL API FUNCTION (GEMINI 1.5 PRO)
-// ----------------------------------------------------
 async function callAPI(systemPrompt, userMessage) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
-
-  // Build the base request body
   const requestBody = {
-    contents: [{
-      role: "user",
-      parts: [{ text: userMessage }]
-    }],
-    generationConfig: {
-      temperature: 0
-    }
+    contents: [{ role: "user", parts: [{ text: userMessage }] }],
+    generationConfig: { temperature: 0 }
   };
-
-  // Only add the system_instruction if the prompt is not empty
   if (systemPrompt && systemPrompt.trim() !== "") {
-    requestBody.system_instruction = {
-      parts: [{ text: systemPrompt }]
-    };
+    requestBody.system_instruction = { parts: [{ text: systemPrompt }] };
   }
-
   const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(requestBody)
   });
-
-  if (!response.ok) {
-    const errData = await response.json();
-    console.error("Gemini API Error:", errData);
-    throw new Error("API call failed");
-  }
-
+  if (!response.ok) throw new Error("API call failed");
   const data = await response.json();
   return data.candidates[0].content.parts[0].text;
 }
-// ----------------------------------------------------
 
-// ----------------------------------------------------
-// UPDATED SUBMIT ANSWERS
-// ----------------------------------------------------
 async function submitAnswers() {
   const ta = document.getElementById('current-answer');
   if (ta) answers[currentQuestion] = ta.value;
-
   state = 'loading';
   render();
-
   try {
     const mirrorPrompt = MIRROR_PROMPT + "\n\nRestate the recommendation in one sentence.";
     const mirror = await callAPI("", buildAnswersText() + "\n\n" + mirrorPrompt);
@@ -2099,11 +1796,9 @@ async function submitAnswers() {
     state = 'question';
     currentQuestion = 4;
   }
-
   render();
   scrollToApp();
 }
-// ----------------------------------------------------
 
 function confirmMirror() {
   clarifyAnswer = '';
@@ -2125,40 +1820,12 @@ async function submitWithClarification() {
 }
 
 async function logToAirtable(r) {
-  const finalContent = [
-    r.final_content_problem,
-    r.final_content_constraint,
-    r.final_content_options,
-    r.final_content_recommendation,
-    r.final_content_metric
-  ].filter(Boolean).join('\n\n');
-
+  const finalContent = [r.final_content_problem, r.final_content_constraint, r.final_content_options, r.final_content_recommendation, r.final_content_metric].filter(Boolean).join('\n\n');
   try {
     await fetch('https://api.airtable.com/v0/appEtSfz6BDhJkdVW/tblAr37nL5AxVrXnS', {
       method: 'POST',
-      headers: {
-        'Authorization': 'Bearer patnEerrg1Mn2IP3s.6fee2928f0004f51e410213e563a8ed8f28ed215161252e99eaf0c2fa8749215',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        fields: {
-          scenario: currentScenario.title,
-          answer_1: answers[0],
-          answer_2: answers[1],
-          answer_3: answers[2],
-          answer_4: answers[3],
-          answer_5: answers[4],
-          mirror: mirrorText,
-          clarification: clarifyAnswer || '',
-          score: r.score,
-          why: r.why,
-          feedback: r.feedback.join('\n'),
-          reflection: r.reflection,
-          final_type: r.final_type,
-          final_content: finalContent,
-          timestamp: new Date().toISOString()
-        }
-      })
+      headers: { 'Authorization': 'Bearer patnEerrg1Mn2IP3s.6fee2928f0004f51e410213e563a8ed8f28ed215161252e99eaf0c2fa8749215', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fields: { scenario: currentScenario.title, answer_1: answers[0], answer_2: answers[1], answer_3: answers[2], answer_4: answers[3], answer_5: answers[4], mirror: mirrorText, clarification: clarifyAnswer || '', score: r.score, why: r.why, feedback: r.feedback.join('\n'), reflection: r.reflection, final_type: r.final_type, final_content: finalContent, timestamp: new Date().toISOString() } })
     });
   } catch (err) {}
 }
@@ -2166,19 +1833,13 @@ async function logToAirtable(r) {
 async function scoreAnswers() {
   state = 'loading';
   render();
-
   try {
     const text = await callAPI(SYSTEM_PROMPT, buildScoringMessage());
     const clean = text.replace(/```json|```/g, '').trim();
     results = JSON.parse(clean);
     state = 'results';
     scenarioCount++;
-    saveHistory({
-      scenario: currentScenario.title,
-      score: results.score,
-      a1: answers[0], a2: answers[1], a3: answers[2], a4: answers[3], a5: answers[4],
-      ts: new Date().toISOString()
-    });
+    saveHistory({ scenario: currentScenario.title, score: results.score, a1: answers[0], a2: answers[1], a3: answers[2], a4: answers[3], a5: answers[4], ts: new Date().toISOString() });
     logToAirtable(results);
   } catch (err) {
     console.error(err);
@@ -2186,7 +1847,6 @@ async function scoreAnswers() {
     render();
     return;
   }
-
   render();
   scrollToApp();
 }
@@ -2223,9 +1883,38 @@ function retryScenario() {
   scrollToApp();
 }
 
-// Init
-currentScenario = pickScenario();
-render();
+async function initAppData() {
+  const container = document.getElementById('app-content');
+  container.innerHTML = `<div class="loading-state"><div class="loading-spinner"></div><div class="loading-text">Loading training data...</div></div>`;
+  
+  try {
+    // Fetch both the scenarios and the prompts from GitHub at the same time
+    const [scenariosRes, promptRes] = await Promise.all([
+      fetch('https://raw.githubusercontent.com/asankapeiris/tenure-data/main/scenarios.json'),
+      fetch('https://raw.githubusercontent.com/asankapeiris/tenure-data/main/prompt.json')
+    ]);
+
+    if (!scenariosRes.ok || !promptRes.ok) throw new Error('Network response was not ok');
+
+    const scenariosData = await scenariosRes.json();
+    const promptData = await promptRes.json();
+
+    SCENARIOS = scenariosData.scenarios;
+    
+    // Stitch the arrays back into multi-line strings for the AI API
+    SYSTEM_PROMPT = promptData.system_prompt.join('\\n');
+    MIRROR_PROMPT = promptData.mirror_prompt.join('\\n');
+
+    currentScenario = pickScenario();
+    state = 'brief';
+    render(); 
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = `<div class="loading-state"><div class="loading-text" style="color:var(--accent)">Failed to load training data. Check your GitHub URLs and refresh.</div></div>`;
+  }
+}
+
+initAppData();
 </script>
 </body>
 </html>
