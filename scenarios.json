@@ -291,6 +291,225 @@
           }
         }
       }
+    },
+    {
+      "id": "the-kickoff",
+      "title": "The Kickoff",
+      "text": "Your company just signed a massive enterprise client. Sales promised a custom integration delivered in 8 weeks to close the deal. You are the technical lead.\n\nReviewing the requirements during the internal kickoff meeting, you realize the integration requires a fundamental architecture change. Building it correctly will take 12 weeks.\n\nYou can try to hack it together in 8 weeks. It will technically work for launch, but it will create severe technical debt and likely cause platform outages when the client scales their volume.\n\nAlternatively, you can pause the kickoff and state that the 8-week timeline is impossible for the agreed scope. \n\nSales leadership is in the room. They are celebrating the win and expecting you to outline the execution plan. Pushing back now will immediately kill the momentum, embarrass Sales, and make you look like a roadblock on day one.\n\nIt is your turn to speak.",
+      "benchmarks": {
+        "level10": {
+          "q1": {
+            "text": "The problem is that Sales committed to an 8-week timeline for an integration that requires 12 weeks of fundamental architectural work to support safely.",
+            "shift": "Name the specific mismatch between the sold timeline and the technical reality."
+          },
+          "q2": {
+            "text": "The main constraint is the political pressure of the kickoff meeting; Sales is celebrating the win and expects immediate execution, making pushback highly visible and politically expensive.",
+            "shift": "Identify the political and social pressure of the room as the primary limit, not just the code."
+          },
+          "q3": {
+            "text": "Option 1: Hack the integration together in 8 weeks, which appeases Sales now but guarantees future platform outages and severe technical debt. Option 2: Push back immediately to reset the timeline to 12 weeks, which protects the platform but embarrasses Sales and kills the project momentum on day one.",
+            "shift": "Make the costs concrete: future platform outages vs. immediate political fallout."
+          },
+          "q4": {
+            "text": "I recommend pausing the kickoff to state that the 8-week timeline is unworkable. I am choosing to prioritize long-term platform stability over the short-term comfort of an easy kickoff meeting. I explicitly accept the risk of causing immediate friction with Sales leadership and killing the momentum.",
+            "shift": "Choose the hard path, state what is deprioritized (comfort/momentum), and name the accepted risk (friction with Sales)."
+          },
+          "q5": {
+            "text": "Success is exiting the week with an agreed-upon 12-week timeline or a reduced scope for the 8-week launch. If Sales escalates this and leadership forces the 8-week timeline anyway, I accept that I will be viewed as uncooperative and a roadblock to revenue.",
+            "shift": "Provide a clear metric and explicitly own how you will look wrong to leadership if your pushback fails."
+          }
+        },
+        "level9": {
+          "q1": {
+            "text": "The problem is that we only have 8 weeks to build an integration that actually takes 12 weeks to do correctly.",
+            "shift": "State the problem, but slightly less forcefully than a 10."
+          },
+          "q2": {
+            "text": "The main limit is that the contract is already signed and Sales is expecting us to just execute the plan.",
+            "shift": "Name the constraint, but miss the immediate psychological pressure of the room."
+          },
+          "q3": {
+            "text": "We can build a hacky version in 8 weeks to hit the deadline, but it will cause tech debt. Or we can push back and ask for 12 weeks, but Sales will be upset.",
+            "shift": "Lay out the options, but frame the costs slightly less severely (tech debt vs. outages)."
+          },
+          "q4": {
+            "text": "I recommend pushing back and asking for 12 weeks. I am choosing to prioritize the architecture over the kickoff momentum. I explicitly accept the risk that Sales will be angry and the meeting will be derailed.",
+            "shift": "Explicitly state what is deprioritized and the risk accepted."
+          },
+          "q5": {
+            "text": "We need to get the timeline officially extended to 12 weeks before any code is written.",
+            "shift": "Provide the metric, but completely omit the backfire plan and ownership of the fallout."
+          }
+        },
+        "level8": {
+          "q1": {
+            "text": "The problem is the timeline is too short for the scope of work that was sold to the client.",
+            "shift": "Identifies the surface problem but lacks specific details."
+          },
+          "q2": {
+            "text": "The constraint is that we only have 8 weeks before the promised launch date.",
+            "shift": "Identifies a constraint (time), but misses the real constraint (politics/expectations)."
+          },
+          "q3": {
+            "text": "We can either rush the development to hit 8 weeks, or tell them we need 12 weeks to do it right.",
+            "shift": "Lays out the choices but doesn't project the systemic failure or political costs of either path."
+          },
+          "q4": {
+            "text": "I recommend we tell them we need 12 weeks. I know hacking it together in 8 weeks keeps Sales happy right now, but we can't risk the platform going down later. We have to do it right.",
+            "shift": "Acknowledges the competing priority (keeping Sales happy) and rejects it, but stops short of explicitly owning the personal/political risk of ruining the kickoff."
+          },
+          "q5": {
+            "text": "A revised project plan with a 12-week timeline.",
+            "shift": "Provides a standard metric, but completely misses the 'backfire plan'."
+          }
+        }
+      }
+    },
+    {
+      "id": "the-reorg",
+      "title": "The Reorg",
+      "text": "Your team of eight is going through a restructure. Two developers will be moved to another team. The decision is largely driven by headcount balance across the org, not performance. You have some influence — you can advocate to keep one of them. But only one. And both developers will eventually find out who you went to bat for and who you didn't.\n\nOne developer consistently delivers. They're technically strong and never miss a deadline. They're also difficult — blunt in reviews, dismissive of junior team members, and regularly creates tension in team meetings. Several people have complained.\n\nThe other developer is slower, misses things, and needs more hand-holding than the role requires. But they're the person you'd call if something went wrong at 11pm. They've had your back and you've had theirs.\n\nYou have one conversation with your manager tomorrow to make your case.",
+      "benchmarks": {
+        "level10": {
+          "q1": {
+            "text": "The real problem is choosing between protecting our delivery speed and protecting our team culture, knowing that keeping a toxic high-performer is actively damaging morale.",
+            "shift": "Name the cultural vs. delivery conflict, not just 'we are losing a developer.'"
+          },
+          "q2": {
+            "text": "The main limit is that I can only save one person, and both developers will eventually find out who I chose to advocate for, which will permanently alter my relationship with the one I don't save.",
+            "shift": "Identify the interpersonal fallout and zero-sum choice as the primary limit."
+          },
+          "q3": {
+            "text": "Option 1: Advocate for the strong performer, which guarantees delivery but costs team harmony and ignores the complaints of junior members. Option 2: Advocate for the loyal, slower developer, which protects culture but costs raw output and requires me to personally provide more hand-holding.",
+            "shift": "Make the costs concrete: team toxicity vs. delivery speed and personal management overhead."
+          },
+          "q4": {
+            "text": "I recommend advocating for the slower, loyal developer. I am prioritizing team culture over raw output speed. I explicitly accept the risk that our delivery timelines might slip and I will have to spend more personal time managing their work.",
+            "shift": "Choose a side, explicitly deprioritize one aspect (delivery or culture), and name the accepted risk."
+          },
+          "q5": {
+            "text": "Success is the remaining team's morale and collaborative output improving over the next 90 days. If the slower developer's missed deadlines cause us to miss major goals, I accept that leadership will question why I advocated for them over a proven performer.",
+            "shift": "Own the worst case. Name how you will look wrong if the choice backfires."
+          }
+        },
+        "level9": {
+          "q1": {
+            "text": "The problem is that I am forced to choose between a strong performer who creates team tension and a weaker performer who is highly loyal.",
+            "shift": "State the problem clearly, but miss the opportunity to frame it as a systemic cultural decision."
+          },
+          "q2": {
+            "text": "The constraint is that I only have influence to keep one of them on my team.",
+            "shift": "Name the constraint, but omit the psychological pressure of them finding out."
+          },
+          "q3": {
+            "text": "I can keep the difficult dev to hit deadlines, or keep the loyal dev but deal with slower delivery.",
+            "shift": "Lay out the options, but frame the costs slightly less severely."
+          },
+          "q4": {
+            "text": "I recommend keeping the loyal developer. I am choosing to deprioritize raw output speed to fix the team dynamic. I accept the risk that our timelines may slip as a result.",
+            "shift": "Explicitly state what is deprioritized and the risk accepted."
+          },
+          "q5": {
+            "text": "We should see fewer complaints in team meetings and a more cohesive team culture within the next quarter.",
+            "shift": "Provide the metric, but completely omit the backfire plan and ownership of the fallout."
+          }
+        },
+        "level8": {
+          "q1": {
+            "text": "We are losing two developers to a reorg and I have to decide which one to try to keep.",
+            "shift": "Identifies the surface problem but lacks the nuance of the actual tension."
+          },
+          "q2": {
+            "text": "I only get one conversation with my manager to make a case.",
+            "shift": "Identifies a constraint, but misses the real interpersonal limit."
+          },
+          "q3": {
+            "text": "We either keep the fast, mean developer or the slow, nice developer.",
+            "shift": "Lays out the choices but doesn't project the long-term compounding cost to the team."
+          },
+          "q4": {
+            "text": "I recommend keeping the slower developer. I know we need to hit our deadlines, but the other developer is just too difficult to work with and is hurting the team.",
+            "shift": "Acknowledges the competing priority (deadlines) and rejects it, but stops short of explicitly owning the personal risk."
+          },
+          "q5": {
+            "text": "The team will be happier and work better together.",
+            "shift": "Provides a vague metric and completely misses the 'backfire plan'."
+          }
+        }
+      }
+    },
+    {
+      "id": "reporting-definitions",
+      "title": "The Weekly Report",
+      "text": "Your team produces a weekly performance report that takes two days to prepare manually, which slows leadership's ability to react. Different departments calculate exposure differently, leading to conflicting pricing decisions.\n\nYou can automate the report in three weeks, but this locks in the current, inconsistent definitions.\n\nAlternatively, you can push to align definitions across departments, which would take at least two months.\n\nYou can realistically lead only one major initiative right now.",
+      "benchmarks": {
+        "level10": {
+          "q1": {
+            "text": "The core problem is that inconsistent data definitions are leading to conflicting pricing decisions, while the slow manual reporting process is simply a symptom of inefficiency.",
+            "shift": "Distinguish between the root cause (data definitions/pricing) and the symptom (manual speed)."
+          },
+          "q2": {
+            "text": "The main constraint is my own bandwidth; I can realistically only lead one major initiative right now.",
+            "shift": "Accurately identify the bandwidth constraint."
+          },
+          "q3": {
+            "text": "Option 1: Automate the report in three weeks, which fixes the speed issue but permanently scales bad data and locks in conflicting pricing decisions. Option 2: Align the definitions over two months, which fixes the pricing issue but forces leadership to endure two more months of slow, manual reporting.",
+            "shift": "Make the costs concrete: scaling bad data vs. enduring immediate leadership frustration."
+          },
+          "q4": {
+            "text": "I recommend aligning the definitions across departments. I am prioritizing data integrity over reporting speed. I explicitly accept the risk that leadership will be frustrated by the ongoing slow turnaround of the manual reports over the next two months.",
+            "shift": "Choose a path, explicitly deprioritize speed, and name the accepted political risk of leadership frustration."
+          },
+          "q5": {
+            "text": "Success is achieving unified pricing decisions across all departments within 90 days. If the alignment process stalls in inter-departmental politics and we still have slow, manual reports after two months, I accept that leadership will view this as a failure to execute.",
+            "shift": "Provide a metric and explicitly own how you will look wrong if the political alignment fails."
+          }
+        },
+        "level9": {
+          "q1": {
+            "text": "The problem is that our reporting uses inconsistent data definitions across departments, and it takes too long to generate manually.",
+            "shift": "Identify the problem, but fail to prioritize the root cause over the symptom."
+          },
+          "q2": {
+            "text": "I can only lead one of these two initiatives right now.",
+            "shift": "Name the constraint accurately."
+          },
+          "q3": {
+            "text": "Automating takes 3 weeks but locks in bad data. Aligning the data takes 2 months but fixes the pricing issue.",
+            "shift": "State the options and their costs, though slightly less concretely than a 10."
+          },
+          "q4": {
+            "text": "I recommend we push to align the definitions. I am deprioritizing the speed of the reporting process to focus on data accuracy. I accept the risk that leadership will be annoyed by the manual reports continuing.",
+            "shift": "Explicitly state what is being deprioritized and the risk being accepted."
+          },
+          "q5": {
+            "text": "All departments will be using the exact same definitions for pricing decisions within two months.",
+            "shift": "Provide a valid metric, but completely omit the backfire/accountability plan."
+          }
+        },
+        "level8": {
+          "q1": {
+            "text": "The weekly report takes two days to prepare and the data definitions are mismatched.",
+            "shift": "States the surface issues but lacks sharp framing of the business threat."
+          },
+          "q2": {
+            "text": "We don't have the time to do both projects at once.",
+            "shift": "Identifies the constraint, but lacks the crispness of the benchmark."
+          },
+          "q3": {
+            "text": "We can build the automation quickly, or spend a couple of months aligning the different departments.",
+            "shift": "Lays out the choices but doesn't project the systemic failure of the alternate path."
+          },
+          "q4": {
+            "text": "I recommend aligning the definitions first. I know leadership wants the reports faster and automating would give them that, but we can't automate bad data.",
+            "shift": "Acknowledges the competing priority (speed) and rejects it, but stops short of explicitly owning the personal risk of the leadership frustration."
+          },
+          "q5": {
+            "text": "The pricing decisions will finally be consistent.",
+            "shift": "Provides a standard metric, but completely misses the 'backfire plan'."
+          }
+        }
+      }
     }
   ]
 }
