@@ -6,69 +6,69 @@
       "text": "Your online business processes about 8,000 orders per week. Order errors have risen from 1.5% to 3% over the past quarter — roughly 240 errors per week at current volume. Refund costs are up and negative reviews are increasing.\n\nYou can build process automation to reduce fulfillment errors. It would take about six weeks to complete.\n\nMarketing is preparing a campaign expected to increase order volume by 25% starting next month. Quarterly revenue targets assume the campaign launches on time.\n\nIf the campaign launches before the automation is done, you'll be running at roughly 300 errors per week on higher volume — and refund costs scale with every order.\n\nIf you delay the campaign to fix errors first, you risk missing quarterly revenue targets and leadership is expecting visible movement immediately.\n\nYou cannot prioritize both.",
       "benchmarks": {
         "level10": {
-          "q1": { 
-            "text": "Order error rates have doubled from 1.5% to 3% over the last quarter, leading to a direct increase in refund costs and negative customer reviews.", 
-            "shift": "Quantify the technical decay. Connect the error rate directly to specific business costs." 
+          "q1": {
+            "text": "Order error rates have doubled from 1.5% to 3% over the last quarter, leading to a direct increase in refund costs and negative customer reviews.",
+            "shift": "Quantify the technical decay. Connect the error rate directly to specific business costs."
           },
-          "q2": { 
-            "text": "The main constraint is that leadership is prioritizing immediate, visible movement and expecting the quarterly revenue targets to be met.", 
-            "shift": "Identify the organizational pressure as the limit, not just the technical timeline." 
+          "q2": {
+            "text": "The main constraint is that leadership is prioritizing immediate, visible movement and expecting the quarterly revenue targets to be met.",
+            "shift": "Identify the organizational pressure as the limit, not just the technical timeline."
           },
-          "q3": { 
-            "text": "Option 1: Build the automation over six weeks, which reduces fulfillment errors but requires delaying the marketing campaign and risking quarterly revenue targets. Option 2: Proceed with the campaign to hit revenue goals, which scales order errors to 300 per week and damages long-term sales volume through negative reviews.", 
-            "shift": "State the concrete cost of the 'successful' path: scaling the error rate and damaging long-term volume." 
+          "q3": {
+            "text": "Option 1: Build the automation over six weeks, which reduces fulfillment errors but requires delaying the marketing campaign and risking quarterly revenue targets. Option 2: Proceed with the campaign to hit revenue goals, which scales order errors to 300 per week and damages long-term sales volume through negative reviews.",
+            "shift": "State the concrete cost of the 'successful' path: scaling the error rate and damaging long-term volume."
           },
-          "q4": { 
-            "text": "I recommend delaying the marketing campaign until the automation is built. I am choosing to prioritize long-term stability and brand health over immediate revenue targets, accepting that this will cause friction with leadership. Addressing the error rates now is the only way to prevent negative reviews from permanently impacting our revenue growth.", 
-            "shift": "Choose a side and explicitly name the legitimate target (revenue) you are choosing to miss." 
+          "q4": {
+            "text": "I recommend delaying the marketing campaign until the automation is built. I am choosing to prioritize long-term stability and brand health over immediate revenue targets, accepting that this will cause friction with leadership. Addressing the error rates now is the only way to prevent negative reviews from permanently impacting our revenue growth.",
+            "shift": "Choose a side and explicitly name the legitimate target (revenue) you are choosing to miss."
           },
-          "q5": { 
-            "text": "Success is defined by a material decrease in negative reviews and fulfillment error rates dropping below 1%. The decision could look wrong if automation fails to move these metrics or the revenue miss exceeds the long-term benefit; I am explicitly accepting the risk that leadership will question my decision-making authority for the missed targets.", 
-            "shift": "Own the worst case. Name exactly how you will look wrong to leadership if this call fails." 
+          "q5": {
+            "text": "Success is defined by a material decrease in negative reviews and fulfillment error rates dropping below 1%. The decision could look wrong if automation fails to move these metrics or the revenue miss exceeds the long-term benefit; I am explicitly accepting the risk that leadership will question my decision-making authority for the missed targets.",
+            "shift": "Own the worst case. Name exactly how you will look wrong to leadership if this call fails."
           }
         },
         "level9": {
-          "q1": { 
-            "text": "Our order error rates have gone up to 3%, which is directly causing more negative reviews and higher refund costs.", 
-            "shift": "State the problem clearly, but miss the opportunity to frame it as a systemic decay." 
+          "q1": {
+            "text": "Our order error rates have gone up to 3%, which is directly causing more negative reviews and higher refund costs. This translates to roughly 240 errors per week at our current volume.",
+            "shift": "State the problem clearly, but miss the opportunity to frame it as a systemic decay."
           },
-          "q2": { 
-            "text": "Leadership expects to see immediate revenue movement from the new campaign, but the automation takes six weeks to build.", 
-            "shift": "Identify the timeline conflict without naming the underlying leadership psychology." 
+          "q2": {
+            "text": "Leadership expects to see immediate revenue movement from the new campaign, but the automation takes six weeks to build. This creates a direct timeline conflict we must navigate.",
+            "shift": "Identify the timeline conflict without naming the underlying leadership psychology."
           },
-          "q3": { 
-            "text": "Option 1 is to delay the campaign to fix the errors, which costs us our quarterly revenue targets. Option 2 is to launch the campaign on time, which hits revenue but scales our error rate up to roughly 300 per week.", 
-            "shift": "Lay out the options, but without projecting the long-term brand damage of Option 2." 
+          "q3": {
+            "text": "Option 1 is to delay the campaign to fix the errors, which costs us our quarterly revenue targets. Option 2 is to launch the campaign on time, which hits revenue but scales our error rate up to roughly 300 per week.",
+            "shift": "Lay out the options, but without projecting the long-term brand damage of Option 2."
           },
-          "q4": { 
-            "text": "I recommend we delay the campaign to build the automation. I know leadership wants to hit the quarterly revenue targets, but launching on time will just scale our negative reviews. Protecting our brand reputation is more important than a short-term revenue bump.", 
-            "shift": "Acknowledge the competing priority (revenue) but fail to explicitly state the personal risk you are accepting." 
+          "q4": {
+            "text": "I recommend we delay the campaign to build the automation. I know leadership wants to hit the quarterly revenue targets, but launching on time will just scale our negative reviews. Protecting our brand reputation is more important than a short-term revenue bump.",
+            "shift": "Acknowledge the competing priority (revenue) but fail to explicitly state the personal risk you are accepting."
           },
-          "q5": { 
-            "text": "We should see our fulfillment error rates drop back below 1% and a measurable reduction in negative customer reviews.", 
-            "shift": "Provide a solid metric, but completely miss the 'backfire plan' and ownership of the fallout." 
+          "q5": {
+            "text": "We should see our fulfillment error rates drop back below 1% and a measurable reduction in negative customer reviews. This will also lead to a decrease in refund costs.",
+            "shift": "Provide a solid metric, but completely miss the 'backfire plan' and ownership of the fallout."
           }
         },
         "level8": {
-          "q1": { 
-            "text": "The problem is that error rates have increased from 1.5% to 3% over the past quarter. This has led to increased refund costs and increased negative reviews.", 
-            "shift": "Clearly states the problem, but doesn't elevate it to a systemic business threat." 
+          "q1": {
+            "text": "The problem is that error rates have increased from 1.5% to 3% over the past quarter. This has led to increased refund costs and increased negative reviews.",
+            "shift": "Clearly states the problem, but doesn't elevate it to a systemic business threat."
           },
-          "q2": { 
-            "text": "Leadership wants to see immediate progress and is focused on hitting the quarterly revenue targets.", 
-            "shift": "Names the constraint, but frames it as a timeline issue rather than a psychological bias." 
+          "q2": {
+            "text": "Leadership wants to see immediate progress and is focused on hitting the quarterly revenue targets.",
+            "shift": "Names the constraint, but frames it as a timeline issue rather than a psychological bias."
           },
-          "q3": { 
-            "text": "We can either build the automation which takes 6 weeks and delays the campaign, or we launch the campaign now to hit revenue but deal with 300 errors a week.", 
-            "shift": "Lays out the choices, but doesn't project the long-term compounding cost of the errors." 
+          "q3": {
+            "text": "We can either build the automation which takes 6 weeks and delays the campaign, or we launch the campaign now to hit revenue but deal with 300 errors a week.",
+            "shift": "Lays out the choices, but doesn't project the long-term compounding cost of the errors."
           },
-          "q4": { 
-            "text": "I recommend delaying the campaign to build the automation. I understand leadership wants to hit the quarterly revenue target with an on-time launch, but if we do that, we are just going to scale our errors and refund costs. We have to fix the root cause first so we can grow sustainably.", 
-            "shift": "Acknowledges the competing priority (revenue) and rejects it, but stops short of explicitly owning the personal risk of that choice." 
+          "q4": {
+            "text": "I recommend delaying the campaign to build the automation. I understand leadership wants to hit the quarterly revenue target with an on-time launch, but if we do that, we are just going to scale our errors and refund costs. We have to fix the root cause first so we can grow sustainably.",
+            "shift": "Acknowledges the competing priority (revenue) and rejects it, but stops short of explicitly owning the personal risk of that choice."
           },
-          "q5": { 
-            "text": "Our fulfillment error rate should drop below 1% and we should see a reduction in negative reviews.", 
-            "shift": "Provides a standard metric, but completely misses the 'backfire plan' and ownership of the fallout." 
+          "q5": {
+            "text": "Our fulfillment error rate should drop below 1% and we should see a reduction in negative reviews.",
+            "shift": "Provides a standard metric, but completely misses the 'backfire plan' and ownership of the fallout."
           }
         }
       }
