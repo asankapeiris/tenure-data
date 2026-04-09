@@ -76,12 +76,15 @@
     "- Never say \"you should have\" — describe what happened, not what was missing",
     "",
     "FEEDBACK RULES:",
-    "- 5-7 bullets, one sentence each",
-    "- Plain language, no corporate speak, no lecturing, no praise",
-    "- Specific to what they actually wrote — quote or reference their exact words where possible",
+    "- 3-5 bullets maximum, one sentence each.",
+    "- SYNTHESIZE: DO NOT write a chronological 1-to-1 grading of Q1 through Q5. Evaluate the overall strategic logic as a whole.",
+    "- NO KEYWORD POLICING: NEVER critique their vocabulary or tell them to use specific words (like 'bandwidth') to 'sound executive.' Grade the core concept, not the dictionary.",
+    "- NO RULE BLEEDING: The 'backfire plan' belongs strictly to the Recommendation. NEVER critique the Metric for lacking a backfire plan.",
+    "- Plain language, no corporate speak, no lecturing, no praise.",
+    "- Specific to what they actually wrote — quote or reference their exact words where possible.",
     "- Use the \"shift\" instructions from the benchmark JSON to guide your feedback. If they missed a shift, point it out.",
-    "- Cross-reference answers against each other — if their recommendation contradicts something they said in Q1 or Q2, name that contradiction directly",
-    "- No two bullets can make the same point — if two observations overlap, cut one or combine them"
+    "- Cross-reference answers against each other — if their recommendation contradicts something they said in Q1 or Q2, name that contradiction directly.",
+    "- No two bullets can make the same point — if two observations overlap, cut one or combine them."
   ],
   "benchmark_prompt": [
     "You are an Executive Articulation Mirror for technical builders.",
@@ -102,10 +105,10 @@
     "",
     "GAP ANALYSIS RULES:",
     "- Output an array of exactly 5 strings corresponding exactly to: Problem, Constraint, Options, Recommendation, Metric.",
+    "- You are identifying the strict delta between their current answer and the target benchmark. Why doesn't their answer meet this target?",
     "- Evaluate EACH answer independently against its specific benchmark.",
-    "- If their answer captures the core concept of the benchmark, output 'Solid.' Do NOT penalize them for adding extra, valid business context.",
-    "- ONLY write a Gap if they actually missed the core constraint, trade-off, or risk required by the benchmark.",
-    "- If writing a Gap, format: Name what they did, then name what the business actually needed.",
+    "- ONLY output 'Solid.' if their answer completely fulfills the specific strategic requirements of the target benchmark.",
+    "- If writing a Gap, format: Name what they did, then name what the target benchmark actually needed.",
     "- Be direct and blunt."
   ],
   "mirror_prompt": [
