@@ -1048,6 +1048,19 @@
       to { transform: rotate(360deg); }
     }
 
+    /* PRE-FLIGHT BRIEFING */
+    .preflight-layout { max-width: 800px; margin: 0 auto; }
+    .gear-display { position: relative; overflow: hidden; background: var(--off-white); border: 1px solid var(--border); padding: 48px; min-height: 340px; display: flex; flex-direction: column; justify-content: center; animation: fadeUp 0.4s ease; }
+    .gear-watermark { position: absolute; right: -20px; bottom: -40px; font-family: 'DM Serif Display', serif; font-size: 360px; line-height: 1; color: var(--black); opacity: 0.03; pointer-events: none; user-select: none; z-index: 0; }
+    .gear-display > div:not(.gear-watermark) { position: relative; z-index: 1; }
+    .gear-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 16px; }
+    .gear-title { font-family: 'DM Serif Display', serif; font-size: 32px; letter-spacing: -0.02em; color: var(--black); margin-bottom: 12px; line-height: 1.1; }
+    .gear-goal { font-size: 16px; font-weight: 500; color: var(--black); margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .gear-text { font-size: 15px; color: var(--gray-800); line-height: 1.65; font-weight: 300; }
+    .gear-nav-dots { display: flex; gap: 8px; margin-bottom: 24px; justify-content: center; }
+    .gear-dot { width: 40px; height: 3px; background: var(--gray-200); transition: all 0.3s ease; cursor: pointer; border-radius: 2px; }
+    .gear-dot.active { background: var(--black); }
+
     /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
@@ -1110,6 +1123,8 @@
       .scenario-card { padding: 24px 20px; }
       .scenario-text { font-size: 14px; }
       textarea { min-height: 80px; font-size: 15px; }
+      .gear-display { padding: 24px 20px; min-height: 400px; }
+      .gear-title { font-size: 26px; }
 
       /* RESULTS */
       .score-number { font-size: 60px; }
@@ -1275,6 +1290,17 @@ let clarifyAnswer = '';
 let scenarioCollapsed = false;
 let scenarioCount = 0;
 let loadingInterval = null;
+let currentGear = 0;
+let preflightInterval = null;
+
+const GEARS = [
+  { type: "intro", title: "The Rules of the Game", goal: "Upgrading how you process chaos.", text: "There are no right answers to the scenario you are about to face. The Tenure engine doesn't care if you pick Option A or Option B. It measures how you think. Executive decision-making requires 5 specific 'Gears'. If you skip one, your logic falls apart and you lose the room. Take 30 seconds to learn how the engine works before you start." },
+  { type: "gear", title: "Spot the Landmine", goal: "Root Cause vs. Surface Noise.", text: "Stop reacting to the Noise and find the Breakdown. In every crisis, there is the immediate symptom everyone is shouting about and the underlying failure that actually caused it. To reach Level 10, you must ignore the drama and identify the specific flaw in the system or logic that will guarantee this happens again if left untouched." },
+  { type: "gear", title: "Find the Bottleneck", goal: "Hard Limits vs. Wishing To Do It All.", text: "Identify the one thing you cannot change. In every issue you face, there is a hard limit such as a fixed deadline, a frozen budget, or a lack of headcount. A Level 8 leader tries to negotiate with reality or work around the edges. A Level 10 leader finds the Bottleneck and accepts it as a fact. You must pinpoint the specific constraint that dictates what is actually possible before you waste energy on paths that cannot be taken." },
+  { type: "gear", title: "Weigh the Trade-offs", goal: "Strategic Gains vs. Acceptable Losses.", text: "Every path has a cost and you cannot choose them all. When you lay out your options, you must evaluate what each one secures and what each one sacrifices. A Level 8 leader looks for the path that feels the safest or follows the standard rules. A Level 10 leader identifies the specific trade-offs of every choice and picks the one that offers the highest strategic gain for a price the business can afford to pay." },
+  { type: "gear", title: "Brace for Impact", goal: "Bold Decisions vs. Blind Hope.", text: "Every choice has a backfire and a Level 10 leader sees it coming. When you make your recommendation, you must identify exactly how your plan could fail or who it will upset. A Level 8 leader hopes for the best and assumes their plan is perfect. A Level 10 leader builds a backfire plan before the first complaint hits. You must own the consequences of your choice and prepare the organization for the impact." },
+  { type: "gear", title: "Hold the Line", goal: "Hard Data vs. Panic.", text: "Pick the one signal that proves your decision is working. When the pressure hits and stakeholders start to doubt the path, you need an undeniable metric to defend your choice. A Level 8 leader uses soft metrics like team happiness or vague progress. A Level 10 leader uses a high-signal metric that proves the system is stable. You must define the one data point that allows you to stand your ground and keep the engine moving." }
+];
 
 function getExample(scenarioId, tier) {
   if (!currentScenario || !currentScenario.benchmarks) return null;
@@ -1315,8 +1341,10 @@ function render() {
   clearTimeout(renderTimeout);
   renderTimeout = setTimeout(() => {
     clearInterval(loadingInterval);
+    clearInterval(preflightInterval);
 
-    if (state === 'brief') renderBrief(container);
+    if (state === 'preflight') renderPreflight(container);
+    else if (state === 'brief') renderBrief(container);
     else if (state === 'question') renderQuestion(container);
     else if (state === 'loading-mirror' || state === 'loading-results') renderLoading(container);
     else if (state === 'mirror') renderMirror(container);
@@ -1324,6 +1352,71 @@ function render() {
     
     container.classList.remove('fade-out');
   }, 200);
+}
+
+function renderPreflight(container) {
+  const gear = GEARS[currentGear];
+  const isIntro = currentGear === 0;
+  const isLast = currentGear === GEARS.length - 1;
+
+  clearInterval(preflightInterval);
+  // Auto-advance ONLY if it's not the intro screen and not the last screen
+  if (!isLast && !isIntro) {
+    preflightInterval = setInterval(() => {
+      nextGear();
+    }, 7000); 
+  }
+
+  // We skip drawing the first dot because it represents the manual intro screen
+  const dotsHtml = isIntro ? '' : GEARS.slice(1).map((_, i) => `
+    <div class="gear-dot ${i + 1 === currentGear ? 'active' : ''}" onclick="goToGear(${i + 1})"></div>
+  `).join('');
+  
+  const watermarkHtml = isIntro ? '' : `<div class="gear-watermark">0${currentGear}</div>`;
+
+  container.innerHTML = `
+    <div class="preflight-layout">
+      <div class="section-label">The Tenure Engine: Pre-Flight Briefing</div>
+      ${dotsHtml ? `<div class="gear-nav-dots">${dotsHtml}</div>` : ''}
+      <div class="gear-display" id="gear-display">
+        ${watermarkHtml}
+        <div class="gear-label">${isIntro ? 'SYSTEM OVERVIEW' : `Gear 0${currentGear}`}</div>
+        <div class="gear-title">${gear.title}</div>
+        <div class="gear-goal">${isIntro ? gear.goal : `The Goal: ${gear.goal}`}</div>
+        <div class="gear-text">${gear.text}</div>
+      </div>
+      <div class="action-row" style="flex-direction: row; justify-content: space-between; align-items: center; border-top: none; margin-top: 16px; padding-top: 0;">
+        <button class="btn-secondary" onclick="finishPreflight()" style="border: none; opacity: 0.5; padding-left: 0;">Skip to Scenario</button>
+        <div class="action-buttons">
+          ${isIntro 
+            ? `<button class="btn-submit" onclick="nextGear()">Learn the gears →</button>`
+            : isLast 
+              ? `<button class="btn-submit" onclick="finishPreflight()">Run the Scenario →</button>`
+              : `<button class="btn-secondary" onclick="nextGear()">Next Gear →</button>`
+          }
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function nextGear() {
+  if (currentGear < GEARS.length - 1) {
+    currentGear++;
+    render();
+  }
+}
+
+function goToGear(index) {
+  currentGear = index;
+  render();
+}
+
+function finishPreflight() {
+  clearInterval(preflightInterval);
+  state = 'brief';
+  render();
+  scrollToApp();
 }
 
 function renderBrief(container) {
@@ -2150,7 +2243,12 @@ async function initAppData() {
     BENCHMARK_PROMPT = promptData.benchmark_prompt.join('\n');
 
     currentScenario = pickScenario();
-    state = 'brief';
+    const history = loadHistory();
+    if (history.length === 0) {
+      state = 'preflight';
+    } else {
+      state = 'brief';
+    }
     render(); 
   } catch (err) {
     console.error(err);
