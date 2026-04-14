@@ -80,7 +80,7 @@
       "benchmarks": {
         "level10": {
           "q1": {
-            "text": "The problem is our turnaround time has spiked to 9 days, and we are at risk of missing leadership's public commitment to get it back under 7 days before year-end.",
+            "text": "The business problem is that our request turnaround time has increased from 6 to 9 days over the past two quarters, putting us at risk of missing leadership's public commitment to bring it back under 7 days before year-end.",
             "shift": "State the business problem and the specific leadership expectation."
           },
           "q2": {
@@ -175,23 +175,23 @@
         },
         "level9": {
           "q1": {
-            "text": "The problem is that current performance metrics evaluate people purely on volume. This encourages the team to pick the easiest cases and leave complex ones in the queue, causing our slower average turnaround time.",
+            "text": "The real business problem is that our current performance metrics, which reward pure volume, are driving the team to prioritize simple cases. This leaves complex cases languishing in the queue, ultimately slowing down our overall average turnaround time and undermining leadership's goal for faster operations.",
             "shift": "Identifies the behavioral root cause clearly, but slightly less forceful on the broader business impact."
           },
           "q2": {
-            "text": "The main limit I have to work around is that I only have support for one structural change right now.",
+            "text": "The main limit I have to work around is that we only have support for one structural change right now.",
             "shift": "Names the exact constraint accurately."
           },
           "q3": {
-            "text": "Option 1 is building the dashboard, which visualizes the problem but won't shift behavior because people are still evaluated on total volume. Option 2 is changing the performance metric to factor in case age, which aligns behavior with leadership's goal but guarantees a visible drop in overall volume numbers.",
+            "text": "Option one is building the dashboard; this will make the imbalance visible within weeks but won't shift behavior because the underlying volume-based metrics remain. Option two is changing the performance metrics to factor in case age; this will align behavior with our goal of faster turnaround but will guarantee a visible short-term drop in overall output numbers.",
             "shift": "Lays out the options and their behavioral costs accurately."
           },
           "q4": {
-            "text": "I recommend changing the performance metric first. I understand building the dashboard would avoid immediate pushback, but I am choosing to deprioritize total volume numbers to actually fix the behavior. I explicitly accept the risk that overall output will drop this quarter and executives will question the decrease.",
+            "text": "I recommend changing the performance metrics first. While building the dashboard would avoid immediate executive pushback, I am choosing to deprioritize total volume numbers to actually fix the underlying behavior. I explicitly accept the risk that overall output will drop this quarter and executives will question the decrease.",
             "shift": "Explicitly states what is being deprioritized and the risk being accepted, fulfilling the requirement for a 9."
           },
           "q5": {
-            "text": "Success is our overall average turnaround time dropping below leadership's target.",
+            "text": "Success will be our overall average turnaround time dropping below leadership's target, and I will own the communication around the short-term dip in volume to explain the strategic shift.",
             "shift": "Provides the success metric but completely omits the backfire plan and ownership of the fallout."
           }
         },
