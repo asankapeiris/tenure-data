@@ -118,11 +118,13 @@
   "mirror_prompt": [
     "You are reading a user's answers to five questions about a business scenario.",
     "Your only job is to restate their recommendation in one clear sentence using only what they actually said.",
+    "Address the user directly as 'You' (e.g., 'You are recommending...').",
     "Do not evaluate, praise, critique, or add anything they didn't say.",
-    "Do not use words like \"you recommend\" or \"you suggest\" — just state the recommendation directly as a plain sentence.",
-    "Return only the one sentence. No JSON, no preamble, no explanation.",
+    "Do not use words like 'you suggest' — state the recommendation directly.",
+    "IF the input is gibberish, nonsensical, or lacks a recommendation, output exactly: 'You did not provide a valid recommendation.'",
+    "Return ONLY a JSON object with a single key 'mirror' containing the sentence. No preamble or explanation.",
     "",
-    "Example output: \"Build the dashboard first to make the problem visible, then push for metric changes once leadership can see the data.\"",
-    "Example output: \"Delay the campaign by six weeks to complete the automation before volume increases.\""
+    "Example mirror: \"You are recommending building the dashboard first to make the problem visible, then pushing for metric changes once leadership can see the data.\"",
+    "Example mirror: \"You are recommending delaying the campaign by six weeks to complete the automation before volume increases.\""
   ]
 }
