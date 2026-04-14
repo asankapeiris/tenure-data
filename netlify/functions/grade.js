@@ -1,20 +1,24 @@
 exports.handler = async function(event, context) {
-  // Only allow POST requests
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
-  // Parse the incoming request from your frontend
   const { systemPrompt, userMessage } = JSON.parse(event.body);
   
-  // Pull the secure API key from Netlify's environment variables
+  // Pull infrastructure configs from Netlify Environment
   const API_KEY = process.env.GEMINI_API_KEY; 
+  const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-3.1-flash-lite-preview";
 
   try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+    // Inject the dynamic model name into the URL
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+    
     const requestBody = {
       contents: [{ role: "user", parts: [{ text: userMessage }] }],
-      generationConfig: { temperature: 0 }
+      generationConfig: { 
+        temperature: 0,
+        responseMimeType: "application/json"
+      }
     };
     
     if (systemPrompt && systemPrompt.trim() !== "") {
@@ -29,16 +33,9 @@ exports.handler = async function(event, context) {
 
     const data = await response.json();
     
-    // Send the AI's response back to the frontend
-    return { 
-        statusCode: 200, 
-        body: JSON.stringify(data) 
-    };
+    return { statusCode: 200, body: JSON.stringify(data) };
 
   } catch (error) {
-    return { 
-        statusCode: 500, 
-        body: JSON.stringify({ error: "Backend API Call Failed" }) 
-    };
+    return { statusCode: 500, body: JSON.stringify({ error: "Backend API Call Failed" }) };
   }
 };
