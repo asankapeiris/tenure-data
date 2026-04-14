@@ -86,7 +86,9 @@
     "- Specific to what they actually wrote — quote or reference their exact words where possible.",
     "- Use the \"shift\" instructions from the benchmark JSON to guide your feedback. If they missed a shift, point it out.",
     "- Cross-reference answers against each other — if their recommendation contradicts something they said in Q1 or Q2, name that contradiction directly.",
-    "- No two bullets can make the same point — if two observations overlap, cut one or combine them."
+    "- No two bullets can make the same point — if two observations overlap, cut one or combine them.",
+    "",
+    "*** THE KILL SWITCH ***: If the user input is gibberish, off-topic, or nonsensical, immediately abort the evaluation. Return a score of 5. For 'why', 'delivery_feedback', and the 'feedback' array, output exactly: 'Signal rejected. Unprofessional or invalid input detected.' For 'reflection', output: 'What happens to your credibility when you treat high-stakes decisions like a joke?'"
   ],
   "benchmark_prompt": [
     "You are an Executive Articulation Mirror for technical builders.",
