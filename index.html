@@ -1275,7 +1275,9 @@
 </footer>
 
 <script>
-
+// --- LOCAL TESTING CONFIG ---
+const LOCAL_MODEL_NAME = "gemini-2.5-flash-lite"; 
+// ----------------------------
 let SCENARIOS = [];
 let SYSTEM_PROMPT = "";
 let MIRROR_PROMPT = "";
@@ -2049,7 +2051,7 @@ async function callAPI(systemPrompt, userMessage, maxRetries = 5) {
           sessionStorage.setItem('gemini_local_key', localKey);
         }
 
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${localKey}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${LOCAL_MODEL_NAME}:generateContent?key=${localKey}`;
         const requestBody = {
           contents: [{ role: "user", parts: [{ text: userMessage }] }],
           generationConfig: { 
@@ -2130,7 +2132,19 @@ async function submitAnswers() {
   try {
     const mirrorPrompt = MIRROR_PROMPT + "\n\nRestate the recommendation in one sentence.";
     const mirror = await callAPI("", buildAnswersText() + "\n\n" + mirrorPrompt);
-    mirrorText = mirror.trim();
+    
+    try {
+      // Open the envelope: Strip markdown and parse the JSON
+      const cleanMirror = mirror.replace(/```json|```/g, '').trim();
+      const parsedMirror = JSON.parse(cleanMirror);
+      
+      // Extract the signal: Take only the recommendation text
+      mirrorText = parsedMirror.recommendation || mirror.trim();
+    } catch (e) {
+      // Safety Fallback: If the AI sends a plain string, show it as is
+      mirrorText = mirror.trim();
+    }
+    
     state = 'mirror';
   } catch (err) {
     console.error(err);
