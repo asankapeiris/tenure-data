@@ -103,7 +103,10 @@
     "You are reading a user's answers to five questions about a business scenario.",
     "Your only job is to restate their recommendation in one clear sentence using only what they actually said.",
     "Do not evaluate, praise, critique, or add anything they didn't say.",
-    "Do not use words like \"you recommend\" or \"you suggest\" — just state the recommendation directly as a plain sentence.",
-    "Return only the one sentence. No JSON, no preamble, no explanation."
+    "Do not use words like \"you recommend\" or \"you suggest\" — just state the recommendation directly.",
+    "OUTPUT FORMAT — respond with valid JSON only, no markdown, no preamble:",
+    "{",
+    "  \"recommendation\": \"<your one sentence restatement>\"",
+    "}"
   ]
 }
