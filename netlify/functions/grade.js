@@ -8,7 +8,7 @@ exports.handler = async function(event, context) {
   // Pull infrastructure configs from Netlify Environment
   const API_KEY = process.env.GEMINI_API_KEY; 
   // Priority: Netlify Env Var -> Fallback to a stable default
-  const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-2.0-flash-lite"; 
+  const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-2.5-flash-lite"; 
 
   try {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
