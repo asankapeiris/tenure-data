@@ -1328,6 +1328,14 @@ const QUESTIONS = [
   { num: "05", text: "What metric proves this worked?", min: 10 }
 ];
 
+const DIRECTIVES = [
+  "Root Cause vs. Surface Noise: Ignore the surface issues. Identify the underlying failure.",
+  "Hard Limits vs. Wishes: Accept reality. Pinpoint the one constraint you cannot change.",
+  "Strategic Gains vs. Losses: Name the price. Identify exactly what is being sacrificed for each path.",
+  "Bold Decisions vs. Hope: Own the backfire. Describe the specific consequence you are willing to own.",
+  "Hard Data vs. Panic: Choose your signal. Define the undeniable metric that proves you were right."
+];
+
 function pickScenario(excludeId = null) {
   const pool = SCENARIOS.filter(s => s.id !== excludeId);
   return pool[Math.floor(Math.random() * pool.length)];
@@ -1502,7 +1510,7 @@ function renderQuestion(container) {
           </div>
           <textarea
             id="current-answer"
-            placeholder="Think it through. Don't present it."
+            placeholder="${DIRECTIVES[currentQuestion]}"
             oninput="handleAnswerInput(this.value)"
           >${answers[currentQuestion]}</textarea>
           <div class="word-count ${meetsMin ? 'word-count-met' : ''}" id="word-count">
