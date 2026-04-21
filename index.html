@@ -2099,14 +2099,20 @@ async function callAPI(systemPrompt, userMessage, maxRetries = 5) {
           body: JSON.stringify({ systemPrompt, userMessage })
         });
         
+        const data = await response.json();
+        
         if (!response.ok) {
           if (response.status === 429 || response.status === 503) {
             throw new Error(`RETRY_${response.status}`);
           }
-          throw new Error("Production API call failed");
+          console.error("Backend Error Response:", data.error);
+          throw new Error(data.error || "Production API call failed");
+        }
+
+        if (!data.candidates || !data.candidates[0]) {
+           throw new Error("Unexpected payload structure from AI.");
         }
         
-        const data = await response.json();
         return data.candidates[0].content.parts[0].text;
       }
     } catch (error) {
