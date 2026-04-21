@@ -32,10 +32,17 @@ exports.handler = async function(event, context) {
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      return { 
+        statusCode: response.status, 
+        body: JSON.stringify({ error: data.error?.message || "Google API Error" }) 
+      };
+    }
     
     return { statusCode: 200, body: JSON.stringify(data) };
 
   } catch (error) {
-    return { statusCode: 500, body: JSON.stringify({ error: "Backend API Call Failed" }) };
+    return { statusCode: 500, body: JSON.stringify({ error: "Backend API Call Failed: " + error.message }) };
   }
 };
