@@ -1,6 +1,79 @@
 {
   "scenarios": [
     {
+      "id": "vibe-coding-miracle",
+      "title": "The Vibe Coding Miracle",
+      "text": "Your most productive developer just finished a massive update to the system that handles your customer billing. They used a new AI tool to get it done in a couple of days. The code passed all the basic tests and it is objectively faster than the old version. However, when you sit down to review it, the developer admits they cannot fully explain how the code works. They just kept giving the tool instructions and tweaking the results until the math looked right. Your senior architect has officially blocked the release. They refuse to sign off on code that the author does not actually understand, calling it a liability that will break the moment a new edge case hits. Your manager is pushing you to ship it anyway. They have made it clear that they value this \"new way\" of working and think the architect is just being a gatekeeper who is afraid of change. If you side with the architect, you look like you are resistant to more efficient tools and you risk alienating your fastest builder. If you ship the code, you are now personally responsible for a billing system that no one on your team knows how to fix if it crashes in the middle of the night.",
+      "benchmarks": {
+        "level10": {
+          "q1": {
+            "text": "The problem is that the core billing logic is now a 'black box' that the author cannot explain, shifting the system from an owned asset to a maintenance liability that can't be debugged.",
+            "shift": "Connect the lack of understanding directly to the loss of system ownership and maintenance liability."
+          },
+          "q2": {
+            "text": "The main constraint is the manager's pressure to adopt the 'new way' of working, which frames architectural rigor as an obstacle to efficiency and creates political risk for those who block it.",
+            "shift": "Identify the manager's bias as the organizational limit, not just the code review conflict."
+          },
+          "q3": {
+            "text": "Option 1: Ship the code to satisfy the manager and maintain momentum, but accept personal responsibility for a billing system that no one can fix. Option 2: Side with the architect to block the release, which protects the system but risks alienating the fastest developer and appearing resistant to innovation.",
+            "shift": "State the concrete cost of the 'successful' path: personal liability for unfixable core logic."
+          },
+          "q4": {
+            "text": "I recommend blocking the release. I am choosing to prioritize operational safety and the architect's standards over delivery speed and manager approval. I explicitly accept the risk that the developer will feel alienated and the manager will view me as a bottleneck who is resistant to modern tools.",
+            "shift": "Choose a side and explicitly name the specific personal risk (bottleneck label) you are choosing to absorb."
+          },
+          "q5": {
+            "text": "Success is the developer proving they can explain and document the AI logic to the architect's satisfaction. If this takes too long and we alienate our best developer while looking like gatekeepers to the manager, I accept that I will be viewed as an operational failure for slowing down the company's evolution.",
+            "shift": "Own the worst case. Name exactly how you will look wrong to leadership if this call fails."
+          }
+        },
+        "level9": {
+          "q1": {
+            "text": "The problem is that the developer has delivered code they can't explain, which means the architect won't sign off and we can't fix it if it fails.",
+            "shift": "Identify the maintenance risk but miss the framing of systemic ownership decay."
+          },
+          "q2": {
+            "text": "The constraint is the manager's push to ship the code to prove the 'new way' of working is better, despite the architect's objections.",
+            "shift": "Identify the conflict between departments without naming the underlying psychological bias."
+          },
+          "q3": {
+            "text": "Option 1 is to ship the code and take the risk of it breaking. Option 2 is to side with the architect and block the release until the code is understood.",
+            "shift": "Lay out the options, but without projecting the full cost of personal liability."
+          },
+          "q4": {
+            "text": "I recommend siding with the architect. I am prioritizing the quality of the billing system over the speed of the release. I accept the risk that the manager will think I am slowing down progress and that the developer will feel frustrated.",
+            "shift": "Explicitly state what is being deprioritized and the risk being accepted."
+          },
+          "q5": {
+            "text": "Success is having the developer explain the code well enough that the architect is willing to sign off on the release.",
+            "shift": "Provide a solid metric, but miss the 'backfire plan' and ownership of the fallout."
+          }
+        },
+        "level8": {
+          "q1": {
+            "text": "The problem is the billing update is faster but nobody understands how it works, making it a liability.",
+            "shift": "Clearly state the problem, but don't elevate it to a threat to business continuity."
+          },
+          "q2": {
+            "text": "The architect is blocking the release while the manager is pushing to ship it anyway.",
+            "shift": "Names the constraint as a simple disagreement between two people."
+          },
+          "q3": {
+            "text": "We can ship the code now to be fast, or block it to stay safe and alienate the developer.",
+            "shift": "Lays out the choices, but doesn't project the compounding risk of the black box."
+          },
+          "q4": {
+            "text": "I recommend blocking the release. I understand the manager wants to go fast, but we can't ship code that we don't understand and can't fix if it crashes.",
+            "shift": "Acknowledge the competing priority (speed) and reject it, but stop short of owning the personal risk."
+          },
+          "q5": {
+            "text": "Success is measured by getting the architect's approval so we can release the update safely.",
+            "shift": "Provides a standard procedural metric, but lacks a 'backfire plan'."
+          }
+        }
+      }
+    },
+    {
       "id": "error-growth",
       "title": "The Campaign Launch",
       "text": "Your online business processes about 8,000 orders per week. Order errors have risen from 1.5% to 3% over the past quarter — roughly 240 errors per week at current volume. Refund costs are up and negative reviews are increasing.\n\nYou can build process automation to reduce fulfillment errors. It would take about six weeks to complete.\n\nMarketing is preparing a campaign expected to increase order volume by 25% starting next month. Quarterly revenue targets assume the campaign launches on time.\n\nIf the campaign launches before the automation is done, you'll be running at roughly 300 errors per week on higher volume — and refund costs scale with every order.\n\nIf you delay the campaign to fix errors first, you risk missing quarterly revenue targets and leadership is expecting visible movement immediately.\n\nYou cannot prioritize both.",
@@ -238,7 +311,7 @@
             "shift": "Make the trade-off brutally concrete: state exactly what each 'good' option forces you to fail at."
           },
           "q4": {
-            "text": "I recommend building the automation now. I am explicitly prioritizing the protection of our renewal rates over managing the total size of the backlog. I accept that total case volume will pile up and look bad during peak season, but ensuring the cases we do process move faster than 10 days is the only way to stop the bleed on renewals.",
+            "text": "I recommend building the automation now. I am explicitly prioritizing the protection of our renewal rates over managing the total size of the backlog. I accept that total <case volume> will pile up and look bad during peak season, but ensuring the cases we do process move faster than 10 days is the only way to stop the <bleed> on renewals.",
             "shift": "Make a decisive choice and explicitly name the specific failure (backlog growth) you are choosing to accept."
           },
           "q5": {
@@ -407,7 +480,7 @@
           },
           "q4": {
             "text": "I recommend keeping the loyal developer. I am choosing to deprioritize raw output speed to fix the team dynamic. I accept the risk that our timelines may slip as a result.",
-            "shift": "Explicitly state what is deprioritized and the risk accepted."
+            "shift": "Explicitly state what is being deprioritized and the risk being accepted."
           },
           "q5": {
             "text": "We should see fewer complaints in team meetings and a more cohesive team culture within the next quarter.",
