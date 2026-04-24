@@ -430,13 +430,41 @@
       margin-bottom: 40px;
     }
 
-    .scenario-tag {
+    .scenario-tag, .scenario-select {
       font-family: 'DM Mono', monospace;
       font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       color: var(--accent);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      display: block; /* Force block to prevent flex-squeeze */
+      border: none;
+      background: transparent;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .scenario-select {
+      width: max-content; /* Ensure it fits the longest possible title */
+      min-width: 280px; /* Decision-grade floor */
+      max-width: 100%;
+      padding: 6px 60px 6px 12px; /* Extreme buffer for high-signal visibility */
+      margin-left: -12px; 
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23c8392b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      text-align: left;
+    }
+
+    .scenario-select:hover {
+      background-color: var(--accent-light);
+      border-color: var(--accent);
     }
 
     .scenario-text {
@@ -1341,6 +1369,35 @@ function pickScenario(excludeId = null) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
+function handleScenarioChange(id) {
+  const selected = SCENARIOS.find(s => s.id === id);
+  if (selected) {
+    currentScenario = selected;
+    // Reset session for new context
+    answers = ['', '', '', '', ''];
+    results = null;
+    mirrorText = '';
+    clarifyAnswer = '';
+    currentQuestion = 0;
+    state = 'brief';
+    render();
+  }
+}
+
+function renderScenarioSelect() {
+  const options = SCENARIOS.map(s => `
+    <option value="${s.id}" ${currentScenario && currentScenario.id === s.id ? 'selected' : ''}>
+      ${s.title}
+    </option>
+  `).join('');
+  
+  return `
+    <select class="scenario-select" onchange="handleScenarioChange(this.value)">
+      ${options}
+    </select>
+  `;
+}
+
 let renderTimeout = null;
 
 function render() {
@@ -1433,7 +1490,7 @@ function renderBrief(container) {
   container.innerHTML = `
     <div class="brief-layout">
       <div class="scenario-card">
-        <div class="scenario-tag">${currentScenario.title}</div>
+        ${renderScenarioSelect()}
         <div class="scenario-text">${currentScenario.text}</div>
       </div>
       <div class="brief-right">
@@ -1490,11 +1547,14 @@ function renderQuestion(container) {
           <span>${currentScenario.title}</span>
           <span class="toggle-icon">${scenarioCollapsed ? '↓ Read scenario' : '↑ Hide scenario'}</span>
         </button>
-        ${!scenarioCollapsed ? `<div class="scenario-card scenario-mobile"><div class="scenario-text">${currentScenario.text}</div></div>` : ''}
+        ${!scenarioCollapsed ? `<div class="scenario-card scenario-mobile">
+          ${renderScenarioSelect()}
+          <div class="scenario-text">${currentScenario.text}</div>
+        </div>` : ''}
       </div>
       ` : `
       <div class="scenario-card scenario-desktop">
-        <div class="scenario-tag">${currentScenario.title}</div>
+        ${renderScenarioSelect()}
         <div class="scenario-text">${currentScenario.text}</div>
       </div>
       `}
