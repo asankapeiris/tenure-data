@@ -583,6 +583,79 @@
           }
         }
       }
+    },
+    {
+  "id": "loud-legacy",
+  "title": "The Loud Legacy",
+  "text": "You recently hired a highly capable engineer to help scale your core system. During their first week, they audited the existing codebase and were frustrated by how hard it was to navigate. In a full team meeting, they bluntly declared the legacy code is a complete mess and pushed to start a ground-up rewrite immediately. The veteran engineers who originally built that system are sitting in the room. They immediately went on the defensive and are now actively stonewalling the new hire by delaying reviews and withholding context. The new engineer is demanding you let them build a parallel system to prove their architecture works. Your veterans are warning you that the new hire does not understand the historical business constraints that shaped the original code. If you let the new engineer operate in a silo to get the modernization done, you validate a fractured culture where loud critics get to bypass the team. If you mandate that all new architecture requires consensus from the original authors, you protect team cohesion but guarantee the modernization effort stalls in endless defensive debates.",
+  "benchmarks": {
+    "level10": {
+      "q1": {
+        "text": "The problem is that a breakdown of trust between new ambition and historical context has turned a necessary modernization effort into a paralyzed turf war.",
+        "shift": "Connect the communication breakdown directly to the operational risk of paralyzed modernization."
+      },
+      "q2": {
+        "text": "The main constraint is that enforcing team consensus right now will stall everything due to defensive egos, but allowing a silo will permanently fracture the team.",
+        "shift": "Identify the organizational inertia and defensive egos as the primary limit, not just the technical legacy code."
+      },
+      "q3": {
+        "text": "Option 1: Let the new hire build a siloed parallel system, which gets code written fast but permanently fractures the team and ignores historical constraints. Option 2: Mandate consensus from the veterans, which protects team cohesion but guarantees the project stalls in endless, defensive debates.",
+        "shift": "Make the costs concrete: permanent cultural fracturing vs. guaranteed endless defensive debates."
+      },
+      "q4": {
+        "text": "I recommend blocking the silo and mandating a 'context pairing' phase before any new architecture is written. I am prioritizing long-term team integration over immediate modernization speed. I explicitly accept the risk that the new hire will be frustrated by the bottleneck and complain that we move too slowly.",
+        "shift": "Choose a side, explicitly deprioritize immediate modernization speed, and name the accepted risk of frustrating the ambitious new hire."
+      },
+      "q5": {
+        "text": "Success is a jointly approved architecture document within two weeks. If the pairing leads to endless arguments and the new hire quits in frustration, I accept that leadership will view my decision as a failure to integrate and protect top talent.",
+        "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the mandated pairing fails and the hire quits."
+      }
+    },
+    "level9": {
+      "q1": {
+        "text": "The problem is that a new hire has insulted the veteran engineers, causing the veterans to stonewall and threatening to stall our modernization efforts.",
+        "shift": "Identify the conflict threatening the project, but miss the deeper framing of historical context vs. ambition."
+      },
+      "q2": {
+        "text": "The constraint is that we need to modernize the system, but the team refuses to collaborate right now.",
+        "shift": "Name the constraint accurately but lack the psychological depth of the egos involved."
+      },
+      "q3": {
+        "text": "We can let the new engineer work alone to get it done faster, but it ruins team culture. Or we can force them to get consensus, which will drag the project out.",
+        "shift": "State the options and their costs, though slightly less concretely than a 10."
+      },
+      "q4": {
+        "text": "I recommend forcing the new engineer to work with the veterans before writing any code. I am deprioritizing the immediate speed of the modernization to focus on team cohesion. I accept the risk that the new engineer will be unhappy with being slowed down.",
+        "shift": "Explicitly state what is being deprioritized and the risk being accepted."
+      },
+      "q5": {
+        "text": "We should see the veterans and the new hire producing merged pull requests within the month.",
+        "shift": "Provide a valid metric, but completely omit the backfire plan and ownership of the fallout."
+      }
+    },
+    "level8": {
+      "q1": {
+        "text": "The problem is that the new engineer was too blunt and hurt the veterans' pride, which is now causing delays in code reviews.",
+        "shift": "States the surface interpersonal problem, but doesn't elevate it to a systemic business threat."
+      },
+      "q2": {
+        "text": "The constraint is trying to keep the new engineer productive while managing the veterans' defensive behavior.",
+        "shift": "Identifies the constraint but frames it as a simple management balancing act."
+      },
+      "q3": {
+        "text": "We can either let the new engineer build a parallel system to keep them moving, or force them to get approval from the people they just insulted.",
+        "shift": "Lays out the choices, but doesn't project the long-term compounding costs of either path."
+      },
+      "q4": {
+        "text": "I recommend not letting the new engineer work in a silo. I know they want to move fast and prove their architecture, but we cannot allow people to bypass the team just because they are critical of the old code. We have to work together.",
+        "shift": "Acknowledges the competing priority (speed/proving architecture) and rejects it, but stops short of explicitly owning the personal risk of the friction."
+      },
+      "q5": {
+        "text": "We need to track the turnaround time on pull request reviews to make sure the stonewalling stops.",
+        "shift": "Provides a standard procedural metric, but completely misses the 'backfire plan'."
+      }
     }
+  }
+}
   ]
 }
