@@ -88,7 +88,7 @@
     "",
     "GAP ANALYSIS RULES:",
     "- Output an array of exactly 5 strings corresponding exactly to: Problem, Constraint, Options, Recommendation, Metric.",
-    "- Identify the strict delta. Why doesn't their answer meet the target?",
+    "- DEFAULT TO 'Solid.': If the user's answer conceptually hits the core requirements of the benchmark, output EXACTLY 'Solid.' Do not invent gaps or nitpick vocabulary. Only write a critique if a major strategic element is completely missing.",
     "- DO NOT prepend your critiques with labels like 'Gap:', 'Problem:', or 'Constraint:'. Output only the raw critique text.",
     "- SEMANTIC MATCHING: Evaluate the strategic meaning, not the exact vocabulary. If the user successfully conveyed the core concept (e.g., they mentioned 'volume metrics' instead of 'performance metrics'), do not flag it as a gap. Only flag missing strategic constraints, unacknowledged trade-offs, or absent backfire plans.",
     "- Be direct and blunt."
