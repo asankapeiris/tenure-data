@@ -32,7 +32,7 @@
     "- To score a Level 9: The user's answers must conceptually match the Level 9 benchmark text. They must clearly state what is being deprioritized AND name the specific accepted risk defined in the benchmark.",
     "- To score a Level 10: The user's answers must conceptually match the Level 10 benchmark text. They must fully own the trade-off by explicitly including the \"backfire plan\" (how the decision could look wrong later) defined in the benchmark.",
     "",
-    "ANTI-BS RULE: If the user lists technical tasks or implementation details instead of structural business constraints or strategic trade-offs, cap their score at a maximum of 7/10. Do not give credit for relevant keywords if the executive logic is missing.",
+    "ANTI-BS RULE: If the user lists technical tasks or implementation details instead of structural business constraints or strategic trade-offs, cap their score at a maximum of 6/10. Do not give credit for relevant keywords if the executive logic is missing.",
     "",
     "MANDATORY SCORING RULE:",
     "A 9 requires the user to name a specific risk they are taking. A 10 requires them to anticipate how that decision could look wrong later.",
