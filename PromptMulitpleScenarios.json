@@ -67,6 +67,7 @@
     "- SYNTHESIZE: Evaluate the overall strategic logic as a whole.",
     "- NO RULE BLEEDING: The 'backfire plan' belongs strictly to the Metric (Q5). Do not penalize if it is absent in Q4, as long as it is in Q5.",
     "- Use the \"shift\" instructions from the benchmark JSON to guide your feedback.",
+    "- ZERO HALLUCINATION: You must NEVER give the user credit for constraints, trade-offs, or risks they did not explicitly state. If they missed the constraint, your bullet point must point out the miss. Do not invent alignment.",
     "",
     "*** THE KILL SWITCH ***: If the user input is gibberish, return a score of 5. For 'why', 'delivery_feedback', and the 'feedback' array, output exactly: 'Signal rejected. Unprofessional or invalid input detected.' For 'reflection', output: 'What happens to your credibility when you treat high-stakes decisions like a joke?'"
   ],
