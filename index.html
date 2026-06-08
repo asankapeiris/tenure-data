@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tenure — Train the skill AI can't replace.</title>
+  <title>Tenure — Judgment Training for Technical Builders.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
@@ -958,29 +958,6 @@
       font-weight: 500;
     }
 
-    .scenario-best-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .scenario-best-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .scenario-best-name {
-      font-size: 13px;
-      color: var(--gray-600);
-      font-weight: 300;
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
     .scenario-best-score {
       font-family: 'DM Serif Display', serif;
       font-size: 20px;
@@ -993,6 +970,27 @@
       background: var(--border);
       flex-shrink: 0;
     }
+
+    .perspectives-list {
+      max-height: 350px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-right: 8px;
+    }
+    .perspectives-list::-webkit-scrollbar { width: 4px; }
+    .perspectives-list::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+    .perspective-group { display: flex; flex-direction: column; gap: 8px; }
+    .perspective-title { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--black); margin-bottom: 4px; }
+    .perspective-title-fraction { color: var(--gray-400); font-weight: 400; font-size: 13px; }
+    .perspective-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; font-weight: 300; }
+    .perspective-name { display: flex; align-items: center; gap: 8px; color: var(--gray-600); flex: 0 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .perspective-icon { font-family: 'DM Mono', monospace; font-size: 10px; flex-shrink: 0; }
+    .perspective-score { font-family: 'DM Serif Display', serif; font-size: 16px; letter-spacing: -0.02em; flex-shrink: 0; }
+    .perspective-dot-leader { flex: 1; border-bottom: 1px dotted var(--gray-200); margin: 0 12px; opacity: 0.5; }
+    .perspective-cta { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); cursor: pointer; transition: opacity 0.2s ease; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; }
+    .perspective-cta:hover { opacity: 0.7; }
 
     .weak-spots-list {
       display: flex;
@@ -1332,10 +1330,10 @@ const GEARS = [
   { type: "gear", title: "Hold the Line", goal: "Hard Data vs. Panic.", text: "Pick the one signal that proves your decision is working. When the pressure hits and stakeholders start to doubt the path, you need an undeniable metric to defend your choice. A Level 8 leader uses soft metrics like team happiness or vague progress. A Level 10 leader uses a high-signal metric that proves the system is stable. You must define the one data point that allows you to stand your ground and keep the engine moving." }
 ];
 
-function getExample(scenarioId, tier) {
-  if (!currentScenario || !currentScenario.benchmarks) return null;
+function getExample(scenarioId, tier, pathKey) {
+  if (!currentScenario || !currentScenario.paths || !pathKey || !currentScenario.paths[pathKey]) return null;
   const levelKey = tier.replace('score', 'level');
-  const benchmark = currentScenario.benchmarks[levelKey];
+  const benchmark = currentScenario.paths[pathKey].benchmarks[levelKey];
   
   if (!benchmark) return null;
 
@@ -1657,14 +1655,14 @@ function renderLoading(container) {
   container.innerHTML = `
     <div class="loading-state">
       <div class="loading-spinner"></div>
-      <div class="loading-text" id="loading-text">Mapping the problem you identified...</div>
+      <div class="loading-text" id="loading-text">Identifying your strategic path...</div>
     </div>
   `;
 
   const phrases = [
-    "Mapping the problem you identified...",
+    "Identifying your strategic path...",
+    "Isolating the grading rubric...",
     "Reviewing your approach...",
-    "Weighing the costs of your decision...",
     "Synthesizing your recommendation..."
   ];
   let step = 0;
@@ -1737,7 +1735,8 @@ async function toggleBenchmarkReveal(level) {
       results.individual_critiques = parsed.individual_critiques;
 
       const targetTier = 'score' + level;
-      const targetBenchmark = getExample(currentScenario.id, targetTier);
+      const pathKey = results?.scoring_evidence?.identified_path;
+      const targetBenchmark = getExample(currentScenario.id, targetTier, pathKey);
       const labels = [
         '01 — The Real Business Problem',
         '02 — Naming The Constraint',
@@ -1750,6 +1749,15 @@ async function toggleBenchmarkReveal(level) {
         const critique = results.individual_critiques[i] || 'The gap is missing.';
         const ideal = targetBenchmark ? [targetBenchmark.problem, targetBenchmark.constraint, targetBenchmark.options, targetBenchmark.recommendation, targetBenchmark.metric][i] : 'Benchmark not available.';
 
+        const userAnswerAccordion = `
+          <details style="margin-top: 16px; cursor: pointer;">
+            <summary style="font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400); outline: none; user-select: none;">+ View Your Answer</summary>
+            <div style="font-size: 14px; color: var(--gray-600); line-height: 1.6; font-style: italic; margin-top: 12px; padding-left: 16px; border-left: 2px solid var(--border);">
+              "${ans || 'No answer provided.'}"
+            </div>
+          </details>
+        `;
+
         if (critique.trim() === 'Solid.') {
           return `
             <div class="benchmark-item">
@@ -1758,6 +1766,7 @@ async function toggleBenchmarkReveal(level) {
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Solid. You hit the target benchmark for this question.
               </div>
+              ${userAnswerAccordion}
             </div>
           `;
         }
@@ -1767,6 +1776,7 @@ async function toggleBenchmarkReveal(level) {
             <div class="benchmark-label">${labels[i]}</div>
             <div class="benchmark-gap"><strong>The Gap:</strong> ${critique}</div>
             <div class="benchmark-ideal"><strong>The ${level}/10 Answer:</strong> ${ideal}</div>
+            ${userAnswerAccordion}
           </div>
         `;
       }).join('');
@@ -1808,7 +1818,18 @@ function renderResults(container) {
 
   let parsedDeliveryText = '';
   if (r.delivery_feedback) {
-    parsedDeliveryText = r.delivery_feedback.replace(/\*\*The Fix:\*\*/gi, '<strong>The Fix:</strong>').replace(/The Fix:/gi, '<strong>The Fix:</strong>');
+    parsedDeliveryText = r.delivery_feedback.replace(/\*\*The Fix:\*\*/gi, '<strong>The Fix:</strong>').replace(/The Fix:/gi, '<strong>The Fix:</strong>').replace(/\*\*The Flaw:\*\*/gi, '<strong>The Flaw:</strong>').replace(/The Flaw:/gi, '<strong>The Flaw:</strong>');
+  }
+
+  // DETECTED STRATEGY UI
+  const pathKey = r.scoring_evidence?.identified_path;
+  let detectedStrategyLabel = "Strategy not clearly identified";
+  if (pathKey === 'off_script') {
+      detectedStrategyLabel = "Off-Script (Evaded the Constraints)";
+  } else if (pathKey === 'gibberish') {
+      detectedStrategyLabel = "Signal Rejected";
+  } else if (pathKey && currentScenario.paths && currentScenario.paths[pathKey]) {
+      detectedStrategyLabel = currentScenario.paths[pathKey].label;
   }
 
   // Pre-load the content if they've already fetched it, otherwise keep it blank to be populated later
@@ -1820,7 +1841,7 @@ function renderResults(container) {
     isBenchmarkOpen = true;
     btnText = 'Hide benchmark comparison';
     const targetTier = 'score' + targetLevel;
-    const targetBenchmark = getExample(currentScenario.id, targetTier);
+    const targetBenchmark = getExample(currentScenario.id, targetTier, pathKey);
     const labels = [
       '01 — The Real Business Problem',
       '02 — Naming The Constraint',
@@ -1833,6 +1854,15 @@ function renderResults(container) {
       const critique = r.individual_critiques[i] || 'The gap is missing.';
       const ideal = targetBenchmark ? [targetBenchmark.problem, targetBenchmark.constraint, targetBenchmark.options, targetBenchmark.recommendation, targetBenchmark.metric][i] : 'Benchmark not available.';
 
+      const userAnswerAccordion = `
+        <details style="margin-top: 16px; cursor: pointer;">
+          <summary style="font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400); outline: none; user-select: none;">+ View Your Answer</summary>
+          <div style="font-size: 14px; color: var(--gray-600); line-height: 1.6; font-style: italic; margin-top: 12px; padding-left: 16px; border-left: 2px solid var(--border);">
+            "${ans || 'No answer provided.'}"
+          </div>
+        </details>
+      `;
+
       if (critique.trim() === 'Solid.') {
         return `
           <div class="benchmark-item">
@@ -1841,6 +1871,7 @@ function renderResults(container) {
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               Solid. You hit the target benchmark for this question.
             </div>
+            ${userAnswerAccordion}
           </div>
         `;
       }
@@ -1850,6 +1881,7 @@ function renderResults(container) {
           <div class="benchmark-label">${labels[i]}</div>
           <div class="benchmark-gap"><strong>The Gap:</strong> ${critique}</div>
           <div class="benchmark-ideal"><strong>The ${targetLevel}/10 Answer:</strong> ${ideal}</div>
+          ${userAnswerAccordion}
         </div>
       `;
     }).join('');
@@ -1859,11 +1891,16 @@ function renderResults(container) {
     <div class="results-layout">
       <div class="results-left">
         <div class="section-label">Results — ${currentScenario.title}</div>
-        <div class="score-display">
+        
+        <div class="score-display" style="margin-bottom: 12px;">
           <div class="score-number" style="color:${scoreColor}">${r.score}</div>
           <div class="score-denom">/10</div>
         </div>
         
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border);">
+          <span style="color: var(--accent);">Detected Strategy:</span> ${detectedStrategyLabel}
+        </div>
+
         <div class="results-section" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border);">
           <div class="results-section-label">The Logic</div>
           <div style="font-size: 16px; color: var(--gray-600); line-height: 1.6; font-weight: 300;">${r.why}</div>
@@ -1941,14 +1978,66 @@ function saveHistory(entry) {
   } catch {}
 }
 
-function getBestPerScenario(history) {
-  const best = {};
-  for (const entry of history) {
-    if (!best[entry.scenario] || entry.score > best[entry.scenario]) {
-      best[entry.scenario] = entry.score;
+function getPerspectivesData(history) {
+  const played = {};
+  
+  // Reverse loop to grab the latest timestamp and evaluate history chronologically
+  for (let i = history.length - 1; i >= 0; i--) {
+    const entry = history[i];
+    const sTitle = entry.scenario;
+    
+    // Find the full scenario object to extract all possible paths
+    const sObj = SCENARIOS.find(s => s.title === sTitle);
+    if (!sObj || !sObj.paths) continue; 
+    
+    if (!played[sTitle]) {
+      played[sTitle] = {
+        id: sObj.id,
+        title: sTitle,
+        lastPlayedTs: entry.ts || new Date(0).toISOString(),
+        pathsPlayed: 0,
+        totalPaths: Object.keys(sObj.paths).length,
+        pathData: {}
+      };
+      // Pre-fill all possible paths as empty
+      Object.entries(sObj.paths).forEach(([k, v]) => {
+        played[sTitle].pathData[k] = { label: v.label, bestScore: null };
+      });
+    }
+    
+    // Track the best score for each specific path
+    const pKey = entry.identified_path;
+    if (pKey && played[sTitle].pathData[pKey]) {
+      const currentBest = played[sTitle].pathData[pKey].bestScore;
+      if (currentBest === null || entry.score > currentBest) {
+        played[sTitle].pathData[pKey].bestScore = entry.score;
+      }
     }
   }
-  return best;
+  
+  // Calculate completed fractions and sort by most recently played
+  const arr = Object.values(played).map(p => {
+    p.pathsPlayed = Object.values(p.pathData).filter(pd => pd.bestScore !== null).length;
+    return p;
+  });
+  
+  return arr.sort((a, b) => new Date(b.lastPlayedTs) - new Date(a.lastPlayedTs));
+}
+
+function jumpToPerspective(scenarioId) {
+  const selected = SCENARIOS.find(s => s.id === scenarioId);
+  if (selected) {
+    currentScenario = selected;
+    answers = ['', '', '', '', ''];
+    results = null;
+    mirrorText = '';
+    clarifyAnswer = '';
+    currentQuestion = 0;
+    scenarioCollapsed = false;
+    state = 'brief'; // Drop them directly into the context to start
+    render();
+    scrollToApp();
+  }
 }
 
 function renderDashboard() {
@@ -1956,7 +2045,6 @@ function renderDashboard() {
   if (history.length === 0) return '';
 
   const recentScores = history.slice(-10);
-  const bestPerScenario = getBestPerScenario(history);
   const totalRuns = history.length;
   const avgScore = Math.round(history.reduce((s, e) => s + e.score, 0) / history.length * 10) / 10;
 
@@ -1980,14 +2068,91 @@ function renderDashboard() {
     `;
   }).join('');
 
-  const scenarioRows = Object.entries(bestPerScenario).map(([name, score]) => {
-    const color = score <= 6 ? 'var(--score-low)' : score <= 7 ? 'var(--score-mid)' : 'var(--score-high)';
-    const barWidth = Math.round((score / 10) * 80);
+  // BUILD THE EXECUTIVE BIAS TRACKER
+  let speedCount = 0;
+  let stabilityCount = 0;
+  let validRuns = 0;
+
+  for (const entry of history) {
+    const scenario = SCENARIOS.find(s => s.title === entry.scenario);
+    if (scenario && scenario.paths && entry.identified_path && scenario.paths[entry.identified_path]) {
+      const bias = scenario.paths[entry.identified_path].bias;
+      if (bias === "Speed Of Delivery & Managing Optics") {
+        speedCount++;
+        validRuns++;
+      } else if (bias === "Operational Stability & Root Cause Focus") {
+        stabilityCount++;
+        validRuns++;
+      }
+    }
+  }
+
+  let biasHtml = '';
+  if (validRuns > 0) {
+    let speedPct = Math.round((speedCount / validRuns) * 100);
+    let stabilityPct = 100 - speedPct;
+    let profileRisk = "";
+
+    if (speedPct >= 65) {
+        profileRisk = "You are a wartime leader who moves fast, but you are highly vulnerable to technical debt and team burnout.";
+    } else if (stabilityPct >= 65) {
+        profileRisk = "You are a protective leader who builds robust systems, but you are highly vulnerable to missing market windows and frustrating executives.";
+    } else {
+        profileRisk = "You adapt to the context. You are unpredictable and dangerous in a boardroom.";
+    }
+
+    biasHtml = `
+      <div class="dashboard-card">
+        <div class="dashboard-card-label">Your Default Leadership Bias</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; margin-bottom: 8px; color: var(--black);">
+          <span style="color: var(--accent); font-weight: 500;">${speedPct}% Velocity & Optics</span> <span style="color: var(--gray-400);">/</span> <span style="color: var(--gray-600); font-weight: 500;">${stabilityPct}% Stability & Root Cause</span>
+        </div>
+        <div style="display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 12px; background: var(--gray-200);">
+          <div style="width: ${speedPct}%; background: var(--accent); transition: width 0.5s ease;"></div>
+          <div style="width: ${stabilityPct}%; background: var(--gray-600); transition: width 0.5s ease;"></div>
+        </div>
+        <div style="font-size: 13px; color: var(--gray-600); line-height: 1.5; font-weight: 300;">
+          <strong>The Risk:</strong> ${profileRisk}
+        </div>
+      </div>
+      <div class="dashboard-divider"></div>
+    `;
+  }
+
+  // BUILD THE PERSPECTIVES MASTERED LIST
+  const perspectivesData = getPerspectivesData(history);
+  const perspectivesHtml = perspectivesData.map(p => {
+    const pathsHtml = Object.entries(p.pathData).map(([pKey, pInfo]) => {
+      if (pInfo.bestScore !== null) {
+        const color = pInfo.bestScore <= 6 ? 'var(--score-low)' : pInfo.bestScore <= 7 ? 'var(--score-mid)' : 'var(--score-high)';
+        return `
+          <div class="perspective-row">
+            <div class="perspective-name">
+              <span class="perspective-icon" style="color: ${color}">✓</span>
+              <span style="color: var(--black)">${pInfo.label}</span>
+            </div>
+            <div class="perspective-dot-leader"></div>
+            <div class="perspective-score" style="color: ${color}">[ ${pInfo.bestScore} ]</div>
+          </div>
+        `;
+      } else {
+        return `
+          <div class="perspective-row">
+            <div class="perspective-name">
+              <span class="perspective-icon" style="color: var(--gray-400)">○</span>
+              <span>${pInfo.label}</span>
+            </div>
+            <div class="perspective-dot-leader"></div>
+            <a class="perspective-cta" onclick="jumpToPerspective('${p.id}')">[ Try this perspective ↗ ]</a>
+          </div>
+        `;
+      }
+    }).join('');
+
     return `
-      <div class="scenario-best-item">
-        <span class="scenario-best-name">${name}</span>
-        <div class="scenario-best-bar" style="width:${barWidth}px;background:${color}"></div>
-        <span class="scenario-best-score" style="color:${color}">${score}</span>
+      <div class="perspective-group">
+        <div class="perspective-title">${p.title} <span class="perspective-title-fraction">(${p.pathsPlayed} of ${p.totalPaths})</span></div>
+        ${pathsHtml}
       </div>
     `;
   }).join('');
@@ -2019,6 +2184,7 @@ function renderDashboard() {
     <div class="dashboard-block">
       <div class="dashboard-title">Your progress</div>
       <div class="dashboard-grid">
+        ${biasHtml}
         <div class="dashboard-card">
           <div class="dashboard-card-label">Score over time</div>
           ${recentScores.length > 1
@@ -2029,9 +2195,9 @@ function renderDashboard() {
         </div>
         <div class="dashboard-divider"></div>
         <div class="dashboard-card">
-          <div class="dashboard-card-label">Best per scenario</div>
-          <div class="scenario-best-list">
-            ${scenarioRows || '<div class="dashboard-empty">No data yet.</div>'}
+          <div class="dashboard-card-label">Perspectives Mastered</div>
+          <div class="perspectives-list">
+            ${perspectivesHtml || '<div class="dashboard-empty">No data yet.</div>'}
           </div>
         </div>
         <div class="dashboard-divider"></div>
@@ -2068,18 +2234,45 @@ function renderDashboard() {
   `;
 }
 
+function buildPathIdentificationMessage() {
+  let msg = `SCENARIO: ${currentScenario.title}\n\n${currentScenario.text}\n\n<USER_RECOMMENDATION>\n${answers[3]}\n</USER_RECOMMENDATION>\n\n<AVAILABLE_PATHS>\n`;
+  if (currentScenario && currentScenario.paths) {
+    Object.keys(currentScenario.paths).forEach(key => {
+      msg += `"${key}": ${currentScenario.paths[key].label}\n`;
+    });
+  }
+  msg += `"off_script": "Off-Script (Evaded the Constraints)"\n`;
+  msg += `"gibberish": "Gibberish or Invalid Input"\n`;
+  msg += `</AVAILABLE_PATHS>\n\nAnalyze the <USER_RECOMMENDATION>.\n`;
+  msg += `RULES:\n`;
+  msg += `1. If it aligns with one of the specific strategic paths, return that path_key.\n`;
+  msg += `2. If the user invents a new option (e.g., Option C), tries to negotiate with the hard constraints, or dodges the trade-off entirely, you MUST return "off_script".\n`;
+  msg += `3. If the answer is keyboard smashes, jokes, or completely off-topic nonsense, you MUST return "gibberish".\n\n`;
+  msg += `Return valid JSON strictly in this format: {"identified_path": "path_key"}`;
+  return msg;
+}
+
 function buildAnswersText() {
   const questions = getQuestions();
   return `SCENARIO: ${currentScenario.title}\n\n${currentScenario.text}\n\nUSER ANSWERS:\n1) ${answers[0]}\n2) ${answers[1]}\n3) ${answers[2]}\n4) ${answers[3]}\n5) [${questions[4].text}] ${answers[4]}`;
 }
 
-function buildScoringMessage() {
+function buildScoringMessage(identifiedPath) {
   let msg = buildAnswersText();
   
   if (clarifyAnswer) msg += `\n\nUSER CLARIFICATION: ${clarifyAnswer}`;
   
-  if (currentScenario && currentScenario.benchmarks) {
-    msg += `\n\nSCENARIO BENCHMARKS (Use this exact grading rubric):\n${JSON.stringify(currentScenario.benchmarks, null, 2)}`;
+  if (currentScenario && currentScenario.paths) {
+    // Flatten the rubric: extract ONLY the benchmarks for the identified path
+    let flatBenchmarks = {};
+    if (identifiedPath && currentScenario.paths[identifiedPath]) {
+        flatBenchmarks = currentScenario.paths[identifiedPath].benchmarks;
+    } else {
+        // Fallback: just grab the first path's benchmarks if detection failed
+        const firstPathKey = Object.keys(currentScenario.paths)[0];
+        flatBenchmarks = currentScenario.paths[firstPathKey].benchmarks;
+    }
+    msg += `\n\nSCENARIO BENCHMARKS (Use this exact grading rubric):\n${JSON.stringify(flatBenchmarks, null, 2)}`;
   }
   
   msg += '\n\nScore and evaluate these answers according to your instructions. Return valid JSON only.';
@@ -2088,7 +2281,8 @@ function buildScoringMessage() {
 
 function buildBenchmarkMessage(targetLevel) {
   const targetTier = 'score' + targetLevel;
-  const targetBenchmark = getExample(currentScenario.id, targetTier);
+  const pathKey = results?.scoring_evidence?.identified_path;
+  const targetBenchmark = getExample(currentScenario.id, targetTier, pathKey);
   const questions = getQuestions();
 
   let msg = `SCENARIO: ${currentScenario.title}\n\n${currentScenario.text}\n\n`;
@@ -2253,14 +2447,65 @@ async function scoreAnswers() {
   state = 'loading-results';
   render();
   try {
-    const text = await callAPI(SYSTEM_PROMPT, buildScoringMessage());
-    const clean = text.replace(/```json|```/g, '').trim();
-    results = JSON.parse(clean);
+    // PASS 1: Identify Path
+    let identifiedPath = null;
+    if (currentScenario && currentScenario.paths) {
+      const pathSysPrompt = "You are a strategic analyzer. Map the user's recommendation to the correct path key. Return valid JSON only.";
+      const pathTextRes = await callAPI(pathSysPrompt, buildPathIdentificationMessage());
+      const cleanPathText = pathTextRes.replace(/```json|```/g, '').trim();
+      try {
+        const pathData = JSON.parse(cleanPathText);
+        identifiedPath = pathData.identified_path;
+      } catch (e) {
+        console.warn("Path identification failed, falling back.");
+        identifiedPath = Object.keys(currentScenario.paths)[0];
+      }
+    }
+
+    // THE SHORT-CIRCUIT TRAPDOOR
+    if (identifiedPath === 'off_script') {
+        results = {
+          scoring_evidence: { identified_path: "Off-Script (Evaded the Constraints)" },
+          score: 5,
+          why: "You invented an option or dodged the trade-off to avoid making the hard choice presented in the scenario.",
+          approach: "Constraint Evasion.",
+          feedback: [
+            "Executives don't get to invent magical third options when the operational constraints are fixed.",
+            "You focused on a different problem instead of the root cause or trade-off the scenario demanded.",
+            "A beautifully articulated recommendation for the wrong problem is still a failure."
+          ],
+          delivery_feedback: "[The Flaw] You negotiated with reality. The Fix: Answer the prompt based strictly on the facts and constraints provided.",
+          reflection: "What happens to your credibility when you refuse to answer the question the board actually asked?"
+        };
+    } else if (identifiedPath === 'gibberish') {
+        results = {
+          scoring_evidence: { identified_path: "Signal Rejected" },
+          score: 5,
+          why: "Signal rejected. Unprofessional or invalid input detected.",
+          approach: "Invalid input.",
+          feedback: [
+            "Signal rejected. Unprofessional or invalid input detected."
+          ],
+          delivery_feedback: null,
+          reflection: "What happens to your credibility when you treat high-stakes decisions like a joke?"
+        };
+    } else {
+        // PASS 2: Grade Answers (using the isolated path rubric)
+        const text = await callAPI(SYSTEM_PROMPT, buildScoringMessage(identifiedPath));
+        const clean = text.replace(/```json|```/g, '').trim();
+        results = JSON.parse(clean);
+        
+        // Force the results to use the Router's identified path, ignoring the Grader's guess
+        if (!results.scoring_evidence) results.scoring_evidence = {};
+        results.scoring_evidence.identified_path = identifiedPath;
+    }
+
     state = 'results';
     scenarioCount++;
     saveHistory({ 
       scenario: currentScenario.title, 
       score: results.score, 
+      identified_path: identifiedPath,
       a1: answers[0], a2: answers[1], a3: answers[2], a4: answers[3], a5: answers[4], 
       delivery_feedback: results.delivery_feedback,
       ts: new Date().toISOString() 
@@ -2315,8 +2560,8 @@ async function initAppData() {
   
   try {
     const [scenariosRes, promptRes] = await Promise.all([
-      fetch('https://raw.githubusercontent.com/asankapeiris/tenure-data/main/scenarios.json'),
-      fetch('https://raw.githubusercontent.com/asankapeiris/tenure-data/main/prompt.json')
+      fetch('https://raw.githubusercontent.com/asankapeiris/tenure-data/main/ScenariosMulitpleChoices.json'),
+      fetch('https://raw.githubusercontent.com/asankapeiris/tenure-data/main/PromptMulitpleScenarios.json')
     ]);
 
     if (!scenariosRes.ok || !promptRes.ok) throw new Error('Network response was not ok');
