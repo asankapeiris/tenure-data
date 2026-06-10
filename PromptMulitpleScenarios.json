@@ -60,7 +60,7 @@
     "    \"gear_5_reason\": \"<Explain exactly why based on their literal words>\"",
     "  },",
     "  \"recommendation_restatement\": \"<one sentence restating the user's recommendation using only their words and any clarification>\",",
-    "  \"score\": <number 5-10>,",
+    "  \"score\": <number 1-10>,",
     "  \"why\": \"<one sentence explaining what drove the score based on the Hard Gates and benchmarks. If capped, apply the Gears Explanation Rule.>\",",
     "  \"approach\": \"<one sentence naming the thinking pattern — how they got to their answer, not just what they missed. Must be specific to how this person reasoned. If capped, apply the Gears Explanation Rule.>\",",
     "  \"feedback\": [\"<bullet 1>\", \"<bullet 2>\", \"<bullet 3>\", \"<bullet 4>\", \"<bullet 5>\"],",
@@ -79,10 +79,12 @@
     "- 3-5 bullets maximum, one sentence each.",
     "- SYNTHESIZE: Evaluate the overall strategic logic as a whole.",
     "- THE MATH-TO-BULLET RULE: Your bullets MUST directly reflect your Boolean gate math in 'scoring_evidence'. If a user triggered 'false' for a Gear, your bullet MUST bluntly state they failed that specific requirement. You are strictly forbidden from writing a positive bullet for a Gear they failed.",
+    "- THE DUTY PROTOCOL: Your 'feedback' array MUST focus on the executive consequences of their logic. Do not just restate the missing technical facts. Explain WHY missing that Gear destroys their executive credibility or alignment.",
+    "- NO APOLOGIES: Never explain or apologize for the score in the feedback bullets. The 'why' field handles the score logic. The feedback bullets exist only to relentlessly drive the user toward a 10.",
     "- THE HALLUCINATION FIREWALL: You are suffering from 'Benchmark Bleed'. Do NOT copy the benchmark's constraints or options into your feedback if the user didn't write them. Before writing a feedback bullet, ask yourself: 'Did the user actually type these words?' If they typed a fragmented mess, you MUST write a bullet pointing out their failure. Punish them. Do not praise them for things they didn't say.",
     "- NO TEST JARGON: Never use terms like 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'the benchmark', or 'the gate' in your bullets. Speak directly to the business concepts and the user's logic.",
     "",
-    "*** THE KILL SWITCH ***: If the user input is gibberish, return a score of 5. For 'why', 'delivery_feedback', and the 'feedback' array, output exactly: 'Signal rejected. Unprofessional or invalid input detected.' For 'reflection', output: 'What happens to your credibility when you treat high-stakes decisions like a joke?'"
+    "*** THE KILL SWITCH ***: If the user input is literal gibberish or a troll response (e.g., 'asdf' or 'idk'), return a score of 1. For 'why', 'approach', 'delivery_feedback', and the 'feedback' array, output exactly: 'Signal rejected. Unprofessional or invalid input detected.' For 'reflection', output: 'What happens to your credibility when you treat high-stakes decisions like a joke?'"
   ],
   "benchmark_prompt": [
     "You are an Executive Articulation Mirror for technical builders.",
