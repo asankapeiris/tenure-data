@@ -31,50 +31,6 @@
                 "text": "Success is the developer proving they can explain and document the AI logic to the architect's satisfaction. If this takes too long and we alienate our best developer while looking like gatekeepers to the manager, I accept that I will be viewed as an operational failure for slowing down the company's evolution.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if this call fails."
               }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that the developer has delivered code they can't explain, which means the architect won't sign off and we can't fix it if it fails.",
-                "shift": "Identify the maintenance risk but miss the framing of systemic ownership decay."
-              },
-              "q2": {
-                "text": "The constraint is the manager's push to ship the code to prove the 'new way' of working is better, despite the architect's objections.",
-                "shift": "Identify the conflict between departments without naming the underlying psychological bias."
-              },
-              "q3": {
-                "text": "Option 1 is to ship the code and take the risk of it breaking. Option 2 is to side with the architect and block the release until the code is understood.",
-                "shift": "Lay out the options, but without projecting the full cost of personal liability."
-              },
-              "q4": {
-                "text": "I recommend siding with the architect. I am prioritizing the quality of the billing system over the speed of the release. I accept the risk that the manager will think I am slowing down progress and that the developer will feel frustrated.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is having the developer explain the code well enough that the architect is willing to sign off on the release.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan' and ownership of the fallout."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The core issue is that while the new billing update is faster, the team doesn't fully understand its internal workings, creating a potential liability.",
-                "shift": "Clearly state the problem, but don't elevate it to a threat to business continuity."
-              },
-              "q2": {
-                "text": "The primary constraint is the disagreement between the senior architect, who is blocking the release due to lack of understanding, and the manager, who is pushing for immediate shipment.",
-                "shift": "Names the constraint as a simple disagreement between two people."
-              },
-              "q3": {
-                "text": "We can either ship the code now to gain speed and potentially alienate the developer, or block the release to ensure operational safety and maintain control.",
-                "shift": "Lays out the choices, but doesn't project the compounding risk of the black box."
-              },
-              "q4": {
-                "text": "I recommend blocking the release. While I understand the desire for speed, we cannot deploy code that we cannot confidently support or fix if issues arise.",
-                "shift": "Acknowledge the competing priority (speed) and reject it, but stop short of owning the personal risk."
-              },
-              "q5": {
-                "text": "Success will be measured by obtaining the architect's sign-off, allowing us to safely release the update.",
-                "shift": "Provides a standard procedural metric, but lacks a 'backfire plan'."
-              }
             }
           }
         },
@@ -102,50 +58,6 @@
               "q5": {
                 "text": "Success is the billing system handling a 20% volume increase with zero math errors. If it crashes and we can't fix it, I accept that I will be viewed as a reckless leader who sacrificed stability for the sake of a gimmick.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the 'vibe' backfires."
-              }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that we are going to miss a major performance gain because we can't explain every line of the AI's math.",
-                "shift": "Identify the loss of efficiency but miss the framing of systemic standard decay."
-              },
-              "q2": {
-                "text": "The constraint is the architect's refusal to sign off on anything they don't personally understand.",
-                "shift": "Identify the person as the obstacle without naming the underlying process bias."
-              },
-              "q3": {
-                "text": "Option 1 is to block the release and stay safe. Option 2 is to ship the code and trust the AI's math to get the performance boost.",
-                "shift": "Lay out the options, but without projecting the full cost of personal liability."
-              },
-              "q4": {
-                "text": "I recommend shipping the code. I am prioritizing speed and innovation over the architect's approval. I accept the risk that I will have no support from the team if this breaks in production.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is hitting the performance targets without seeing an increase in customer support tickets related to billing errors.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan'."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is the new billing code is better but the architect won't let us use it because it was made with AI.",
-                "shift": "Clearly state the problem, but don't elevate it to a philosophical strategy shift."
-              },
-              "q2": {
-                "text": "The senior architect is being a gatekeeper and stopping the release.",
-                "shift": "Names the constraint as a simple person-to-person conflict."
-              },
-              "q3": {
-                "text": "We can ship the code and be fast, or stay with the old slow version to keep the architect happy.",
-                "shift": "Lays out the choices, but doesn't project the long-term risk of the black box."
-              },
-              "q4": {
-                "text": "I recommend shipping the code. The tests passed and it's much faster. We can't let a fear of new tools stop us from improving the product.",
-                "shift": "Acknowledge the architect's concern but choose to move forward anyway."
-              },
-              "q5": {
-                "text": "Success is seeing the faster code in production without any obvious bugs.",
-                "shift": "Provides a standard procedural metric."
               }
             }
           }
@@ -183,50 +95,6 @@
                 "text": "Success is defined by a material decrease in negative reviews and fulfillment error rates dropping below 1%. The decision could look wrong if automation fails to move these metrics or the revenue miss exceeds the long-term benefit; I am explicitly accepting the risk that leadership will question my decision-making authority for the missed targets.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if this call fails."
               }
-            },
-            "level9": {
-              "q1": {
-                "text": "Our order error rates have gone up to 3%, which is directly causing more negative reviews and higher refund costs. This translates to roughly 240 errors per week at our current volume.",
-                "shift": "State the problem clearly, but miss the opportunity to frame it as a systemic decay."
-              },
-              "q2": {
-                "text": "Leadership expects to see immediate revenue movement from the new campaign, but the automation takes six weeks to build. This creates a direct timeline conflict we must navigate.",
-                "shift": "Identify the timeline conflict without naming the underlying leadership psychology."
-              },
-              "q3": {
-                "text": "Option 1 is to delay the campaign to fix the errors, which costs us our quarterly revenue targets. Option 2 is to launch the campaign on time, which hits revenue but scales our error rate up to roughly 300 per week.",
-                "shift": "Lay out the options, but without projecting the full cost of personal liability."
-              },
-              "q4": {
-                "text": "I recommend we delay the campaign to build the automation. I know leadership wants to hit the quarterly revenue targets, but launching on time will just scale our negative reviews. Protecting our brand reputation is more important than a short-term revenue bump.",
-                "shift": "Acknowledge the competing priority (revenue) but fail to explicitly state the personal risk you are accepting."
-              },
-              "q5": {
-                "text": "We should see our fulfillment error rates drop back below 1% and a measurable reduction in negative customer reviews. This will also lead to a decrease in refund costs.",
-                "shift": "Provide a solid metric, but completely miss the 'backfire plan' and ownership of the fallout."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is that error rates have increased from 1.5% to 3% over the past quarter. This has led to increased refund costs and increased negative reviews.",
-                "shift": "Clearly states the problem, but doesn't elevate it to a systemic business threat."
-              },
-              "q2": {
-                "text": "Leadership wants to see immediate progress and is focused on hitting the quarterly revenue targets.",
-                "shift": "Names the constraint, but frames it as a timeline issue rather than a psychological bias."
-              },
-              "q3": {
-                "text": "We can either build the automation which takes 6 weeks and delays the campaign, or we launch the campaign now to hit revenue but deal with 300 errors a week.",
-                "shift": "Lays out the choices, but doesn't project the compounding risk of the black box."
-              },
-              "q4": {
-                "text": "I recommend delaying the campaign to build the automation. I understand leadership wants to hit the quarterly revenue target with an on-time launch, but if we do that, we are just going to scale our errors and refund costs. We have to fix the root cause first so we can grow sustainably.",
-                "shift": "Acknowledges the competing priority (revenue) and rejects it, but stops short of owning the personal risk of that choice."
-              },
-              "q5": {
-                "text": "Our fulfillment error rate should drop below 1% and we should see a reduction in negative reviews.",
-                "shift": "Provides a standard procedural metric, but lacks a 'backfire plan'."
-              }
             }
           }
         },
@@ -254,50 +122,6 @@
               "q5": {
                 "text": "Success is hitting the 25% volume increase and the revenue target. If the reviews become toxic and cause a net drop in future sales, I accept that I will look like a short-sighted leader who traded our future for a quarterly bonus.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the revenue doesn't justify the brand hit."
-              }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that if we don't launch the campaign next month, we will miss our public revenue targets for the quarter.",
-                "shift": "Identify the revenue risk but miss the framing of 'financial survival'."
-              },
-              "q2": {
-                "text": "The constraint is the fixed 6-week build time for automation which overlaps with the launch window.",
-                "shift": "Identify the timeline conflict without naming the underlying quarterly pressure."
-              },
-              "q3": {
-                "text": "Option 1 is to delay and fix the errors. Option 2 is to launch now, hit the numbers, and deal with the extra refund costs as a cost of doing business.",
-                "shift": "Lay out the options, but without projecting the long-term brand damage."
-              },
-              "q4": {
-                "text": "I recommend launching on time. I am prioritizing our revenue goals over fixing the automation right now. I accept the risk that refund costs will go up and we'll see more negative reviews.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is hitting the growth target while keeping the increase in refund costs below a pre-defined threshold.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan'."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is we need the revenue from the campaign but our error rate is high.",
-                "shift": "Clearly state the problem, but don't elevate it to a survival necessity."
-              },
-              "q2": {
-                "text": "We don't have enough time to build automation and launch the campaign at the same time.",
-                "shift": "Names the constraint as a simple calendar issue."
-              },
-              "q3": {
-                "text": "We can fix the errors first or launch now and deal with the customer complaints later.",
-                "shift": "Lays out the choices, but doesn't project the compounding cost of the reputation hit."
-              },
-              "q4": {
-                "text": "I recommend launching the campaign. We need the money to hit our goals and we can always build the automation after the peak volume subsides.",
-                "shift": "Acknowledge the errors but choose to move forward with the launch."
-              },
-              "q5": {
-                "text": "Success is hitting the quarterly revenue target on time.",
-                "shift": "Provides a standard procedural metric."
               }
             }
           }
@@ -335,50 +159,6 @@
                 "text": "Success is the misclassification rate dropping below 5% and turnaround trending toward 7 days. If pushing back on Sales tanks their quarterly revenue and we still miss the 7-day target, I accept that leadership will view my decision as an operational failure that hurt the business.",
                 "shift": "Provide a metric and explicitly own how you will look wrong to leadership if it fails."
               }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is our average turnaround time has increased to 9 days, and leadership has publicly committed to getting it under 7 days.",
-                "shift": "Identifies the problem, but slightly less forceful on the business threat."
-              },
-              "q2": {
-                "text": "I can realistically only lead one major change this quarter.",
-                "shift": "Names the constraint accurately."
-              },
-              "q3": {
-                "text": "We can build a routing system to speed things up, but it will route bad Sales data to the wrong places. Or we can push back on Sales to fix their submissions, which solves the root cause but slows down submissions during a revenue quarter.",
-                "shift": "Lays out the options and their costs accurately."
-              },
-              "q4": {
-                "text": "I recommend pushing back on Sales leadership to fix the submission process. I know building the automation is a faster way to hit the 7-day target, but I am prioritizing clean data. I accept the risk that slowing down submissions will cause friction with Sales during a revenue quarter.",
-                "shift": "Explicitly states what is being deprioritized and the risk being accepted, fulfilling the requirement for a 9."
-              },
-              "q5": {
-                "text": "The misclassification rate from Sales needs to drop below 5%, and average turnaround needs to reach 7 days.",
-                "shift": "Provides the success metric but completely omits the backfire plan and ownership of the fallout."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "Our turnaround time has increased to 9 days, and we need to get it under 7 days before year-end, which is a public commitment from leadership.",
-                "shift": "Identifies the surface problem but doesn't explicitly link it to the public leadership commitment."
-              },
-              "q2": {
-                "text": "I can only lead one major change this quarter.",
-                "shift": "Identifies the constraint accurately but lacks the crispness of the higher benchmarks."
-              },
-              "q3": {
-                "text": "We can build an automated routing system that speeds up straightforward cases but will route bad Sales data to the wrong places faster, or we can push back on Sales to fix their submissions, which solves the root cause but temporarily slows down new submissions during a strong revenue quarter.",
-                "shift": "Lays out the choices and costs, but without projecting the political friction as concretely as the higher levels."
-              },
-              "q4": {
-                "text": "I recommend pushing back on Sales to fix their submissions. While building the automation would help us hit the 7-day target faster, we have to fix the root cause of the bad data.",
-                "shift": "Acknowledges the competing priority (the automation) and rejects it, but stops short of explicitly owning the political risk with Sales."
-              },
-              "q5": {
-                "text": "Our average turnaround time needs to drop from 9 days to under 7 days.",
-                "shift": "Provides a standard procedural metric, but lacks a 'backfire plan'."
-              }
             }
           }
         },
@@ -406,50 +186,6 @@
               "q5": {
                 "text": "Success is hitting the 7-day turnaround target by year-end. If the 'bad data' debt causes a system-wide processing failure later, I accept that I will look like an operational failure who traded long-term stability for an easy win.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the data debt crashes the system."
-              }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that we are going to miss our public 7-day turnaround target unless we find a way to speed up the team's output.",
-                "shift": "Identify the speed risk but miss the framing of 'leadership credibility'."
-              },
-              "q2": {
-                "text": "The constraint is that we only have a few months left in the year to move the metric.",
-                "shift": "Identify the time limit without naming the political capital involved."
-              },
-              "q3": {
-                "text": "Option 1 is to fix Sales data, which won't hit the target in time. Option 2 is to build the router and hit the 7-day mark even if it's messy.",
-                "shift": "Lay out the options, but without projecting the full cost of the 'unwinding' work."
-              },
-              "q4": {
-                "text": "I recommend building the routing system. I am prioritizing hitting the turnaround target over the quality of the incoming data. I accept the risk that my team will have to do more manual cleanup later.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is our average turnaround time dropping below 7 days by the end of December.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan'."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is turnaround time is 9 days and we promised to get it under 7.",
-                "shift": "Clearly state the problem, but don't elevate it to a public liability."
-              },
-              "q2": {
-                "text": "We need to make a change that brings the numbers down before the end of the year.",
-                "shift": "Names the constraint as a simple metric goal."
-              },
-              "q3": {
-                "text": "We can either try to fix Sales or just build a tool to make our own team faster.",
-                "shift": "Lays out the choices, but doesn't project the long-term risk of the misclassifications."
-              },
-              "q4": {
-                "text": "I recommend building the routing system. It's the only way we are going to hit the 7-day target that leadership expects from us.",
-                "shift": "Acknowledge the data issue but choose to move forward with the tool."
-              },
-              "q5": {
-                "text": "Success is seeing the turnaround time drop to 7 days.",
-                "shift": "Provides a standard procedural metric."
               }
             }
           }
@@ -487,50 +223,6 @@
                 "text": "Success is overall turnaround time dropping below leadership's target. If changing the metric drops volume without actually improving turnaround time, I accept that leadership will question my judgment and say we wasted time instead of just building the dashboard.",
                 "shift": "Name a specific success metric and own exactly how you will look wrong to leadership if the decision fails."
               }
-            },
-            "level9": {
-              "q1": {
-                "text": "The real business problem is that our current performance metrics, which reward pure volume, are driving the team to prioritize simple cases. This leaves complex cases languishing in the queue, ultimately slowing down our overall average turnaround time and undermining leadership's goal for faster operations.",
-                "shift": "Identifies the behavioral root cause clearly, but slightly less forceful on the broader business impact."
-              },
-              "q2": {
-                "text": "The main limit I have to work around is that we only have support for one structural change right now.",
-                "shift": "Names the exact constraint accurately."
-              },
-              "q3": {
-                "text": "Option one is building the dashboard; this will make the imbalance visible within weeks but won't shift behavior because the underlying volume-based metrics remain. Option two is changing the performance metrics to factor in case age; this will align behavior with our goal of faster turnaround but will guarantee a visible short-term drop in overall output numbers.",
-                "shift": "Lays out the options and their behavioral costs accurately."
-              },
-              "q4": {
-                "text": "I recommend changing the performance metrics first. While building the dashboard would avoid immediate executive pushback, I am choosing to deprioritize total volume numbers to actually fix the underlying behavior. I explicitly accept the risk that overall output will drop this quarter and executives will question the decrease.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted, fulfilling the requirement for a 9."
-              },
-              "q5": {
-                "text": "Success will be our overall average turnaround time dropping below leadership's target, and I will own the communication around the short-term dip in volume to explain the strategic shift.",
-                "shift": "Provides the success metric but completely omits the backfire plan and ownership of the fallout."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "Our average turnaround time has gotten slower because people are picking the easy cases to pad their volume metrics, leaving the hard cases sitting.",
-                "shift": "Identifies the behavioral problem but doesn't explicitly name the metric design as the structural root cause."
-              },
-              "q2": {
-                "text": "I only have support to make one structural change right now.",
-                "shift": "Identifies the constraint accurately but lacks the crispness of the higher benchmarks."
-              },
-              "q3": {
-                "text": "We can build a dashboard to show the queue, or we can change the performance metric. The dashboard won't fix the behavior. Changing the metric will fix it, but overall output numbers will drop.",
-                "shift": "Lays out the choices and costs, but without projecting the political friction as concretely as the higher levels."
-              },
-              "q4": {
-                "text": "I recommend we change the performance metric instead of building the dashboard. I know building a dashboard is easier and wouldn't hurt our total output numbers in the short term, but we have to fix the root cause of the problem if we actually want to improve turnaround times.",
-                "shift": "Acknowledges the competing priority (the dashboard) and rejects it, but stops short of owning the personal risk and executive friction of the output drop."
-              },
-              "q5": {
-                "text": "Our overall average turnaround time needs to drop back below leadership's target.",
-                "shift": "Provides a standard procedural metric, but lacks a 'backfire plan'."
-              }
             }
           }
         },
@@ -558,50 +250,6 @@
               "q5": {
                 "text": "Success is using the dashboard data to get executive sign-off for a metric change by next quarter. If the dashboard is ignored and behavior remains static, I accept that I will look like an ineffective leader who spent weeks building a tool that nobody used.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the visibility doesn't lead to change."
-              }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that we don't have the data to prove to executives why we need to change our metrics.",
-                "shift": "Identify the lack of evidence but miss the framing of 'political alignment'."
-              },
-              "q2": {
-                "text": "The constraint is that I can only make one change, and executives won't support a volume drop.",
-                "shift": "Identify the executive bias without naming the evidence-gathering strategy."
-              },
-              "q3": {
-                "text": "Option 1 is to change metrics and risk the fallout. Option 2 is to build the dashboard to show everyone where the bottleneck is.",
-                "shift": "Lay out the options, but without projecting the full cost of the 'ignored dashboard'."
-              },
-              "q4": {
-                "text": "I recommend building the dashboard. I am prioritizing visibility and maintaining our current output numbers over an immediate change to incentives. I accept the risk that behavior won't actually change this month.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is the dashboard going live and showing an increase in the age of the oldest cases in the queue.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan'."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is we don't know exactly which cases are sitting in the queue too long.",
-                "shift": "Clearly state the problem, but don't elevate it to a lack of evidence for change."
-              },
-              "q2": {
-                "text": "We need to hit our volume targets this quarter so we can't change the metrics yet.",
-                "shift": "Names the constraint as a simple volume goal."
-              },
-              "q3": {
-                "text": "We can either build a dashboard to see the problem or change the metrics to fix it.",
-                "shift": "Lays out the choices, but doesn't project the behavioral cost."
-              },
-              "q4": {
-                "text": "I recommend building the dashboard. It's a safer first step that doesn't risk our total output numbers while we figure out how to improve turnaround time.",
-                "shift": "Acknowledge the metrics issue but choose to move forward with visibility."
-              },
-              "q5": {
-                "text": "Success is having a dashboard that shows workload distribution across the team.",
-                "shift": "Provides a standard procedural metric."
               }
             }
           }
@@ -639,50 +287,6 @@
                 "text": "Success is average turnaround time dropping below 10 days before peak season starts. If the automation fails to move turnaround time and renewals still drop, I accept that leadership will see I wasted our window before peak season and should have just hired the raw headcount.",
                 "shift": "Provide a specific success metric and fully own exactly how you will look wrong if the decision fails."
               }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that our average turnaround time is 12 days, which pushes us past the 10-day mark where we see customer renewal rates drop.",
-                "shift": "Identify the problem, but frame it slightly less sharply as a systemic failure."
-              },
-              "q2": {
-                "text": "The main limit is that I only have the bandwidth to lead one initiative before peak season starts in eight weeks.",
-                "shift": "Name the constraint accurately."
-              },
-              "q3": {
-                "text": "Option 1 is to build the automation to bring turnaround time down and protect renewals, but the overall backlog will likely still grow. Option 2 is to hire two people to increase capacity and manage the backlog, but turnaround times stay at 12 days.",
-                "shift": "State the options and their costs, though slightly less concretely than a 10."
-              },
-              "q4": {
-                "text": "I recommend building the automation. I am prioritizing renewal rates over the overall size of the backlog, and I accept the risk that total case volume will pile up during peak season. Stopping the bleed on renewals is more critical.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted, fulfilling the requirement for a 9."
-              },
-              "q5": {
-                "text": "Average turnaround time should drop below the 10-day threshold before peak season.",
-                "shift": "Provide a valid metric, but completely omit the backfire/accountability plan."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is that our average turnaround time is 12 days, which is causing customer renewal rates to drop.",
-                "shift": "States the problem and business impact, but lacks the sharp quantitative framing of a 10."
-              },
-              "q2": {
-                "text": "I can only lead one initiative before the peak season begins in eight weeks.",
-                "shift": "Identifies the constraint accurately but lacks the crispness of the benchmark."
-              },
-              "q3": {
-                "text": "We can either build an automation to speed up cases, or hire two juniors to handle more volume. Automation improves turnaround time but takes 6 weeks. Hiring gives us more capacity to handle the volume spike but takes 4 weeks to onboard.",
-                "shift": "Lays out the choices and timelines but doesn't project the systemic failure of the alternate path."
-              },
-              "q4": {
-                "text": "I recommend building the automation. Hiring people is tempting because it gives us more overall capacity for peak season, but our biggest issue right now is the renewal rates. We have to get cases moving faster to solve that.",
-                "shift": "Acknowledges the competing priority (capacity) and rejects it, but stops short of explicitly owning the personal risk of the growing backlog."
-              },
-              "q5": {
-                "text": "Our average turnaround time should drop from 12 days to 9-10 days.",
-                "shift": "Provides a standard procedural metric, but lacks a 'backfire plan'."
-              }
             }
           }
         },
@@ -710,50 +314,6 @@
               "q5": {
                 "text": "Success is keeping the total backlog size stable during the peak season spike. Backfire Plan: If the renewals drop faster than expected and the extra headcount doesn't stabilize the backlog, I accept that I will look like an operational failure who missed the technology shift.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the headcount doesn't stop the backlog."
-              }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that we are going into peak season with a 15% volume spike expected, and we don't have enough people to handle the work.",
-                "shift": "Identify the capacity risk but miss the framing of 'operational collapse'."
-              },
-              "q2": {
-                "text": "The constraint is that it takes four weeks to get new people hired and trained.",
-                "shift": "Identify the hiring lead-time without naming the strategic window."
-              },
-              "q3": {
-                "text": "Option 1 is to automate and hope it's enough. Option 2 is to hire more people and handle the volume, even if it's slow.",
-                "shift": "Lay out the options, but without projecting the full cost of the 'renewal bleed'."
-              },
-              "q4": {
-                "text": "I recommend hiring the two new people. I am prioritizing our total capacity over the speed of each individual case. I accept the risk that our turnaround time will stay high and we'll lose some renewals this month.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is defined by our team being able to process all 1,200+ cases per month without the backlog growing beyond current levels.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan'."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is we have too much work and not enough people to do it.",
-                "shift": "Clearly state the problem, but don't elevate it to a peak-season survival issue."
-              },
-              "q2": {
-                "text": "We only have eight weeks until peak season starts.",
-                "shift": "Names the constraint as a simple calendar deadline."
-              },
-              "q3": {
-                "text": "We can build automation or hire two people. Hiring takes four weeks, automation takes six.",
-                "shift": "Lays out the choices and timelines but doesn't project the systemic failure."
-              },
-              "q4": {
-                "text": "I recommend hiring the two people. We need more hands on deck to get through the peak season volume spike. Even if each case still takes 12 days, we'll be able to handle more of them total.",
-                "shift": "Acknowledge the turnaround issue but choose to move forward with headcount."
-              },
-              "q5": {
-                "text": "Success is having the two new hires fully onboarded before the volume spike hits.",
-                "shift": "Provides a standard procedural metric."
               }
             }
           }
@@ -791,50 +351,6 @@
                 "text": "Success is exiting the week with an agreed-upon 12-week timeline or a reduced scope for the 8-week launch. If Sales escalates this and leadership forces the 8-week timeline anyway, I accept that I will be viewed as uncooperative and a roadblock to revenue.",
                 "shift": "Provide a clear metric and explicitly own how you will look wrong to leadership if your pushback fails."
               }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that we only have 8 weeks to build an integration that actually takes 12 weeks to do correctly.",
-                "shift": "State the problem, but slightly less forcefully than a 10."
-              },
-              "q2": {
-                "text": "The main limit is that the contract is already signed and Sales is expecting us to just execute the plan.",
-                "shift": "Name the constraint, but miss the immediate psychological pressure of the room."
-              },
-              "q3": {
-                "text": "We can build a hacky version in 8 weeks to hit the deadline, but it will cause tech debt. Or we can push back and ask for 12 weeks, but Sales will be upset.",
-                "shift": "Lay out the options, but frame the costs slightly less severely (tech debt vs. outages)."
-              },
-              "q4": {
-                "text": "I recommend pushing back and asking for 12 weeks. I am choosing to prioritize the architecture over the kickoff momentum. I explicitly accept the risk that Sales will be angry and the meeting will be derailed.",
-                "shift": "Explicitly state what is being deprioritized and the risk accepted."
-              },
-              "q5": {
-                "text": "Success is hitting a 12-week timeline with high-quality architecture.",
-                "shift": "Provide the metric, but completely omit the backfire plan and ownership of the fallout."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is the timeline is too short for the scope of work that was sold to the client.",
-                "shift": "Identifies the surface problem but lacks specific details."
-              },
-              "q2": {
-                "text": "The constraint is that we only have 8 weeks before the promised launch date.",
-                "shift": "Identifies a constraint (time), but misses the real constraint (politics/expectations)."
-              },
-              "q3": {
-                "text": "We can either rush the development to hit 8 weeks, or tell them we need 12 weeks to do it right.",
-                "shift": "Lays out the choices but doesn't project the systemic failure or political costs of either path."
-              },
-              "q4": {
-                "text": "I recommend we tell them we need 12 weeks. I know hacking it together in 8 weeks keeps Sales happy right now, but we can't risk the platform going down later. We have to do it right.",
-                "shift": "Acknowledges the competing priority (keeping Sales happy) and rejects it, but stops short of owning the personal/political risk of ruining the kickoff."
-              },
-              "q5": {
-                "text": "A revised project plan with a 12-week timeline.",
-                "shift": "Provides a standard procedural metric, but lacks a 'backfire plan'."
-              }
             }
           }
         },
@@ -862,50 +378,6 @@
               "q5": {
                 "text": "Success is hitting the 8-week launch date without immediate bugs. Backfire Plan: If the platform crashes when they scale, I will personally lead a dedicated 'Architecture Rebuild' sprint in month 3, using the revenue from the new client to justify the pause in other roadmap items.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership and how you'll fix the debt after the win."
-              }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that we need to hit the 8-week timeline to keep the new enterprise client happy and fulfill Sales' promise.",
-                "shift": "Identify the customer satisfaction risk but miss the framing of 'momentum'."
-              },
-              "q2": {
-                "text": "The constraint is that Sales already promised 8 weeks to get the contract signed.",
-                "shift": "Identify the promise without naming the political capital involved."
-              },
-              "q3": {
-                "text": "Option 1 is to ask for more time and derail the kickoff. Option 2 is to hack it together and launch on time, then fix the code later.",
-                "shift": "Lay out the options, but without projecting the full cost of the 'outages'."
-              },
-              "q4": {
-                "text": "I recommend we hack it together for an 8-week launch. I am prioritizing the client's needs and our revenue goals over doing it 'the right way'. I accept the risk of future technical debt and potential bugs.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is hitting the 8-week launch date without any immediate system failure.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan'."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is we need to build a custom integration in only 8 weeks for a new client.",
-                "shift": "Clearly state the problem, but don't elevate it to a momentum necessity."
-              },
-              "q2": {
-                "text": "Sales is in the room and they are expecting us to say yes to the 8-week plan.",
-                "shift": "Names the constraint as a simple social expectation."
-              },
-              "q3": {
-                "text": "We can either do it right and take 12 weeks, or rush it and get it done in 8 weeks.",
-                "shift": "Lays out the choices, but doesn't project the long-term risk of the outages."
-              },
-              "q4": {
-                "text": "I recommend we go with the 8-week plan. We have to support Sales and make sure this client is happy. We can always refactor the code later on once the launch is over.",
-                "shift": "Acknowledge the timeline issue but choose to move forward with the hack."
-              },
-              "q5": {
-                "text": "Success is hitting the 8-week deadline with a working integration.",
-                "shift": "Provides a standard procedural metric."
               }
             }
           }
@@ -943,50 +415,6 @@
                 "text": "Success is the remaining team's morale and collaborative output improving over the next 90 days. If the slower developer's missed deadlines cause us to miss major goals, I accept that I will be viewed as a failure to protect top performers.",
                 "shift": "Own the worst case. Name how you will look wrong if the choice backfires."
               }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that I am forced to choose between a strong performer who creates team tension and a weaker performer who is highly loyal.",
-                "shift": "State the problem clearly, but miss the opportunity to frame it as a systemic cultural decision."
-              },
-              "q2": {
-                "text": "The constraint is that I only have influence to keep one of them on my team.",
-                "shift": "Name the constraint, but omit the psychological pressure of them finding out."
-              },
-              "q3": {
-                "text": "I can keep the difficult dev to hit deadlines, or keep the loyal dev but deal with slower delivery.",
-                "shift": "Lay out the options, but frame the costs slightly less severely."
-              },
-              "q4": {
-                "text": "I recommend keeping the loyal developer. I am choosing to deprioritize raw output speed to fix the team dynamic. I accept the risk that our timelines may slip as a result.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success will be fewer complaints in team meetings and a more cohesive team culture within the next quarter.",
-                "shift": "Provide the metric, but completely omit the backfire plan and ownership of the fallout."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "We are losing two developers to a reorg and I have to decide which one to try to keep.",
-                "shift": "Identifies the surface problem but lacks the nuance of the actual tension."
-              },
-              "q2": {
-                "text": "I only get one conversation with my manager to make a case.",
-                "shift": "Identifies a constraint, but misses the real interpersonal limit."
-              },
-              "q3": {
-                "text": "We either keep the fast, mean developer or the slow, nice developer.",
-                "shift": "Lays out the choices but doesn't project the long-term compounding cost to the team."
-              },
-              "q4": {
-                "text": "I recommend keeping the slower developer. I know we need to hit our deadlines, but the other developer is just too difficult to work with and is hurting the team.",
-                "shift": "Acknowledges the competing priority (deadlines) and rejects it, but stops short of owning the personal risk."
-              },
-              "q5": {
-                "text": "The team will be happier and work better together.",
-                "shift": "Provides a vague metric and completely misses the 'backfire plan'."
-              }
             }
           }
         },
@@ -1014,50 +442,6 @@
               "q5": {
                 "text": "Success is hitting all our major project milestones over the next quarter. Backfire Plan: If the team dynamic becomes toxic and leads to more resignations, I accept that I will look like a short-sighted leader who sacrificed the long-term health of the team for a few deadlines.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the 'toxic' dev drives others out."
-              }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that I need to keep our most productive developer so we don't miss our launch dates.",
-                "shift": "Identify the delivery risk but miss the framing of 'project failure'."
-              },
-              "q2": {
-                "text": "The constraint is that I can only save one person from the reorg.",
-                "shift": "Identify the headcount limit without naming the hiring environment."
-              },
-              "q3": {
-                "text": "Option 1 is to keep the loyal dev and miss our goals. Option 2 is to keep the high performer and deal with the team tension.",
-                "shift": "Lay out the options, but without projecting the full cost of 'attrition'."
-              },
-              "q4": {
-                "text": "I recommend keeping the high-performing developer. I am prioritizing our output speed over fixing the team culture right now. I accept the risk that some people will be unhappy with my choice.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is hitting our next three major deadlines on time with high-quality code.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan'."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is we are losing people and I need to keep the one who does the most work.",
-                "shift": "Clearly state the problem, but don't elevate it to a business commitment necessity."
-              },
-              "q2": {
-                "text": "My manager only lets me keep one person on the team.",
-                "shift": "Names the constraint as a simple management rule."
-              },
-              "q3": {
-                "text": "We can keep the developer who is fast but mean, or the one who is slow but nice.",
-                "shift": "Lays out the choices, but doesn't project the long-term cultural cost."
-              },
-              "q4": {
-                "text": "I recommend we keep the high-performer. We have too much work to do and we can't afford to keep someone who needs hand-holding right now. We have to prioritize our delivery.",
-                "shift": "Acknowledge the cultural issue but choose to move forward with the performer."
-              },
-              "q5": {
-                "text": "Success is seeing the developer continue to hit their deadlines every week.",
-                "shift": "Provides a standard procedural metric."
               }
             }
           }
@@ -1095,50 +479,6 @@
                 "text": "Success is achieving unified pricing decisions across all departments within 90 days. If the alignment process stalls in inter-departmental politics and we still have slow, manual reports after two months, I accept that leadership will view this as a failure to execute.",
                 "shift": "Provide a metric and explicitly own how you will look wrong if the political alignment fails."
               }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that our reporting uses inconsistent data definitions across departments, and it takes too long to generate manually.",
-                "shift": "Identify the problem, but fail to prioritize the root cause over the symptom."
-              },
-              "q2": {
-                "text": "I can only lead one of these two initiatives right now.",
-                "shift": "Name the constraint accurately."
-              },
-              "q3": {
-                "text": "Automating takes 3 weeks but locks in bad data. Aligning the data takes 2 months but fixes the pricing issue.",
-                "shift": "State the options and their costs, though slightly less concretely than a 10."
-              },
-              "q4": {
-                "text": "I recommend we push to align the definitions. I am deprioritizing the speed of the reporting process to focus on data accuracy. I accept the risk that leadership will be annoyed by the manual reports continuing.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success will be all departments using the exact same definitions for pricing decisions within two months.",
-                "shift": "Provide a valid metric, but completely omit the backfire plan and ownership of the fallout."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The weekly report takes two days to prepare and the data definitions are mismatched.",
-                "shift": "States the surface issues but lacks sharp framing of the business threat."
-              },
-              "q2": {
-                "text": "We don't have the time to do both projects at once.",
-                "shift": "Identifies the constraint, but lacks the crispness of the benchmark."
-              },
-              "q3": {
-                "text": "We can build the automation quickly, or spend a couple of months aligning the different departments.",
-                "shift": "Lays out the choices but doesn't project the systemic failure of the alternate path."
-              },
-              "q4": {
-                "text": "I recommend aligning the definitions first. I know leadership wants the reports faster and automating would give them that, but we can't automate bad data.",
-                "shift": "Acknowledges the competing priority (speed) and rejects it, but stops short of explicitly owning the personal risk of the leadership frustration."
-              },
-              "q5": {
-                "text": "Success is seeing pricing decisions finally become consistent.",
-                "shift": "Provides a standard procedural metric, but lacks a 'backfire plan'."
-              }
             }
           }
         },
@@ -1166,50 +506,6 @@
               "q5": {
                 "text": "Success is leadership receiving their performance reports in hours rather than days. Backfire Plan: If the inconsistent data leads to a major pricing error, I will personally lead a 'Data Clean-up' task force to fix the underlying definitions, using the automation's success as the lever to force departmental cooperation.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the data ruins the pricing."
-              }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that our current reporting process is too slow, which prevents leadership from seeing our performance numbers until it's too late.",
-                "shift": "Identify the speed risk but miss the framing of 'market reaction'."
-              },
-              "q2": {
-                "text": "The constraint is that I can only choose one of these two projects to finish this month.",
-                "shift": "Identify the time limit without naming the quarterly pressure."
-              },
-              "q3": {
-                "text": "Option 1 is to fix the data definitions. Option 2 is to automate what we have so leadership gets their reports faster.",
-                "shift": "Lay out the options, but without projecting the full cost of 'scaling bad data'."
-              },
-              "q4": {
-                "text": "I recommend we automate the report. I am prioritizing our speed over our data accuracy for now. I accept the risk that departments will still have conflicting pricing decisions.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is the weekly report being generated automatically every Monday morning without any manual work.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan'."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is that the report takes too long to make and people are asking for it to be faster.",
-                "shift": "Clearly state the problem, but don't elevate it to a leadership reaction necessity."
-              },
-              "q2": {
-                "text": "I don't have enough people to do both the automation and the data alignment at the same time.",
-                "shift": "Names the constraint as a simple headcount issue."
-              },
-              "q3": {
-                "text": "We can spend three weeks automating the current report or two months fixing the definitions.",
-                "shift": "Lays out the choices, but doesn't project the behavioral cost."
-              },
-              "q4": {
-                "text": "I recommend we build the automation. Leadership is frustrated with the delay and this is a quick win that makes us look good while we figure out how to fix the data issues later.",
-                "shift": "Acknowledge the data issue but choose to move forward with the automation."
-              },
-              "q5": {
-                "text": "Success is having a report that takes zero manual hours to prepare each week.",
-                "shift": "Provides a standard procedural metric."
               }
             }
           }
@@ -1247,50 +543,6 @@
                 "text": "Success is a jointly approved architecture document within two weeks. If the pairing leads to endless arguments and the new hire quits in frustration, I accept that I will be viewed as a failure to integrate and protect top talent.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the mandated pairing fails and the hire quits."
               }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that a new hire has insulted the veteran engineers, causing the veterans to stonewall and threatening to stall our modernization efforts.",
-                "shift": "Identify the conflict threatening the project, but miss the deeper framing of historical context vs. ambition."
-              },
-              "q2": {
-                "text": "The constraint is that we need to modernize the system, but the team refuses to collaborate right now.",
-                "shift": "Name the constraint accurately but lack the psychological depth of the egos involved."
-              },
-              "q3": {
-                "text": "We can let the new engineer work alone to get it done faster, but it ruins team culture. Or we can force them to get consensus, which will drag the project out.",
-                "shift": "State the options and their costs, though slightly less concretely than a 10."
-              },
-              "q4": {
-                "text": "I recommend forcing the new engineer to work with the veterans before writing any code. I am deprioritizing the immediate speed of the modernization to focus on team cohesion. I accept the risk that the new engineer will be unhappy with being slowed down.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is the veterans and the new hire producing merged pull requests within the month.",
-                "shift": "Provide a valid metric, but completely omit the backfire plan and ownership of the fallout."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is that the new engineer was too blunt and hurt the veterans' pride, which is now causing delays in code reviews.",
-                "shift": "States the surface interpersonal problem, but doesn't elevate it to a systemic business threat."
-              },
-              "q2": {
-                "text": "The constraint is trying to keep the new engineer productive while managing the veterans' defensive behavior.",
-                "shift": "Identifies the constraint but frames it as a simple management balancing act."
-              },
-              "q3": {
-                "text": "We can either let the new engineer build a parallel system to keep them moving, or force them to get approval from the people they just insulted.",
-                "shift": "Lays out the choices, but doesn't project the long-term compounding costs of either path."
-              },
-              "q4": {
-                "text": "I recommend not letting the new engineer work in a silo. I know they want to move fast and prove their architecture, but we cannot allow people to bypass the team just because they are critical of the old code. We have to work together.",
-                "shift": "Acknowledge the competing priority (speed/proving architecture) and rejects it, but stops short of explicitly owning the personal risk of the friction."
-              },
-              "q5": {
-                "text": "Success is tracking the turnaround time on pull request reviews to make sure the stonewalling stops.",
-                "shift": "Provides a standard procedural metric, but lacks a 'backfire plan'."
-              }
             }
           }
         },
@@ -1318,50 +570,6 @@
               "q5": {
                 "text": "Success is a working parallel system delivered within six weeks that outperforms the legacy code. Backfire Plan: If the new system fails or the veterans quit, I accept that I will look like a reckless leader who broke a functional team for the sake of a shiny new tool.",
                 "shift": "Own the worst case. Name exactly how you will look wrong to leadership if the siloed project fails."
-              }
-            },
-            "level9": {
-              "q1": {
-                "text": "The problem is that our veterans are blocking a highly capable new hire because they feel insulted, which is stopping us from fixing our legacy mess.",
-                "shift": "Identify the conflict but miss the framing of 'systemic scalability'."
-              },
-              "q2": {
-                "text": "The constraint is that I need the new hire to stay productive, but the veterans are withholding context.",
-                "shift": "Identify the context withholding without naming the underlying cultural bias."
-              },
-              "q3": {
-                "text": "Option 1 is to force everyone to agree. Option 2 is to let the new hire work alone and prove their point through code.",
-                "shift": "Lay out the options, but without projecting the full cost of 'attrition'."
-              },
-              "q4": {
-                "text": "I recommend letting the new engineer build their parallel system. I am prioritizing our need to rewrite the messy legacy code over the feelings of the veteran engineers. I accept the risk that this will create some tension on the team.",
-                "shift": "Explicitly state what is being deprioritized and the risk being accepted."
-              },
-              "q5": {
-                "text": "Success is defined by the parallel system passing all load tests and being ready for a beta trial by next month.",
-                "shift": "Provide a solid metric, but miss the 'backfire plan'."
-              }
-            },
-            "level8": {
-              "q1": {
-                "text": "The problem is that the new hire wants to fix the code but the veterans are in the way.",
-                "shift": "Clearly state the problem, but don't elevate it to a scalability necessity."
-              },
-              "q2": {
-                "text": "The veterans are being defensive and won't review the new hire's code.",
-                "shift": "Names the constraint as a simple interpersonal conflict."
-              },
-              "q3": {
-                "text": "We can either force them to talk it out or just let the new person build a separate system to show what they can do.",
-                "shift": "Lays out the choices, but doesn't project the long-term risk of the silo."
-              },
-              "q4": {
-                "text": "I recommend letting the new hire build the parallel system. We hired them to help us scale, and we can't let a defensive culture stop us from improving our code.",
-                "shift": "Acknowledge the cultural issue but choose to move forward with the rewrite."
-              },
-              "q5": {
-                "text": "Success is seeing the first few modules of the parallel system working correctly in the dev environment.",
-                "shift": "Provides a standard procedural metric."
               }
             }
           }
