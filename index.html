@@ -91,25 +91,14 @@
       animation: fadeUp 0.6s ease forwards 0.1s;
     }
 
-    .hero-mirror {
-      font-size: clamp(15px, 2vw, 18px);
-      color: var(--gray-600);
-      max-width: 560px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-      font-weight: 300;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.15s;
-    }
-
     .hero-headline {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(42px, 7vw, 88px);
+      font-size: clamp(36px, 6vw, 64px);
       line-height: 1.05;
       letter-spacing: -0.03em;
       color: var(--black);
       max-width: 900px;
-      margin-bottom: 24px;
+      margin-bottom: 48px;
       opacity: 0;
       animation: fadeUp 0.7s ease forwards 0.2s;
     }
@@ -117,17 +106,6 @@
     .hero-headline em {
       font-style: italic;
       color: var(--gray-600);
-    }
-
-    .hero-sub {
-      font-size: 18px;
-      color: var(--gray-600);
-      max-width: 480px;
-      line-height: 1.65;
-      margin-bottom: 48px;
-      font-weight: 300;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.35s;
     }
 
     .hero-meta {
@@ -388,7 +366,7 @@
     #app {
       background: var(--white);
       min-height: 100vh;
-      padding: 80px 24px;
+      padding: 40px 24px;
     }
 
     .app-inner {
@@ -475,7 +453,32 @@
       font-weight: 300;
     }
 
-    /* QUESTIONS */
+    /* QUESTIONS & HUD */
+    .hud-container { margin-bottom: 32px; }
+    .hud-track { position: relative; padding-top: 8px; }
+    .hud-node { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 20%; z-index: 2; position: relative; }
+    .hud-label { font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-400); text-align: center; line-height: 1.3; }
+    
+    .hud-past .gear-cog { color: var(--black); }
+    .hud-past .gear-assembly { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); }
+    .hud-past .hud-label { color: var(--black); }
+    
+    .hud-active .gear-cog { color: var(--score-mid); animation: spin-cw 6s linear infinite; }
+    .hud-active .gear-assembly { filter: drop-shadow(0 0 12px rgba(217, 119, 6, 0.4)); transform: scale(1.15); }
+    .hud-active .hud-label { color: var(--score-mid); font-weight: 700; }
+    
+    .hud-future .gear-cog { color: var(--gray-200); }
+    .hud-future .gear-assembly { filter: none; }
+
+    .hud-node .gear-assembly { width: 32px; height: 32px; }
+    @media (min-width: 768px) { .hud-node .gear-assembly { width: 36px; height: 36px; } }
+
+    .req-accordion { margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .req-acc-btn { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--black); background: none; border: none; cursor: pointer; padding: 8px 0; font-weight: 700; width: 100%; text-align: left; transition: opacity 0.2s; }
+    .req-acc-btn:hover { opacity: 0.7; }
+    .req-acc-content { display: none; padding: 12px 0 16px; font-size: 14px; color: var(--gray-800); line-height: 1.6; font-weight: 300; border-top: 1px solid var(--border); margin-top: 8px; animation: fadeDown 0.2s ease; }
+    .req-acc-content.open { display: block; }
+
     .question-label {
       display: flex;
       align-items: flex-start;
@@ -501,7 +504,7 @@
 
     textarea {
       width: 100%;
-      min-height: 100px;
+      min-height: 120px;
       padding: 16px;
       border: 1px solid var(--border);
       background: var(--white);
@@ -591,12 +594,12 @@
       display: flex;
       align-items: flex-end;
       gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
     }
 
     .score-number {
       font-family: 'DM Serif Display', serif;
-      font-size: 80px;
+      font-size: 64px; 
       line-height: 1;
       letter-spacing: -0.04em;
     }
@@ -609,8 +612,8 @@
     }
 
     .results-section {
-      margin-bottom: 40px;
-      padding-bottom: 40px;
+      margin-bottom: 24px; 
+      padding-bottom: 24px; 
       border-bottom: 1px solid var(--border);
     }
 
@@ -627,29 +630,6 @@
       margin-bottom: 20px;
     }
 
-    .feedback-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .feedback-item {
-      display: flex;
-      gap: 16px;
-      font-size: 15px;
-      color: var(--gray-800);
-      line-height: 1.65;
-      font-weight: 300;
-    }
-
-    .feedback-dash {
-      color: var(--accent);
-      font-family: 'DM Mono', monospace;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
     .reflection-box {
       background: var(--off-white);
       border-left: 3px solid var(--black);
@@ -663,8 +643,8 @@
 
     /* HORIZONTAL VISUALIZER */
     .visualizer-section {
-      margin-bottom: 32px;
-      padding-bottom: 32px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
       border-bottom: 1px solid var(--border);
     }
     .visualizer-header-row {
@@ -717,6 +697,7 @@
       inset: 0;
       width: 100%;
       height: 100%;
+      transform-origin: center center;
     }
     .gear-icon-inner {
       position: relative;
@@ -726,8 +707,14 @@
       justify-content: center;
     }
 
-    @keyframes spin-cw { 100% { transform: rotate(360deg); } }
-    @keyframes spin-ccw { 100% { transform: rotate(-360deg); } }
+    @keyframes spin-cw { 
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); } 
+    }
+    @keyframes spin-ccw { 
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); } 
+    }
     @keyframes jammed {
       0%, 100% { transform: rotate(0deg); }
       10% { transform: rotate(5deg); }
@@ -739,17 +726,16 @@
     /* PASS */
     .node-pass { cursor: pointer; } 
     .node-pass .gear-assembly {
-      background: var(--white);
-      box-shadow: 0 4px 6px rgba(0,0,0,0.08), 0 0 0 2px var(--white); 
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); 
       transition: all 0.2s ease;
     }
     .node-pass:hover .gear-assembly {
       transform: translateY(-2px) scale(1.15); 
-      box-shadow: 0 8px 16px rgba(22, 163, 74, 0.2), 0 0 0 2px var(--white);
+      filter: drop-shadow(0 8px 16px rgba(22, 163, 74, 0.3));
     }
     .node-pass.active .gear-assembly {
       transform: translateY(0) scale(1.15);
-      box-shadow: 0 0 0 3px var(--score-high);
+      filter: drop-shadow(0 0 16px rgba(22, 163, 74, 0.5)); 
     }
     .node-pass .gear-cog {
       color: var(--score-high);
@@ -762,28 +748,26 @@
 
     /* STALL */
     @keyframes stall-pulse {
-      0% { box-shadow: 0 0 0 0 rgba(200, 57, 43, 0.4), 0 4px 8px rgba(0,0,0,0.12); }
-      70% { box-shadow: 0 0 0 12px rgba(200, 57, 43, 0), 0 4px 8px rgba(0,0,0,0.12); }
-      100% { box-shadow: 0 0 0 0 rgba(200, 57, 43, 0), 0 4px 8px rgba(0,0,0,0.12); }
+      0% { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12)); }
+      50% { filter: drop-shadow(0 0 16px rgba(200, 57, 43, 0.6)); }
+      100% { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12)); }
     }
 
     .node-stall { cursor: pointer; } 
     .node-stall .gear-assembly {
       transform: scale(1.3);
-      background: var(--white);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 0 0 4px var(--white); 
       animation: stall-pulse 2s infinite; 
-      transition: all 0.2s ease;
+      transition: transform 0.2s ease;
     }
     .node-stall:hover .gear-assembly {
       transform: translateY(-2px) scale(1.4); 
       animation: none; 
-      box-shadow: 0 10px 20px rgba(200, 57, 43, 0.25), 0 0 0 4px var(--white);
+      filter: drop-shadow(0 10px 20px rgba(200, 57, 43, 0.4));
     }
     .node-stall.active .gear-assembly {
       transform: translateY(0) scale(1.4);
       animation: none; 
-      box-shadow: 0 0 0 4px var(--score-low);
+      filter: drop-shadow(0 0 20px rgba(200, 57, 43, 0.6)); 
     }
     .node-stall .gear-cog {
       color: var(--score-low);
@@ -798,6 +782,7 @@
 
     /* LOCK */
     .node-lock .gear-cog { color: var(--gray-200); }
+    .node-lock .gear-assembly { filter: none; }
     .node-lock .gear-icon-inner { color: var(--gray-400); }
     .node-lock .gear-label { color: var(--gray-400); }
 
@@ -824,26 +809,28 @@
       display: none;
       background: var(--off-white);
       border: 1px solid var(--border);
-      padding: 24px;
-      margin-top: 24px;
+      padding: 32px 32px 24px 32px;
+      margin-top: 32px;
       animation: fadeDown 0.3s ease forwards;
     }
     .accordion-panel.open { display: block; }
     .accordion-panel.state-pass { border-top: 3px solid var(--score-high); }
     .accordion-panel.state-stalled { border-top: 3px solid var(--score-low); }
+    .accordion-panel.state-locked { border-top: 3px solid var(--gray-400); }
 
     .acc-header {
       font-family: 'DM Mono', monospace;
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .state-pass .acc-header { color: var(--score-high); }
     .state-stalled .acc-header { color: var(--score-low); }
+    .state-locked .acc-header { color: var(--gray-400); }
 
     .acc-close {
       cursor: pointer;
@@ -862,129 +849,22 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
     }
     .acc-banner.pass { color: var(--score-high); }
     
-    .rule-block {
-      font-size: 14px;
-      color: var(--black);
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-    .rule-line { margin-bottom: 12px; }
     .rule-label {
       font-family: 'DM Mono', monospace;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--gray-800);
-      margin-right: 4px;
     }
 
     .acc-divider {
       height: 1px;
       background: var(--border);
       margin: 24px 0;
-    }
-
-    .example-intro {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--black);
-      margin-bottom: 16px;
-    }
-
-    .example-block {
-      margin-bottom: 20px;
-      padding-left: 16px;
-      border-left: 2px solid var(--border);
-    }
-    .example-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .example-wrong .example-label { color: var(--score-low); }
-    .example-right .example-label { color: var(--score-high); }
-    .example-text {
-      font-size: 14px;
-      color: var(--gray-600);
-      font-style: italic;
-      line-height: 1.6;
-    }
-
-    /* BENCHMARK REVEAL */
-    .btn-reveal {
-      width: 100%;
-      background: transparent;
-      border: 1px dashed var(--gray-600);
-      color: var(--black);
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 20px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      margin-bottom: 24px;
-    }
-
-    .btn-reveal:hover:not(:disabled) {
-      background: var(--off-white);
-      border-style: solid;
-      border-color: var(--black);
-    }
-
-    .benchmark-content {
-      display: none;
-      background: var(--off-white);
-      border: 1px solid var(--border);
-      padding: 32px 32px 8px 32px;
-      margin-bottom: 32px;
-    }
-
-    .benchmark-content.open {
-      display: block;
-      animation: fadeUp 0.3s ease;
-    }
-
-    .benchmark-item {
-      margin-bottom: 32px;
-    }
-
-    .benchmark-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-
-    .benchmark-gap {
-      font-size: 15px;
-      color: var(--black);
-      line-height: 1.6;
-      margin-bottom: 12px;
-    }
-
-    .benchmark-ideal {
-      font-size: 15px;
-      color: var(--gray-600);
-      line-height: 1.6;
-      font-style: italic;
-      font-weight: 300;
-      padding-left: 16px;
-      border-left: 2px solid var(--gray-200);
     }
 
     /* ACTION BUTTONS */
@@ -994,7 +874,6 @@
       gap: 20px;
       margin-top: 24px;
       padding-top: 40px;
-      border-top: 1px solid var(--border);
     }
 
     .progression-line {
@@ -1057,20 +936,6 @@
     }
 
     .scenario-desktop { position: sticky; top: 88px; }
-
-    /* PROGRESS BAR */
-    .progress-bar-wrap {
-      height: 3px; background: var(--gray-100);
-      border-radius: 2px; overflow: hidden;
-    }
-    .progress-bar-fill {
-      height: 100%; background: var(--black);
-      border-radius: 2px; transition: width 0.3s ease;
-    }
-    .progress-label {
-      font-family: 'DM Mono', monospace; font-size: 10px;
-      text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400);
-    }
 
     .single-question { display: flex; flex-direction: column; gap: 12px; }
 
@@ -1329,23 +1194,15 @@
       from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-
-    /* PRE-FLIGHT BRIEFING */
-    .preflight-layout { max-width: 800px; margin: 0 auto; }
-    .gear-display { position: relative; overflow: hidden; background: var(--off-white); border: 1px solid var(--border); padding: 48px; min-height: 340px; display: flex; flex-direction: column; justify-content: center; animation: fadeUp 0.4s ease; }
-    .gear-watermark { position: absolute; right: -20px; bottom: -40px; font-family: 'DM Serif Display', serif; font-size: 360px; line-height: 1; color: var(--black); opacity: 0.03; pointer-events: none; user-select: none; z-index: 0; }
-    .gear-display > div:not(.gear-watermark) { position: relative; z-index: 1; }
-    .gear-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 16px; }
-    .gear-title { font-family: 'DM Serif Display', serif; font-size: 32px; letter-spacing: -0.02em; color: var(--black); margin-bottom: 12px; line-height: 1.1; }
-    .gear-goal { font-size: 16px; font-weight: 500; color: var(--black); margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-    .gear-text { font-size: 15px; color: var(--gray-800); line-height: 1.65; font-weight: 300; }
-    .gear-nav-dots { display: flex; gap: 8px; margin-bottom: 24px; justify-content: center; }
-    .gear-dot { width: 40px; height: 3px; background: var(--gray-200); transition: all 0.3s ease; cursor: pointer; border-radius: 2px; }
-    .gear-dot.active { background: var(--black); }
 
     /* FOOTER */
     footer {
@@ -1409,14 +1266,10 @@
       .scenario-card { padding: 24px 20px; }
       .scenario-text { font-size: 14px; }
       textarea { min-height: 80px; font-size: 15px; }
-      .gear-display { padding: 24px 20px; min-height: 400px; }
-      .gear-title { font-size: 26px; }
-      .gear-assembly { width: 32px; height: 32px; }
       .gear-track::before, .gear-track-fill { top: 28px !important; }
 
       /* RESULTS */
       .score-number { font-size: 60px; }
-      .benchmark-content { padding: 24px 20px 8px 20px; }
 
       /* BUTTONS */
       .action-buttons { flex-direction: column; }
@@ -1431,7 +1284,8 @@
       .hero-headline { letter-spacing: -0.02em; }
       .what-heading { font-size: 28px; }
       #what, #scoring, #app { padding: 48px 16px; }
-      .gear-label { font-size: 8px; }
+      .gear-label, .hud-label { font-size: 8px; }
+      .accordion-panel { padding: 24px 20px; }
     }
   </style>
 </head>
@@ -1444,9 +1298,7 @@
 
 <section id="hero">
   <div class="hero-eyebrow">Human judgment. Sharpened.</div>
-  <p class="hero-mirror">AI keeps getting better. Are you?</p>
-  <h1 class="hero-headline">Train the skill<br /><em>AI can't replace.</em></h1>
-  <p class="hero-sub">Tenure is where you start.</p>
+  <h1 class="hero-headline">AI can give you answers.<br /><em>Tenure trains your judgment.</em></h1>
   <div class="hero-meta">
     <div class="hero-meta-item">
       <span class="hero-meta-number">5</span>
@@ -1551,8 +1403,7 @@
 </section>
 
 <section id="app">
-  <div class="app-inner" id="app-content">
-    </div>
+  <div class="app-inner" id="app-content"></div>
 </section>
 
 <footer>
@@ -1566,11 +1417,11 @@
 <script>
 // --- LOCAL TESTING CONFIG ---
 const LOCAL_MODEL_NAME = "gemini-2.5-flash-lite"; 
-// ----------------------------
+
+// --- STATE VARIABLES ---
 let SCENARIOS = [];
 let SYSTEM_PROMPT = "";
 let MIRROR_PROMPT = "";
-let BENCHMARK_PROMPT = "";
 let currentScenario = null;
 let answers = ['', '', '', '', ''];
 let currentQuestion = 0;
@@ -1581,88 +1432,18 @@ let clarifyAnswer = '';
 let scenarioCollapsed = false;
 let scenarioCount = 0;
 let loadingInterval = null;
-let currentGear = 0;
-let preflightInterval = null;
 let activeGear = null;
+let renderTimeout = null;
+window.currentStallGear = null;
 
+// --- CONSTANTS ---
 const GEARS = [
-  { type: "intro", title: "The Rules of the Game", goal: "Upgrading how you process chaos.", text: "There are no right answers to the scenario you are about to face. The Tenure engine doesn't care if you pick Option A or Option B. It measures how you think. Executive decision-making requires 5 specific 'Gears'. If you skip one, your logic falls apart and you lose the room. Take 30 seconds to learn how the engine works before you start." },
-  { type: "gear", title: "Spot the Landmine", goal: "Root Cause vs. Surface Noise.", text: "Stop reacting to the Noise and find the Breakdown. In every crisis, there is the immediate symptom everyone is shouting about and the underlying failure that actually caused it. To reach Level 10, you must ignore the drama and identify the specific flaw in the system or logic that will guarantee this happens again if left untouched." },
-  { type: "gear", title: "Find the Bottleneck", goal: "Hard Limits vs. Wishing To Do It All.", text: "Identify the one thing you cannot change. In every issue you face, there is a hard limit such as a fixed deadline, a frozen budget, or a lack of headcount. A Level 8 leader tries to negotiate with reality or work around the edges. A Level 10 leader finds the Bottleneck and accepts it as a fact. You must pinpoint the specific constraint that dictates what is actually possible before you waste energy on paths that cannot be taken." },
-  { type: "gear", title: "Weigh the Trade-offs", goal: "Strategic Gains vs. Acceptable Losses.", text: "Every path has a cost and you cannot choose them all. When you lay out your options, you must evaluate what each one secures and what each one sacrifices. A Level 8 leader looks for the path that feels the safest or follows the standard rules. A Level 10 leader identifies the specific trade-offs of every choice and picks the one that offers the highest strategic gain for a price the business can afford to pay." },
-  { type: "gear", title: "Brace for Impact", goal: "Bold Decisions vs. Blind Hope.", text: "Every choice has a backfire and a Level 10 leader sees it coming. When you make your recommendation, you must identify exactly how your plan could fail or who it will upset. A Level 8 leader hopes for the best and assumes their plan is perfect. A Level 10 leader builds a backfire plan before the first complaint hits. You must own the consequences of your choice and prepare the organization for the impact." },
-  { type: "gear", title: "Hold the Line", goal: "Hard Data vs. Panic.", text: "Pick the one signal that proves your decision is working. When the pressure hits and stakeholders start to doubt the path, you need an undeniable metric to defend your choice. A Level 8 leader uses soft metrics like team happiness or vague progress. A Level 10 leader uses a high-signal metric that proves the system is stable. You must define the one data point that allows you to stand your ground and keep the engine moving." }
+  { title: "Spot the Landmine", goal: "Root Cause vs. Surface Noise.", text: "Stop reacting to the Noise and find the Breakdown. Identify the specific flaw in the system that will guarantee this happens again if left untouched." },
+  { title: "Find the Bottleneck", goal: "Hard Limits vs. Wishing To Do It All.", text: "Pinpoint the specific constraint that dictates what is actually possible before you waste energy on paths that cannot be taken." },
+  { title: "Weigh the Trade-offs", goal: "Strategic Gains vs. Acceptable Losses.", text: "Identify the specific trade-offs of every choice and pick the one that offers the highest strategic gain for a price the business can afford to pay." },
+  { title: "Brace for Impact", goal: "Bold Decisions vs. Blind Hope.", text: "Own the consequences of your choice. Identify exactly how your plan could fail or who it will upset, and prepare the organization for the impact." },
+  { title: "Hold the Line", goal: "Hard Data vs. Panic.", text: "Define the one data point that proves your strategy is generating value and allows you to stand your ground when stakeholders doubt the path." }
 ];
-
-// Content dictionary for the Visual Cap Accordions
-const gearData = {
-  1: {
-    title: 'Gear 01: Spot the Landmine',
-    rule: 'Stop reacting to the Noise and find the Breakdown.',
-    reflex: 'Fixing the immediate symptom everyone is shouting about.',
-    req: 'Ignoring the drama and identifying the specific flaw in the system or logic that will guarantee this happens again.',
-    wrongLabel: 'The Builder Reflex (A Symptom)',
-    wrongText: '"The API is returning 500 errors and the customers are locked out."',
-    rightLabel: 'The Business Reality (The Root Cause)',
-    rightText: '"Our architecture has a single point of failure that we ignored to hit a deadline, and it is now actively burning our reputation with Enterprise clients."'
-  },
-  2: {
-    title: 'Gear 02: Find the Bottleneck',
-    rule: 'Identify the one thing you cannot change.',
-    reflex: 'Trying to negotiate with reality, work around the edges, or fixate on a technical headache.',
-    req: 'Pinpointing the exact business constraint and accepting it as a fact before wasting energy on paths that cannot be taken.',
-    wrongLabel: 'The Builder Reflex (A Technical Headache)',
-    wrongText: '"The constraint is that the legacy codebase is too messy and complex to build on."',
-    rightLabel: 'The Business Reality (A Hard Limit)',
-    rightText: '"The CEO froze hiring yesterday, meaning we are capped at our current sprint capacity and cannot parallel path both projects."'
-  },
-  3: {
-    title: 'Gear 03: Weigh the Trade-offs',
-    rule: 'Every path has a cost and you cannot choose them all.',
-    reflex: 'Trying to find a compromise to keep everyone happy.',
-    req: 'Identifying the specific costs of every choice and picking the path that offers the highest strategic gain for a price the business can afford to pay.',
-    wrongLabel: 'The Builder Reflex (The Compromise)',
-    wrongText: '"If we work weekends and do an agile sprint, we can deliver a partial version of both features by the deadline so neither team is entirely disappointed."',
-    rightLabel: 'The Business Reality (The Hard Call)',
-    rightText: '"We can either hack it together by Friday and accept massive technical debt, or we build it right and miss the holiday revenue window. We cannot do both."'
-  },
-  4: {
-    title: 'Gear 04: Brace for Impact',
-    rule: 'Every choice has a backfire and a leader sees it coming.',
-    reflex: 'Hoping for the best and assuming the plan is perfect.',
-    req: 'Owning the consequences of your choice and preparing the organization for the impact.',
-    wrongLabel: 'The Builder Reflex (Hoping for the best)',
-    wrongText: '"I recommend we push the code and closely monitor the logs for any issues."',
-    rightLabel: 'The Business Reality (Risk Ownership)',
-    rightText: '"I recommend we halt the launch. I accept that Sales leadership will be furious about missing their targets, but I will not absorb the reputational risk of a data breach."'
-  },
-  5: {
-    title: 'Gear 05: Hold the Line',
-    rule: 'Pick the one signal that proves your decision is working.',
-    reflex: 'Relying on internal vanity metrics like sprint velocity or ticket counts.',
-    req: 'Defining the one data point that proves your strategy is generating value for the company, not just keeping the engineering team busy.',
-    wrongLabel: 'The Builder Reflex (An Internal Metric)',
-    wrongText: '"We will measure success by the number of Jira tickets closed and our SLA response time."',
-    rightLabel: 'The Business Reality (A Business Outcome)',
-    rightText: '"Success is reducing the manual report generation time from 16 hours a week to exactly zero hours a week, returning that payroll capacity to active feature development."'
-  }
-};
-
-function getExample(scenarioId, tier, pathKey) {
-  if (!currentScenario || !currentScenario.paths || !pathKey || !currentScenario.paths[pathKey]) return null;
-  const levelKey = tier.replace('score', 'level');
-  const benchmark = currentScenario.paths[pathKey].benchmarks[levelKey];
-  
-  if (!benchmark) return null;
-
-  return {
-    problem: benchmark.q1?.text || "",
-    constraint: benchmark.q2?.text || "",
-    options: benchmark.q3?.text || "",
-    recommendation: benchmark.q4?.text || "",
-    metric: benchmark.q5?.text || ""
-  };
-}
 
 const QUESTIONS = [
   { num: "01", text: "What is the real business problem?", min: 10 },
@@ -1674,32 +1455,69 @@ const QUESTIONS = [
 
 const DIRECTIVES = [
   "Don't just name the symptom. What is the structural threat to the business?",
-  "Name a hard executive boundary (e.g., zero budget, hiring freeze), not a technical task.",
+  "Name a hard boundary (e.g., zero budget, hiring freeze), not a technical task.",
   "Identify the options. What is the legitimate business value of the path you are rejecting?",
   "Make the call. What specific political or operational pain are you choosing to absorb?",
   "How will you measure success, and how will you know if your plan is failing?"
 ];
 
+// --- CORE UTILS ---
 function pickScenario(excludeId = null) {
+  if (!SCENARIOS || SCENARIOS.length === 0) return null;
   const pool = SCENARIOS.filter(s => s.id !== excludeId);
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-function handleScenarioChange(id) {
-  const selected = SCENARIOS.find(s => s.id === id);
-  if (selected) {
-    currentScenario = selected;
-    answers = ['', '', '', '', ''];
-    results = null;
-    mirrorText = '';
-    clarifyAnswer = '';
-    currentQuestion = 0;
-    state = 'brief';
-    render();
+function countWords(str) {
+  return str.trim().split(/\s+/).filter(w => w.length > 0).length;
+}
+
+function getQuestions() {
+  return QUESTIONS.map((q, i) => {
+    if (i === 4 && currentScenario && currentScenario.q5) {
+      return { ...q, text: currentScenario.q5 };
+    }
+    return q;
+  });
+}
+
+function scrollToApp() {
+  const el = document.getElementById('app');
+  if (el) {
+    const top = el.getBoundingClientRect().top + window.scrollY - 24;
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 }
 
+// --- RENDER ENGINE ---
+function render() {
+  const container = document.getElementById('app-content');
+  if (!container) return;
+
+  container.classList.add('fade-out');
+  
+  clearTimeout(renderTimeout);
+  renderTimeout = setTimeout(() => {
+    clearInterval(loadingInterval);
+
+    try {
+      if (state === 'brief') renderBrief(container);
+      else if (state === 'question') renderQuestion(container);
+      else if (state === 'loading-mirror' || state === 'loading-results') renderLoading(container);
+      else if (state === 'mirror') renderMirror(container);
+      else if (state === 'results') renderResults(container);
+      else container.innerHTML = '<div class="loading-state">Error: Invalid state.</div>';
+    } catch (e) {
+      console.error("Render Error:", e);
+      container.innerHTML = `<div class="loading-state"><div class="loading-text" style="color:var(--accent)">A rendering error occurred. Please check the browser console for details. Error: ${e.message}</div></div>`;
+    } finally {
+      container.classList.remove('fade-out');
+    }
+  }, 200);
+}
+
 function renderScenarioSelect() {
+  if (!SCENARIOS || SCENARIOS.length === 0) return '';
   const options = SCENARIOS.map(s => `
     <option value="${s.id}" ${currentScenario && currentScenario.id === s.id ? 'selected' : ''}>
       ${s.title}
@@ -1713,82 +1531,12 @@ function renderScenarioSelect() {
   `;
 }
 
-let renderTimeout = null;
-
-function render() {
-  const container = document.getElementById('app-content');
-  container.classList.add('fade-out');
-  
-  clearTimeout(renderTimeout);
-  renderTimeout = setTimeout(() => {
-    clearInterval(loadingInterval);
-    clearInterval(preflightInterval);
-
-    if (state === 'preflight') renderPreflight(container);
-    else if (state === 'brief') renderBrief(container);
-    else if (state === 'question') renderQuestion(container);
-    else if (state === 'loading-mirror' || state === 'loading-results') renderLoading(container);
-    else if (state === 'mirror') renderMirror(container);
-    else if (state === 'results') renderResults(container);
-    
-    container.classList.remove('fade-out');
-  }, 200);
-}
-
-function renderPreflight(container) {
-  const gear = GEARS[currentGear];
-  const isIntro = currentGear === 0;
-  const isLast = currentGear === GEARS.length - 1;
-
-  clearInterval(preflightInterval);
-  if (!isLast && !isIntro) {
-    preflightInterval = setInterval(() => { nextGear(); }, 7000); 
-  }
-
-  const dotsHtml = isIntro ? '' : GEARS.slice(1).map((_, i) => `
-    <div class="gear-dot ${i + 1 === currentGear ? 'active' : ''}" onclick="goToGear(${i + 1})"></div>
-  `).join('');
-  
-  const watermarkHtml = isIntro ? '' : `<div class="gear-watermark">0${currentGear}</div>`;
-
-  container.innerHTML = `
-    <div class="preflight-layout">
-      <div class="section-label">The Tenure Engine: Pre-Flight Briefing</div>
-      ${dotsHtml ? `<div class="gear-nav-dots">${dotsHtml}</div>` : ''}
-      <div class="gear-display" id="gear-display">
-        ${watermarkHtml}
-        <div class="gear-label">${isIntro ? 'SYSTEM OVERVIEW' : `Gear 0${currentGear}`}</div>
-        <div class="gear-title">${gear.title}</div>
-        <div class="gear-goal">${isIntro ? gear.goal : `The Goal: ${gear.goal}`}</div>
-        <div class="gear-text">${gear.text}</div>
-      </div>
-      <div class="action-row" style="flex-direction: row; justify-content: space-between; align-items: center; border-top: none; margin-top: 16px; padding-top: 0;">
-        <button class="btn-secondary" onclick="finishPreflight()" style="border: none; opacity: 0.5; padding-left: 0;">Skip to Scenario</button>
-        <div class="action-buttons">
-          ${isIntro 
-            ? `<button class="btn-submit" onclick="nextGear()">Learn the gears →</button>`
-            : isLast 
-              ? `<button class="btn-submit" onclick="finishPreflight()">Enter the Scenario →</button>`
-              : `<button class="btn-secondary" onclick="nextGear()">Next Gear →</button>`
-          }
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function nextGear() {
-  if (currentGear < GEARS.length - 1) { currentGear++; render(); }
-}
-function goToGear(index) { currentGear = index; render(); }
-function finishPreflight() {
-  clearInterval(preflightInterval);
-  state = 'brief';
-  render();
-  scrollToApp();
-}
-
+// --- RENDER VIEWS ---
 function renderBrief(container) {
+  if (!currentScenario) {
+    container.innerHTML = '<div class="loading-state">No scenario available. Please check data connection.</div>';
+    return;
+  }
   container.innerHTML = `
     <div class="brief-layout">
       <div class="scenario-card">
@@ -1811,35 +1559,48 @@ function renderBrief(container) {
   `;
 }
 
-function startQuestions() {
-  currentQuestion = 0;
-  state = 'question';
-  render();
-  scrollToApp();
-}
-
-function countWords(str) {
-  return str.trim().split(/\s+/).filter(w => w.length > 0).length;
-}
-
-function getQuestions() {
-  return QUESTIONS.map((q, i) => {
-    if (i === 4 && currentScenario.q5) {
-      return { ...q, text: currentScenario.q5 };
-    }
-    return q;
-  });
-}
-
 function renderQuestion(container) {
   const questions = getQuestions();
   const q = questions[currentQuestion];
-  const progress = ((currentQuestion + 1) / QUESTIONS.length) * 100;
   const isMobile = window.innerWidth <= 768;
   const currentWords = countWords(answers[currentQuestion] || '');
   const meetsMin = currentWords >= q.min;
   const hasText = currentWords > 0;
   const isLast = currentQuestion === QUESTIONS.length - 1;
+
+  const gearLabels = ["Root Cause", "Hard Limit", "Trade Offs", "Risk Owner", "Metric"];
+  let hudNodesHtml = '';
+  
+  for (let i = 0; i < 5; i++) {
+    let stateClass = '';
+    let icon = '';
+    if (i < currentQuestion) {
+      stateClass = 'hud-past';
+      icon = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    } else if (i === currentQuestion) {
+      stateClass = 'hud-active';
+      icon = `<div style="width:6px; height:6px; background:var(--score-mid); border-radius:50%;"></div>`;
+    } else {
+      stateClass = 'hud-future';
+      icon = `<div style="width:4px; height:4px; background:var(--gray-200); border-radius:50%;"></div>`;
+    }
+
+    hudNodesHtml += `
+      <div class="hud-node ${stateClass}">
+        <div class="gear-assembly">
+          <svg class="gear-cog" viewBox="-3 -3 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="8" fill="var(--white)"/>
+            <path transform="translate(12 12) scale(1.25) translate(-12 -12)" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49-.12-.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z" fill="currentColor"/>
+          </svg>
+          <div class="gear-icon-inner">${icon}</div>
+        </div>
+        <div class="hud-label">${gearLabels[i]}</div>
+      </div>
+    `;
+  }
+  
+  const fillPct = currentQuestion * 25;
+  const lineWidth = fillPct * 0.8;
 
   container.innerHTML = `
     <div class="question-layout">
@@ -1861,10 +1622,27 @@ function renderQuestion(container) {
       </div>
       `}
       <div class="question-right">
-        <div class="progress-bar-wrap">
-          <div class="progress-bar-fill" style="width:${progress}%"></div>
+        
+        <div class="hud-container">
+          <div class="hud-track">
+            <div style="position: absolute; top: 24px; left: 10%; right: 10%; height: 2px; background: var(--gray-200); z-index: 0;"></div>
+            <div style="position: absolute; top: 24px; left: 10%; width: ${lineWidth}%; height: 2px; background: var(--black); z-index: 1; transition: width 0.5s ease;"></div>
+            <div style="display:flex; justify-content: space-between; position:relative; z-index: 2;">
+              ${hudNodesHtml}
+            </div>
+          </div>
         </div>
-        <div class="progress-label">${currentQuestion + 1} of ${QUESTIONS.length}</div>
+
+        <div class="req-accordion">
+          <button class="req-acc-btn" onclick="document.getElementById('req-content').classList.toggle('open')">
+            <span style="color:var(--accent);">+</span> UNDERSTAND THE REQUIREMENT
+          </button>
+          <div id="req-content" class="req-acc-content">
+            <strong>The Goal:</strong> ${GEARS[currentQuestion].goal}<br>
+            <strong>The Requirement:</strong> ${GEARS[currentQuestion].text}
+          </div>
+        </div>
+
         <div class="single-question">
           <div class="question-label">
             <span class="question-number">${q.num}</span>
@@ -1879,65 +1657,18 @@ function renderQuestion(container) {
             ${currentWords} / ${q.min} words ${hasText && !meetsMin ? '(A bit short)' : ''}
           </div>
         </div>
+        
         <div class="question-nav">
           ${currentQuestion > 0 ? `<button class="btn-secondary" onclick="prevQuestion()">← Back</button>` : '<span></span>'}
           ${isLast
-            ? `<button class="btn-submit ${!hasText ? 'btn-disabled' : ''}" onclick="${hasText ? 'submitAnswers()' : ''}" ${!hasText ? 'disabled' : ''}>Submit for scoring →</button>`
+            ? `<button class="btn-submit ${!hasText ? 'btn-disabled' : ''}" onclick="${hasText ? 'submitAnswers()' : ''}" ${!hasText ? 'disabled' : ''}>Submit for analyzing logic →</button>`
             : `<button class="btn-submit ${!hasText ? 'btn-disabled' : ''}" onclick="${hasText ? 'nextQuestion()' : ''}" ${!hasText ? 'disabled' : ''}>Next →</button>`
           }
         </div>
+
       </div>
     </div>
   `;
-}
-
-function handleAnswerInput(value) {
-  answers[currentQuestion] = value;
-  const q = getQuestions()[currentQuestion];
-  const words = countWords(value);
-  const meetsMin = words >= q.min;
-  const hasText = words > 0;
-  const countEl = document.getElementById('word-count');
-  if (countEl) {
-    countEl.textContent = `${words} / ${q.min} words ${hasText && !meetsMin ? '(A bit short)' : ''}`;
-    countEl.className = `word-count ${meetsMin ? 'word-count-met' : ''}`;
-  }
-  const isLast = currentQuestion === QUESTIONS.length - 1;
-  const btn = document.querySelector('.question-nav .btn-submit');
-  if (btn) {
-    if (hasText) {
-      btn.disabled = false;
-      btn.classList.remove('btn-disabled');
-      btn.onclick = isLast ? submitAnswers : nextQuestion;
-    } else {
-      btn.disabled = true;
-      btn.classList.add('btn-disabled');
-      btn.onclick = null;
-    }
-  }
-}
-
-function toggleScenario() { scenarioCollapsed = !scenarioCollapsed; render(); }
-function prevQuestion() {
-  const ta = document.getElementById('current-answer');
-  if (ta) answers[currentQuestion] = ta.value;
-  currentQuestion--;
-  state = 'question';
-  render();
-  scrollToApp();
-}
-function nextQuestion() {
-  const ta = document.getElementById('current-answer');
-  if (ta) answers[currentQuestion] = ta.value;
-  if (!answers[currentQuestion].trim()) {
-    ta.style.borderColor = 'var(--accent)';
-    ta.placeholder = 'Please answer this question before continuing.';
-    return;
-  }
-  currentQuestion++;
-  state = 'question';
-  render();
-  scrollToApp();
 }
 
 function renderLoading(container) {
@@ -1960,7 +1691,7 @@ function renderLoading(container) {
 
   const phrases = [
     "Identifying your strategic path...",
-    "Isolating the grading rubric...",
+    "Isolating the analyzing logic...",
     "Reviewing your approach...",
     "Synthesizing your recommendation..."
   ];
@@ -2011,236 +1742,80 @@ function renderMirror(container) {
   `;
 }
 
-function openAccordion(gearId, status) {
-  const panel = document.getElementById('dynamic-panel');
-  const nodes = document.querySelectorAll('.gear-node');
-  
-  if (activeGear === gearId) {
-    panel.classList.remove('open');
-    nodes.forEach(n => n.classList.remove('active'));
-    activeGear = null;
-    return;
-  }
-
-  nodes.forEach(n => n.classList.remove('active'));
-  document.getElementById(`node-${gearId}`).classList.add('active');
-  activeGear = gearId;
-
-  const data = gearData[gearId];
-  panel.className = `accordion-panel open state-${status}`;
-
-  const passBanner = status === 'pass' 
-    ? `<div class="acc-banner pass">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        You passed this check
-       </div>` 
-    : '';
-
-  panel.innerHTML = `
-    ${passBanner}
-    <div class="acc-header">
-      <span>${data.title}</span>
-      <span class="acc-close" onclick="openAccordion(${gearId}, '${status}')">×</span>
-    </div>
-    
-    <div class="rule-block">
-      <div class="rule-line"><span class="rule-label">The Rule:</span> ${data.rule}</div>
-      <div class="rule-line"><span class="rule-label">The Reflex:</span> ${data.reflex}</div>
-      <div class="rule-line"><span class="rule-label">The Requirement:</span> ${data.req}</div>
-    </div>
-    
-    <div class="acc-divider"></div>
-    
-    <div class="example-intro" style="margin-bottom: 4px;">Real-World Examples</div>
-    <div style="font-size: 11px; color: var(--gray-400); font-style: italic; margin-bottom: 16px;">(These illustrate the difference in mindset.)</div>
-    
-    <div class="example-block example-wrong">
-      <div class="example-label">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        ${data.wrongLabel}
-      </div>
-      <div class="example-text">${data.wrongText}</div>
-    </div>
-
-    <div class="example-block example-right">
-      <div class="example-label">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        ${data.rightLabel}
-      </div>
-      <div class="example-text">${data.rightText}</div>
-    </div>
-  `;
-}
-
-async function toggleBenchmarkReveal(level) {
-  const content = document.getElementById('benchmark-content');
-  const btn = document.getElementById('reveal-btn');
-
-  if(content.classList.contains('open')) {
-    content.classList.remove('open');
-    btn.innerText = `Reveal how to score a ${level}/10`;
-    return;
-  }
-
-  if (!results.individual_critiques) {
-    btn.innerText = 'Analyzing your gaps...';
-    btn.disabled = true;
-    btn.style.opacity = '0.5';
-
-    try {
-      const text = await callAPI(BENCHMARK_PROMPT, buildBenchmarkMessage(level));
-      const clean = text.replace(/```json|```/g, '').trim();
-      const parsed = JSON.parse(clean);
-      results.individual_critiques = parsed.individual_critiques;
-
-      const targetTier = 'score' + level;
-      const pathKey = results?.scoring_evidence?.identified_path;
-      const targetBenchmark = getExample(currentScenario.id, targetTier, pathKey);
-      const labels = [
-        '01 — The Real Business Problem',
-        '02 — Naming The Constraint',
-        '03 — Concrete Trade-Offs',
-        '04 — Owning The Recommendation',
-        '05 — Specifying The Metric'
-      ];
-
-      const benchmarkItemsHtml = answers.map((ans, i) => {
-        const critique = results.individual_critiques[i] || 'The gap is missing.';
-        const ideal = targetBenchmark ? [targetBenchmark.problem, targetBenchmark.constraint, targetBenchmark.options, targetBenchmark.recommendation, targetBenchmark.metric][i] : 'Benchmark not available.';
-
-        const userAnswerAccordion = `
-          <details style="margin-top: 16px; cursor: pointer;">
-            <summary style="font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400); outline: none; user-select: none;">+ View Your Answer</summary>
-            <div style="font-size: 14px; color: var(--gray-600); line-height: 1.6; font-style: italic; margin-top: 12px; padding-left: 16px; border-left: 2px solid var(--border);">
-              "${ans || 'No answer provided.'}"
-            </div>
-          </details>
-        `;
-
-        if (critique.trim() === 'Solid.') {
-          return `
-            <div class="benchmark-item">
-              <div class="benchmark-label">${labels[i]}</div>
-              <div style="font-size: 15px; color: var(--score-high); font-weight: 500; display: flex; align-items: center; gap: 8px;">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Solid. You hit the target benchmark for this question.
-              </div>
-              ${userAnswerAccordion}
-            </div>
-          `;
-        }
-
-        return `
-          <div class="benchmark-item">
-            <div class="benchmark-label">${labels[i]}</div>
-            <div class="benchmark-gap"><strong>The Gap:</strong> ${critique}</div>
-            <div class="benchmark-ideal"><strong>The ${level}/10 Answer:</strong> ${ideal}</div>
-            ${userAnswerAccordion}
-          </div>
-        `;
-      }).join('');
-
-      content.innerHTML = benchmarkItemsHtml;
-
-      const history = loadHistory();
-      if (history.length > 0) {
-        history[history.length - 1].individual_critiques = results.individual_critiques;
-        localStorage.setItem('tenure_history', JSON.stringify(history));
-      }
-
-    } catch (err) {
-      console.error(err);
-      alert("The AI servers are busy. Please try clicking again.");
-      btn.innerText = `Reveal how to score a ${level}/10`;
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      return;
-    }
-
-    btn.disabled = false;
-    btn.style.opacity = '1';
-  }
-
-  content.classList.add('open');
-  btn.innerText = 'Hide benchmark comparison';
-}
-
 function renderResults(container) {
   const r = results;
   const scoreColor = r.score <= 6 ? 'var(--score-low)' : r.score <= 7 ? 'var(--score-mid)' : 'var(--score-high)';
   const pathKey = r.scoring_evidence?.identified_path;
   
-  let targetLevel = 10;
-  if (r.score < 8) targetLevel = 8;
-  else if (r.score === 8) targetLevel = 9;
-
-  let parsedDeliveryText = '';
-  if (r.delivery_feedback) {
-    parsedDeliveryText = r.delivery_feedback.replace(/\*\*The Fix:\*\*/gi, '<strong>The Fix:</strong>').replace(/The Fix:/gi, '<strong>The Fix:</strong>').replace(/\*\*The Flaw:\*\*/gi, '<strong>The Flaw:</strong>').replace(/The Flaw:/gi, '<strong>The Flaw:</strong>');
-  }
-
   let detectedStrategyLabel = "Strategy not clearly identified";
   if (pathKey === 'off_script') {
       detectedStrategyLabel = "Off-Script (Evaded the Constraints)";
   } else if (pathKey === 'gibberish') {
       detectedStrategyLabel = "Signal Rejected";
-  } else if (pathKey && currentScenario.paths && currentScenario.paths[pathKey]) {
+  } else if (pathKey && currentScenario && currentScenario.paths && currentScenario.paths[pathKey]) {
       detectedStrategyLabel = currentScenario.paths[pathKey].label;
   }
 
-  // --- VISUAL CAP LOGIC ---
-  let stallGearNum = 1;
-  if (r.score <= 5) stallGearNum = 1;
-  else if (r.score === 6 || r.score === 7) stallGearNum = 3;
-  else if (r.score === 8) stallGearNum = 4;
-  else if (r.score === 9) stallGearNum = 5;
-  else if (r.score === 10) stallGearNum = 6;
-  
-  if (pathKey === 'off_script' || pathKey === 'gibberish') {
-      stallGearNum = 1;
+  let stallGearNum = r.scoring_evidence?.stall_gear_num;
+  if (stallGearNum === undefined) {
+      if (r.score <= 5) stallGearNum = 1;
+      else if (r.score === 6) stallGearNum = 2;
+      else if (r.score === 7) stallGearNum = 3;
+      else if (r.score === 8) stallGearNum = 4;
+      else if (r.score === 9) stallGearNum = 5;
+      else stallGearNum = 0;
   }
+  if (pathKey === 'off_script' || pathKey === 'gibberish') stallGearNum = 1;
+  
+  window.currentStallGear = stallGearNum;
 
-  const gearLabels = ["Root<br>Cause", "Hard<br>Limit", "Trade<br>Offs", "Risk<br>Owner", "Backfire<br>Metric"];
+  const gearLabelsHtml = ["Root<br>Cause", "Hard<br>Limit", "Trade<br>Offs", "Risk<br>Owner", "Backfire<br>Metric"];
   let gearNodesHtml = '';
   
   for (let i = 1; i <= 5; i++) {
     let stateClass = '';
     let iconHtml = '';
     let stallTag = '';
-    let onclick = '';
+    let statusArg = '';
 
-    if (i < stallGearNum) {
+    if (stallGearNum === 0 || i < stallGearNum) {
       stateClass = 'node-pass';
-      onclick = `onclick="openAccordion(${i}, 'pass')"`;
+      statusArg = 'pass';
       iconHtml = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     } else if (i === stallGearNum) {
       stateClass = 'node-stall';
-      onclick = `onclick="openAccordion(${i}, 'stalled')"`;
+      statusArg = 'stalled';
       iconHtml = `<svg width="8" height="8" viewBox="0 0 16 16" fill="none"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
       stallTag = `<div class="stall-tag">STALLED</div>`;
     } else {
       stateClass = 'node-lock';
+      statusArg = 'locked';
       iconHtml = `<svg width="8" height="10" viewBox="0 0 14 16" fill="none"><path d="M3 6V4.5C3 2.567 4.567 1 6.5 1V1C8.433 1 10 2.567 10 4.5V6M1 6H12V15H1V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`;
     }
 
-    let gearCircleColor = i < stallGearNum ? 'var(--white)' : (i === stallGearNum ? 'var(--score-low)' : 'var(--gray-100)');
+    let gearCircleColor = (stallGearNum === 0 || i < stallGearNum) ? 'var(--white)' : (i === stallGearNum ? 'var(--score-low)' : 'var(--gray-100)');
 
     gearNodesHtml += `
-      <div class="gear-node ${stateClass}" id="node-${i}" ${onclick}>
+      <div class="gear-node ${stateClass}" id="node-${i}" onclick="openAccordion(${i}, '${statusArg}', true)">
         <div class="gear-assembly">
-          <svg class="gear-cog" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49-.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z"/>
+          <svg class="gear-cog" viewBox="-3 -3 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="8" fill="${gearCircleColor}"/>
+            <path transform="translate(12 12) scale(1.25) translate(-12 -12)" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49-.12-.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z" fill="currentColor"/>
           </svg>
-          <svg style="position:absolute; inset:0; width:100%; height:100%;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5" fill="${gearCircleColor}"/></svg>
           <div class="gear-icon-inner">${iconHtml}</div>
         </div>
-        <div class="gear-label">${gearLabels[i-1]}</div>
+        <div class="gear-label">${gearLabelsHtml[i-1]}</div>
         ${stallTag}
       </div>
     `;
   }
 
-  const fillPct = Math.min((stallGearNum - 1) * 20, 80);
+  let fillPct = 100;
+  if (stallGearNum !== 0) {
+    fillPct = (stallGearNum - 1) * 25; 
+  }
+  const lineWidth = fillPct * 0.8;
+
   const gearVisualizerHtml = `
     <div class="visualizer-section">
       <div class="visualizer-header-row">
@@ -2249,128 +1824,38 @@ function renderResults(container) {
       </div>
       <div class="gear-track">
         <div style="position: absolute; top: 32px; left: 10%; right: 10%; height: 2px; background: var(--gray-200); z-index: 0;"></div>
-        <div style="position: absolute; top: 32px; left: 10%; width: ${fillPct}%; height: 2px; background: var(--score-high); z-index: 1; transition: width 0.5s ease;"></div>
+        <div style="position: absolute; top: 32px; left: 10%; width: ${lineWidth}%; height: 2px; background: var(--score-high); z-index: 1; transition: width 0.5s ease;"></div>
         ${gearNodesHtml}
       </div>
       <div id="dynamic-panel" class="accordion-panel"></div>
     </div>
   `;
-  // --- END VISUAL CAP LOGIC ---
-
-  let benchmarkItemsHtml = '';
-  let isBenchmarkOpen = false;
-  let btnText = `Reveal how to score a ${targetLevel}/10`;
-
-  if (r.individual_critiques) {
-    isBenchmarkOpen = true;
-    btnText = 'Hide benchmark comparison';
-    const targetTier = 'score' + targetLevel;
-    const targetBenchmark = getExample(currentScenario.id, targetTier, pathKey);
-    const labels = [
-      '01 — The Real Business Problem',
-      '02 — Naming The Constraint',
-      '03 — Concrete Trade-Offs',
-      '04 — Owning The Recommendation',
-      '05 — Specifying The Metric'
-    ];
-
-    benchmarkItemsHtml = answers.map((ans, i) => {
-      const critique = r.individual_critiques[i] || 'The gap is missing.';
-      const ideal = targetBenchmark ? [targetBenchmark.problem, targetBenchmark.constraint, targetBenchmark.options, targetBenchmark.recommendation, targetBenchmark.metric][i] : 'Benchmark not available.';
-
-      const userAnswerAccordion = `
-        <details style="margin-top: 16px; cursor: pointer;">
-          <summary style="font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400); outline: none; user-select: none;">+ View Your Answer</summary>
-          <div style="font-size: 14px; color: var(--gray-600); line-height: 1.6; font-style: italic; margin-top: 12px; padding-left: 16px; border-left: 2px solid var(--border);">
-            "${ans || 'No answer provided.'}"
-          </div>
-        </details>
-      `;
-
-      if (critique.trim() === 'Solid.') {
-        return `
-          <div class="benchmark-item">
-            <div class="benchmark-label">${labels[i]}</div>
-            <div style="font-size: 15px; color: var(--score-high); font-weight: 500; display: flex; align-items: center; gap: 8px;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Solid. You hit the target benchmark for this question.
-            </div>
-            ${userAnswerAccordion}
-          </div>
-        `;
-      }
-
-      return `
-        <div class="benchmark-item">
-          <div class="benchmark-label">${labels[i]}</div>
-          <div class="benchmark-gap"><strong>The Gap:</strong> ${critique}</div>
-          <div class="benchmark-ideal"><strong>The ${targetLevel}/10 Answer:</strong> ${ideal}</div>
-          ${userAnswerAccordion}
-        </div>
-      `;
-    }).join('');
-  }
 
   container.innerHTML = `
     <div class="results-layout">
       <div class="results-left">
         <div class="section-label">Results — ${currentScenario.title}</div>
         
-        <div class="score-display" style="margin-bottom: 12px;">
+        <div class="score-display">
           <div class="score-number" style="color:${scoreColor}">${r.score}</div>
           <div class="score-denom">/10</div>
         </div>
         
-        <div style="font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border);">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
           <span style="color: var(--accent);">Detected Strategy:</span> ${detectedStrategyLabel}
         </div>
 
-        ${gearVisualizerHtml}
-
-        <div class="results-section" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border);">
-          <div class="results-section-label">The Logic</div>
-          <div style="font-size: 16px; color: var(--gray-600); line-height: 1.6; font-weight: 300;">${r.why}</div>
-        </div>
-
-        ${r.delivery_feedback ? `
-        <div class="results-section" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border);">
-          <div class="results-section-label">How Clearly You Communicated</div>
-          <div style="font-size: 16px; color: var(--gray-600); line-height: 1.6; font-weight: 300;">${parsedDeliveryText}</div>
-        </div>
-        ` : ''}
-
         <div class="results-section">
-          <div class="results-section-label">Feedback</div>
-          <ul class="feedback-list">
-            ${r.feedback.map(f => `
-              <li class="feedback-item">
-                <span class="feedback-dash">—</span>
-                <span>${f}</span>
-              </li>
-            `).join('')}
-          </ul>
+          <div class="results-section-label">The Verdict</div>
+          <div style="font-size: 16px; color: var(--black); line-height: 1.6; font-weight: 400;">${r.why}</div>
         </div>
+
+        ${gearVisualizerHtml}
 
         <div class="results-section">
           <div class="results-section-label">One thing to think about</div>
           <div class="reflection-box">${r.reflection}</div>
         </div>
-
-        ${r.score < 10 ? `
-        <button id="reveal-btn" class="btn-reveal" onclick="toggleBenchmarkReveal(${targetLevel})">
-          ${btnText}
-        </button>
-
-        <div id="benchmark-content" class="benchmark-content ${isBenchmarkOpen ? 'open' : ''}">
-          ${benchmarkItemsHtml}
-        </div>
-        ` : `
-        <div class="results-section" style="margin-top: 32px;">
-          <div style="font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--score-high); text-align: center; border: 1px dashed var(--score-high); padding: 20px;">
-            Perfect Score. You are the benchmark.
-          </div>
-        </div>
-        `}
 
         <div class="action-row">
           <div class="progression-line">Most people score a 6 their first time. By their third scenario they think differently.</div>
@@ -2391,72 +1876,12 @@ function renderResults(container) {
       </div>
     </div>
   `;
-}
 
-function loadHistory() {
-  try { return JSON.parse(localStorage.getItem('tenure_history') || '[]'); } catch { return []; }
-}
-function saveHistory(entry) {
-  try {
-    const history = loadHistory();
-    history.push(entry);
-    localStorage.setItem('tenure_history', JSON.stringify(history));
-  } catch {}
-}
-
-function getPerspectivesData(history) {
-  const played = {};
-  for (let i = history.length - 1; i >= 0; i--) {
-    const entry = history[i];
-    const sTitle = entry.scenario;
-    const sObj = SCENARIOS.find(s => s.title === sTitle);
-    if (!sObj || !sObj.paths) continue; 
-    
-    if (!played[sTitle]) {
-      played[sTitle] = {
-        id: sObj.id,
-        title: sTitle,
-        lastPlayedTs: entry.ts || new Date(0).toISOString(),
-        pathsPlayed: 0,
-        totalPaths: Object.keys(sObj.paths).length,
-        pathData: {}
-      };
-      Object.entries(sObj.paths).forEach(([k, v]) => {
-        played[sTitle].pathData[k] = { label: v.label, bestScore: null };
-      });
-    }
-    
-    const pKey = entry.identified_path;
-    if (pKey && played[sTitle].pathData[pKey]) {
-      const currentBest = played[sTitle].pathData[pKey].bestScore;
-      if (currentBest === null || entry.score > currentBest) {
-        played[sTitle].pathData[pKey].bestScore = entry.score;
-      }
-    }
-  }
-  
-  const arr = Object.values(played).map(p => {
-    p.pathsPlayed = Object.values(p.pathData).filter(pd => pd.bestScore !== null).length;
-    return p;
-  });
-  
-  return arr.sort((a, b) => new Date(b.lastPlayedTs) - new Date(a.lastPlayedTs));
-}
-
-function jumpToPerspective(scenarioId) {
-  const selected = SCENARIOS.find(s => s.id === scenarioId);
-  if (selected) {
-    currentScenario = selected;
-    answers = ['', '', '', '', ''];
-    results = null;
-    mirrorText = '';
-    clarifyAnswer = '';
-    currentQuestion = 0;
-    scenarioCollapsed = false;
-    state = 'brief'; 
-    render();
-    scrollToApp();
-  }
+  setTimeout(() => {
+      const targetGear = stallGearNum === 0 ? 5 : stallGearNum;
+      const statusArg = stallGearNum === 0 ? 'pass' : 'stalled';
+      openAccordion(targetGear, statusArg, false);
+  }, 50);
 }
 
 function renderDashboard() {
@@ -2513,9 +1938,9 @@ function renderDashboard() {
     if (speedPct >= 65) {
         profileRisk = "You are a wartime leader who moves fast, but you are highly vulnerable to technical debt and team burnout.";
     } else if (stabilityPct >= 65) {
-        profileRisk = "You are a protective leader who builds robust systems, but you are highly vulnerable to missing market windows and frustrating executives.";
+        profileRisk = "You are a protective leader who builds robust systems, but you are highly vulnerable to missing market windows and frustrating leadership.";
     } else {
-        profileRisk = "You adapt to the context. You are unpredictable and dangerous in a boardroom.";
+        profileRisk = "You adapt to the context. You are unpredictable and dangerous in a hostile meeting.";
     }
 
     biasHtml = `
@@ -2650,6 +2075,324 @@ function renderDashboard() {
   `;
 }
 
+// --- USER ACTIONS ---
+function handleScenarioChange(id) {
+  const selected = SCENARIOS.find(s => s.id === id);
+  if (selected) {
+    currentScenario = selected;
+    answers = ['', '', '', '', ''];
+    results = null;
+    mirrorText = '';
+    clarifyAnswer = '';
+    currentQuestion = 0;
+    state = 'brief';
+    render();
+  }
+}
+
+function startQuestions() {
+  currentQuestion = 0;
+  state = 'question';
+  render();
+  scrollToApp();
+}
+
+function handleAnswerInput(value) {
+  answers[currentQuestion] = value;
+  const q = getQuestions()[currentQuestion];
+  const words = countWords(value);
+  const meetsMin = words >= q.min;
+  const hasText = words > 0;
+  const countEl = document.getElementById('word-count');
+  if (countEl) {
+    countEl.textContent = `${words} / ${q.min} words ${hasText && !meetsMin ? '(A bit short)' : ''}`;
+    countEl.className = `word-count ${meetsMin ? 'word-count-met' : ''}`;
+  }
+  const isLast = currentQuestion === QUESTIONS.length - 1;
+  const btn = document.querySelector('.question-nav .btn-submit');
+  if (btn) {
+    if (hasText) {
+      btn.disabled = false;
+      btn.classList.remove('btn-disabled');
+      btn.onclick = isLast ? submitAnswers : nextQuestion;
+    } else {
+      btn.disabled = true;
+      btn.classList.add('btn-disabled');
+      btn.onclick = null;
+    }
+  }
+}
+
+function toggleScenario() { 
+  scenarioCollapsed = !scenarioCollapsed; 
+  render(); 
+}
+
+function prevQuestion() {
+  const ta = document.getElementById('current-answer');
+  if (ta) answers[currentQuestion] = ta.value;
+  currentQuestion--;
+  state = 'question';
+  render();
+  scrollToApp();
+}
+
+function nextQuestion() {
+  const ta = document.getElementById('current-answer');
+  if (ta) answers[currentQuestion] = ta.value;
+  if (!answers[currentQuestion].trim()) {
+    ta.style.borderColor = 'var(--accent)';
+    ta.placeholder = 'Please answer this question before continuing.';
+    return;
+  }
+  currentQuestion++;
+  state = 'question';
+  render();
+  scrollToApp();
+}
+
+function confirmMirror() {
+  clarifyAnswer = '';
+  scoreAnswers();
+}
+
+function rejectMirror() {
+  const el = document.getElementById('clarify-extra');
+  if (el) el.style.display = 'block';
+}
+
+async function submitWithClarification() {
+  const ta = document.getElementById('clarify-answer');
+  if (ta) clarifyAnswer = ta.value;
+  if (!clarifyAnswer.trim()) {
+    if (ta) ta.style.borderColor = 'var(--accent)';
+    return;
+  }
+  scoreAnswers();
+}
+
+function closeAccordion() {
+  const panel = document.getElementById('dynamic-panel');
+  const nodes = document.querySelectorAll('.gear-node');
+  if (panel) panel.classList.remove('open');
+  nodes.forEach(n => n.classList.remove('active'));
+  activeGear = null;
+}
+
+function openAccordion(gearId, status, fromClick = false) {
+  const panel = document.getElementById('dynamic-panel');
+  const nodes = document.querySelectorAll('.gear-node');
+  if (!panel) return;
+  
+  // If the user clicks the gear that is already active, force the scroll down but do NOT close it.
+  if (activeGear === gearId) {
+    if (fromClick) {
+      setTimeout(() => {
+        const t = panel.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top: t, behavior: 'smooth' });
+      }, 50);
+    }
+    return;
+  }
+
+  nodes.forEach(n => n.classList.remove('active'));
+  const targetNode = document.getElementById(`node-${gearId}`);
+  if (targetNode) targetNode.classList.add('active');
+  activeGear = gearId;
+
+  const gearNames = ["Root Cause", "Hard Limit", "Trade Offs", "Risk Owner", "Metric"];
+  const currentName = gearNames[gearId - 1];
+
+  panel.className = `accordion-panel open state-${status}`;
+
+  if (status === 'locked') {
+    const stallName = gearNames[window.currentStallGear - 1];
+    panel.innerHTML = `
+      <div class="acc-header">
+        <span>Gear 0${gearId}: ${currentName}</span>
+        <span class="acc-close" onclick="closeAccordion()">×</span>
+      </div>
+      <div class="acc-banner" style="color: var(--gray-400);">
+        <svg width="12" height="14" viewBox="0 0 14 16" fill="none" style="margin-right:4px; margin-bottom:-2px;"><path d="M3 6V4.5C3 2.567 4.567 1 6.5 1V1C8.433 1 10 2.567 10 4.5V6M1 6H12V15H1V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        LOCKED: LOGIC STALLED
+      </div>
+      <div style="font-size: 15px; color: var(--gray-600); line-height: 1.6;">
+        You cannot evaluate <strong>${currentName}</strong> until your <strong>${stallName}</strong> is secure. Clear Gear 0${window.currentStallGear} to unlock this intelligence.
+      </div>
+    `;
+    
+    if (fromClick) {
+      setTimeout(() => {
+        const t = panel.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top: t, behavior: 'smooth' });
+      }, 50);
+    }
+    return;
+  }
+
+  const userAnswer = answers[gearId - 1] || "No answer provided.";
+  const feedback = results?.feedback_map ? (results.feedback_map[`gear_${gearId}`] || "Logic stalled before this gear could be evaluated.") : '';
+  
+  let benchmarkText = "Benchmark not available.";
+  const pathKey = results?.scoring_evidence?.identified_path;
+  if (currentScenario && pathKey && currentScenario.paths && currentScenario.paths[pathKey]) {
+      const bench = currentScenario.paths[pathKey].benchmarks?.level10;
+      if (bench) {
+          const keys = ['q1', 'q2', 'q3', 'q4', 'q5'];
+          benchmarkText = bench[keys[gearId - 1]]?.text || benchmarkText;
+      }
+  }
+
+  let gapHtml = '';
+  if (status === 'stalled') {
+    gapHtml = `
+      <div class="acc-divider"></div>
+      <div class="rule-label" style="color: var(--score-low); margin-bottom: 8px;">The Fatal Gap</div>
+      <div style="font-size: 15px; color: var(--black); line-height: 1.6;">${feedback}</div>
+    `;
+    
+    if (results.delivery_feedback) {
+      const parsedDelivery = results.delivery_feedback.replace(/\*\*The Fix:\*\*/gi, '<strong>The Fix:</strong>').replace(/The Fix:/gi, '<strong>The Fix:</strong>').replace(/\*\*The Flaw:\*\*/gi, '<strong>The Flaw:</strong>').replace(/The Flaw:/gi, '<strong>The Flaw:</strong>');
+      gapHtml += `
+        <div style="margin-top: 24px; padding: 20px; background: var(--white); border-left: 2px solid var(--score-low);">
+          <div style="font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--score-low); margin-bottom: 8px;">Delivery & Authority Check</div>
+          <div style="font-size: 14px; color: var(--gray-800); line-height: 1.5;">${parsedDelivery}</div>
+        </div>
+      `;
+    }
+  } else if (status === 'pass') {
+    gapHtml = `
+      <div class="acc-divider"></div>
+      <div class="rule-label" style="color: var(--score-high); margin-bottom: 8px;">The Strategy</div>
+      <div style="font-size: 15px; color: var(--black); line-height: 1.6;">${feedback}</div>
+    `;
+  }
+
+  const passBanner = status === 'pass' 
+    ? `<div class="acc-banner pass"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="margin-right:4px;"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> You passed this check</div>` 
+    : `<div class="acc-banner" style="color: var(--score-low);"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="margin-right:4px;"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Logic Stalled Here</div>`;
+
+  panel.innerHTML = `
+    ${passBanner}
+    <div class="acc-header">
+      <span>Gear 0${gearId}: ${currentName}</span>
+      <span class="acc-close" onclick="closeAccordion()">×</span>
+    </div>
+    
+    <div class="rule-label" style="margin-bottom: 8px;">Your Input</div>
+    <div style="font-size: 15px; color: var(--gray-600); font-style: italic; line-height: 1.6; padding-left: 16px; border-left: 2px solid var(--border);">"${userAnswer}"</div>
+
+    ${gapHtml}
+
+    <div class="acc-divider"></div>
+    <div class="rule-label" style="color: var(--black); margin-bottom: 8px;">The 10/10 Tenure Standard</div>
+    <div style="font-size: 15px; color: var(--gray-800); line-height: 1.6;">${benchmarkText}</div>
+  `;
+
+  if (fromClick) {
+    setTimeout(() => {
+      const p = document.getElementById('dynamic-panel');
+      if (p) {
+        const t = p.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top: t, behavior: 'smooth' });
+      }
+    }, 50);
+  }
+}
+
+function tryAnother() {
+  const prev = currentScenario ? currentScenario.id : null;
+  currentScenario = pickScenario(prev);
+  answers = ['', '', '', '', ''];
+  results = null;
+  mirrorText = '';
+  clarifyAnswer = '';
+  currentQuestion = 0;
+  scenarioCollapsed = false;
+  state = 'brief';
+  render();
+  scrollToApp();
+}
+
+function retryScenario() {
+  answers = ['', '', '', '', ''];
+  results = null;
+  mirrorText = '';
+  clarifyAnswer = '';
+  currentQuestion = 0;
+  scenarioCollapsed = false;
+  state = 'brief';
+  render();
+  scrollToApp();
+}
+
+function jumpToPerspective(scenarioId) {
+  const selected = SCENARIOS.find(s => s.id === scenarioId);
+  if (selected) {
+    currentScenario = selected;
+    answers = ['', '', '', '', ''];
+    results = null;
+    mirrorText = '';
+    clarifyAnswer = '';
+    currentQuestion = 0;
+    scenarioCollapsed = false;
+    state = 'brief'; 
+    render();
+    scrollToApp();
+  }
+}
+
+// --- API & DATA LOGIC ---
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem('tenure_history') || '[]'); } catch { return []; }
+}
+function saveHistory(entry) {
+  try {
+    const history = loadHistory();
+    history.push(entry);
+    localStorage.setItem('tenure_history', JSON.stringify(history));
+  } catch {}
+}
+
+function getPerspectivesData(history) {
+  const played = {};
+  for (let i = history.length - 1; i >= 0; i--) {
+    const entry = history[i];
+    const sTitle = entry.scenario;
+    const sObj = SCENARIOS.find(s => s.title === sTitle);
+    if (!sObj || !sObj.paths) continue; 
+    
+    if (!played[sTitle]) {
+      played[sTitle] = {
+        id: sObj.id,
+        title: sTitle,
+        lastPlayedTs: entry.ts || new Date(0).toISOString(),
+        pathsPlayed: 0,
+        totalPaths: Object.keys(sObj.paths).length,
+        pathData: {}
+      };
+      Object.entries(sObj.paths).forEach(([k, v]) => {
+        played[sTitle].pathData[k] = { label: v.label, bestScore: null };
+      });
+    }
+    
+    const pKey = entry.identified_path;
+    if (pKey && played[sTitle].pathData[pKey]) {
+      const currentBest = played[sTitle].pathData[pKey].bestScore;
+      if (currentBest === null || entry.score > currentBest) {
+        played[sTitle].pathData[pKey].bestScore = entry.score;
+      }
+    }
+  }
+  
+  const arr = Object.values(played).map(p => {
+    p.pathsPlayed = Object.values(p.pathData).filter(pd => pd.bestScore !== null).length;
+    return p;
+  });
+  
+  return arr.sort((a, b) => new Date(b.lastPlayedTs) - new Date(a.lastPlayedTs));
+}
+
 function buildPathIdentificationMessage() {
   let msg = `SCENARIO: ${currentScenario.title}\n\n${currentScenario.text}\n\n<USER_RECOMMENDATION>\n${answers[3]}\n</USER_RECOMMENDATION>\n\n<AVAILABLE_PATHS>\n`;
   if (currentScenario && currentScenario.paths) {
@@ -2686,27 +2429,10 @@ function buildScoringMessage(identifiedPath) {
         const firstPathKey = Object.keys(currentScenario.paths)[0];
         flatBenchmarks = currentScenario.paths[firstPathKey].benchmarks;
     }
-    msg += `\n\nSCENARIO BENCHMARKS (Use this exact grading rubric):\n${JSON.stringify(flatBenchmarks, null, 2)}`;
+    msg += `\n\nSCENARIO BENCHMARKS (Use this exact analyzing logic):\n${JSON.stringify(flatBenchmarks, null, 2)}`;
   }
   
   msg += '\n\nScore and evaluate these answers according to your instructions. Return valid JSON only.';
-  return msg;
-}
-
-function buildBenchmarkMessage(targetLevel) {
-  const targetTier = 'score' + targetLevel;
-  const pathKey = results?.scoring_evidence?.identified_path;
-  const targetBenchmark = getExample(currentScenario.id, targetTier, pathKey);
-  const questions = getQuestions();
-
-  let msg = `SCENARIO: ${currentScenario.title}\n\n${currentScenario.text}\n\n`;
-
-  for (let i = 0; i < 5; i++) {
-    const ideal = targetBenchmark ? [targetBenchmark.problem, targetBenchmark.constraint, targetBenchmark.options, targetBenchmark.recommendation, targetBenchmark.metric][i] : 'N/A';
-    msg += `QUESTION ${i + 1}: ${questions[i].text}\nUSER ANSWER: ${answers[i]}\nTARGET BENCHMARK: ${ideal}\n\n`;
-  }
-
-  msg += "Compare the user answers to the target benchmarks. Output the 5 specific gaps in the requested JSON format.";
   return msg;
 }
 
@@ -2721,7 +2447,7 @@ async function callAPI(systemPrompt, userMessage, maxRetries = 5) {
         if (!localKey) {
           localKey = prompt("Local Testing: Paste your Gemini API key:");
           if (!localKey) {
-            alert("Test cancelled. You need a key to test locally.");
+            alert("Analyzing logic cancelled. You need a key to analyze logic locally.");
             throw new Error("No key provided.");
           }
           sessionStorage.setItem('gemini_local_key', localKey);
@@ -2754,7 +2480,7 @@ async function callAPI(systemPrompt, userMessage, maxRetries = 5) {
           const errData = await response.json();
           console.error("Google API Error:", errData);
           alert("API Error: " + (errData.error?.message || "Check the console for details."));
-          throw new Error("Local API call failed");
+          throw new Error(errData.error?.message || "Local API call failed");
         }
         
         const data = await response.json();
@@ -2801,7 +2527,7 @@ async function logToAirtable(r) {
     await fetch('https://api.airtable.com/v0/appEtSfz6BDhJkdVW/tblAr37nL5AxVrXnS', {
       method: 'POST',
       headers: { 'Authorization': 'Bearer patnEerrg1Mn2IP3s.6fee2928f0004f51e410213e563a8ed8f28ed215161252e99eaf0c2fa8749215', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fields: { scenario: currentScenario.title, answer_1: answers[0], answer_2: answers[1], answer_3: answers[2], answer_4: answers[3], answer_5: answers[4], score: r.score, why: r.why, feedback: r.feedback.join('\n'), reflection: r.reflection, timestamp: new Date().toISOString() } })
+      body: JSON.stringify({ fields: { scenario: currentScenario.title, answer_1: answers[0], answer_2: answers[1], answer_3: answers[2], answer_4: answers[3], answer_5: answers[4], score: r.score, why: r.why, feedback: JSON.stringify(r.feedback_map || {}), reflection: r.reflection, timestamp: new Date().toISOString() } })
     });
   } catch (err) {}
 }
@@ -2825,8 +2551,8 @@ async function submitAnswers() {
     
     state = 'mirror';
   } catch (err) {
-    console.error(err);
-    alert("The AI servers are currently experiencing high volume and timed out. Please wait a moment and try submitting again.");
+    console.error("Mirror Error:", err);
+    alert("Error: " + err.message);
     state = 'question';
     currentQuestion = 4;
   }
@@ -2840,7 +2566,8 @@ function confirmMirror() {
 }
 
 function rejectMirror() {
-  document.getElementById('clarify-extra').style.display = 'block';
+  const el = document.getElementById('clarify-extra');
+  if (el) el.style.display = 'block';
 }
 
 async function submitWithClarification() {
@@ -2873,27 +2600,33 @@ async function scoreAnswers() {
 
     if (identifiedPath === 'off_script') {
         results = {
-          scoring_evidence: { identified_path: "Off-Script (Evaded the Constraints)" },
+          scoring_evidence: { identified_path: "off_script", stall_gear_num: 1 },
           score: 5,
-          why: "You invented an option or dodged the trade-off to avoid making the hard choice presented in the scenario.",
+          why: "You scored a 5/10. Your logic stalled in Gear 1 because you invented an option or dodged the trade-off to avoid making the hard choice presented in the scenario.",
           approach: "Constraint Evasion.",
-          feedback: [
-            "Executives don't get to invent magical third options when the operational constraints are fixed.",
-            "You focused on a different problem instead of the root cause or trade-off the scenario demanded.",
-            "A beautifully articulated recommendation for the wrong problem is still a failure."
-          ],
-          delivery_feedback: "[The Flaw] You negotiated with reality. The Fix: Answer the prompt based strictly on the facts and constraints provided.",
+          feedback_map: {
+            gear_1: "Leaders don't get to invent magical third options when the operational constraints are fixed. A beautifully articulated recommendation for the wrong problem is still a failure.",
+            gear_2: "Logic stalled before this gear could be evaluated.", 
+            gear_3: "Logic stalled before this gear could be evaluated.", 
+            gear_4: "Logic stalled before this gear could be evaluated.", 
+            gear_5: "Logic stalled before this gear could be evaluated."
+          },
+          delivery_feedback: "The Flaw: You negotiated with reality. The Fix: Answer the prompt based strictly on the facts and constraints provided.",
           reflection: "What happens to your credibility when you refuse to answer the question the board actually asked?"
         };
     } else if (identifiedPath === 'gibberish') {
         results = {
-          scoring_evidence: { identified_path: "Signal Rejected" },
-          score: 5,
+          scoring_evidence: { identified_path: "gibberish", stall_gear_num: 1 },
+          score: 1,
           why: "Signal rejected. Unprofessional or invalid input detected.",
           approach: "Invalid input.",
-          feedback: [
-            "Signal rejected. Unprofessional or invalid input detected."
-          ],
+          feedback_map: {
+            gear_1: "Signal rejected. Unprofessional or invalid input detected.",
+            gear_2: "Logic stalled before this gear could be evaluated.", 
+            gear_3: "Logic stalled before this gear could be evaluated.", 
+            gear_4: "Logic stalled before this gear could be evaluated.", 
+            gear_5: "Logic stalled before this gear could be evaluated."
+          },
           delivery_feedback: null,
           reflection: "What happens to your credibility when you treat high-stakes decisions like a joke?"
         };
@@ -2918,8 +2651,8 @@ async function scoreAnswers() {
     });
     logToAirtable(results);
   } catch (err) {
-    console.error(err);
-    alert("The AI servers are currently experiencing high volume and timed out. Your answers are saved. Please wait a moment and click to score again.");
+    console.error("Score Error:", err);
+    alert("Error: " + err.message);
     state = 'mirror'; 
     render();
     return;
@@ -2928,41 +2661,12 @@ async function scoreAnswers() {
   scrollToApp();
 }
 
-function scrollToApp() {
-  const el = document.getElementById('app');
-  const top = el.getBoundingClientRect().top + window.scrollY - 24;
-  window.scrollTo({ top, behavior: 'smooth' });
-}
-
-function tryAnother() {
-  const prev = currentScenario.id;
-  currentScenario = pickScenario(prev);
-  answers = ['', '', '', '', ''];
-  results = null;
-  mirrorText = '';
-  clarifyAnswer = '';
-  currentQuestion = 0;
-  scenarioCollapsed = false;
-  state = 'brief';
-  render();
-  scrollToApp();
-}
-
-function retryScenario() {
-  answers = ['', '', '', '', ''];
-  results = null;
-  mirrorText = '';
-  clarifyAnswer = '';
-  currentQuestion = 0;
-  scenarioCollapsed = false;
-  state = 'brief';
-  render();
-  scrollToApp();
-}
-
+// --- INIT ---
 async function initAppData() {
   const container = document.getElementById('app-content');
-  container.innerHTML = `<div class="loading-state"><div class="loading-spinner"></div><div class="loading-text">Loading training data...</div></div>`;
+  if (container) {
+    container.innerHTML = `<div class="loading-state"><div class="loading-spinner"></div><div class="loading-text">Loading training data...</div></div>`;
+  }
   
   try {
     const [scenariosRes, promptRes] = await Promise.all([
@@ -2970,28 +2674,28 @@ async function initAppData() {
       fetch('https://raw.githubusercontent.com/asankapeiris/tenure-data/main/PromptMulitpleScenarios.json')
     ]);
 
-    if (!scenariosRes.ok || !promptRes.ok) throw new Error('Network response was not ok');
+    if (!scenariosRes.ok || !promptRes.ok) throw new Error('Failed to download required JSON from GitHub.');
 
     const scenariosData = await scenariosRes.json();
     const promptData = await promptRes.json();
 
+    if (!scenariosData.scenarios || scenariosData.scenarios.length === 0) {
+      throw new Error("Scenarios missing from JSON file.");
+    }
+
     SCENARIOS = scenariosData.scenarios;
-    
     SYSTEM_PROMPT = promptData.system_prompt.join('\n');
     MIRROR_PROMPT = promptData.mirror_prompt.join('\n');
-    BENCHMARK_PROMPT = promptData.benchmark_prompt.join('\n');
-
+    
     currentScenario = pickScenario();
-    const history = loadHistory();
-    if (history.length === 0) {
-      state = 'preflight';
-    } else {
-      state = 'brief';
-    }
+    state = 'brief';
     render(); 
   } catch (err) {
-    console.error(err);
-    container.innerHTML = `<div class="loading-state"><div class="loading-text" style="color:var(--accent)">Failed to load training data. Check your GitHub URLs and refresh.</div></div>`;
+    console.error("Init Error:", err);
+    if (container) {
+      container.classList.remove('fade-out');
+      container.innerHTML = `<div class="loading-state"><div class="loading-text" style="color:var(--accent)">Failed to load training data.<br><br>Check your GitHub JSON files for syntax errors. Error: ${err.message}</div></div>`;
+    }
   }
 }
 
