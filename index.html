@@ -462,8 +462,12 @@
     .hud-past .gear-cog { color: var(--black); }
     .hud-past .hud-label { color: var(--black); }
     
+    @keyframes activePulse {
+      0%, 100% { transform: scale(1.15); }
+      50% { transform: scale(1.22); }
+    }
     .hud-active .gear-cog { color: var(--gray-800); animation: spin-cw 6s linear infinite; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2)); }
-    .hud-active .gear-assembly { transform: scale(1.15); }
+    .hud-active .gear-assembly { animation: activePulse 2s ease-in-out infinite; }
     .hud-active .hud-label { color: var(--black); font-weight: 700; }
     
     .hud-future .gear-cog { color: var(--gray-200); }
@@ -979,13 +983,14 @@
       grid-template-columns: 1fr 1fr;
       gap: 40px;
       align-items: start;
+      /* MODIFIED: Increased from 8px to 24px to prevent clipping of text at the top */
+      padding-top: 24px;
     }
 
     .brief-right, .question-right, .clarify-right {
       display: flex;
       flex-direction: column;
       gap: 24px;
-      padding-top: 8px;
     }
 
     .brief-content { display: flex; flex-direction: column; gap: 12px; }
@@ -1025,6 +1030,8 @@
     .clarify-label {
       font-family: 'DM Mono', monospace; font-size: 10px;
       text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent);
+      /* MODIFIED: Added 8px margin to give the label independent breathing room */
+      margin-bottom: 8px;
     }
     .clarify-question { font-size: 17px; color: var(--black); font-weight: 400; line-height: 1.6; }
 
@@ -1500,6 +1507,8 @@ let loadingInterval = null;
 let activeGear = null;
 let renderTimeout = null;
 window.currentStallGear = null;
+window.terminalSequenceDone = null;
+window.terminalResolve = null;
 
 // --- CONSTANTS ---
 const GEARS = [
@@ -1575,9 +1584,13 @@ function render() {
     } catch (e) {
       console.error("Render Error:", e);
       container.innerHTML = `<div class="loading-state"><div class="loading-text" style="color:var(--accent)">A rendering error occurred. Please check the browser console for details. Error: ${e.message}</div></div>`;
-    } finally {
+    } 
+    
+    // MODIFIED: Wait a beat before removing fade-out so the browser registers the new DOM at 0% opacity
+    setTimeout(() => {
       container.classList.remove('fade-out');
-    }
+    }, 50);
+
   }, 200);
 }
 
@@ -1721,7 +1734,7 @@ function renderQuestion(container) {
 
         <div class="req-accordion">
           <button class="req-acc-btn" onclick="document.getElementById('req-content').classList.toggle('open')">
-            <span style="color:var(--accent);">+</span> UNDERSTAND THE REQUIREMENT
+            <span style="color:var(--accent);">+</span> HOW TO SCORE A 10
           </button>
           <div id="req-content" class="req-acc-content">
             <strong>The Goal:</strong> ${GEARS[currentQuestion].goal}<br>
@@ -1757,7 +1770,6 @@ function renderQuestion(container) {
   `;
 }
 
-// MODIFIED: Diagnostic Terminal logic with aggressive flashing
 function renderLoading(container) {
   let phrases = [];
   if (state === 'loading-mirror') {
@@ -1785,6 +1797,11 @@ function renderLoading(container) {
   `;
 
   let step = 0;
+  
+  window.terminalSequenceDone = new Promise(resolve => {
+    window.terminalResolve = resolve;
+  });
+
   loadingInterval = setInterval(() => {
     const tc = document.getElementById('terminal-container');
     const cl = document.getElementById('terminal-cursor-line');
@@ -1801,8 +1818,9 @@ function renderLoading(container) {
       step++;
     } else {
       clearInterval(loadingInterval);
+      if (window.terminalResolve) window.terminalResolve();
     }
-  }, 300); // 300ms tight flash sequence
+  }, 300);
 }
 
 function renderMirror(container) {
@@ -2292,6 +2310,55 @@ function nextQuestion() {
   scrollToApp();
 }
 
+async function submitAnswers() {
+  const ta = document.getElementById('current-answer');
+  if (ta) answers[currentQuestion] = ta.value;
+  
+  window.terminalSequenceDone = null;
+  state = 'loading-mirror';
+  render();
+  
+  const apiPromise = (async () => {
+    const mirrorPrompt = MIRROR_PROMPT + "\n\nRestate the recommendation in one sentence.";
+    const mirror = await callAPI("", buildAnswersText() + "\n\n" + mirrorPrompt);
+    
+    try {
+      const cleanMirror = mirror.replace(new RegExp('`{3}json|`{3}', 'g'), '').trim();
+      const parsedMirror = JSON.parse(cleanMirror);
+      return parsedMirror.recommendation || mirror.trim();
+    } catch (e) {
+      return mirror.trim();
+    }
+  })();
+
+  try {
+    const mirrorResult = await apiPromise;
+    
+    let checkCount = 0;
+    while (!window.terminalSequenceDone && checkCount < 10) {
+      await new Promise(r => setTimeout(r, 50));
+      checkCount++;
+    }
+    
+    if (window.terminalSequenceDone) {
+      await window.terminalSequenceDone;
+    }
+    
+    await new Promise(r => setTimeout(r, 600));
+
+    mirrorText = mirrorResult;
+    state = 'mirror';
+  } catch (err) {
+    console.error("Mirror Error:", err);
+    alert("Error: " + err.message);
+    state = 'question';
+    currentQuestion = 4;
+  }
+
+  render();
+  scrollToApp();
+}
+
 function confirmMirror() {
   clarifyAnswer = '';
   scoreAnswers();
@@ -2674,65 +2741,6 @@ async function logToAirtable(r) {
       body: JSON.stringify({ fields: { scenario: currentScenario.title, answer_1: answers[0], answer_2: answers[1], answer_3: answers[2], answer_4: answers[3], answer_5: answers[4], score: r.score, why: r.why, feedback: JSON.stringify(r.feedback_map || {}), reflection: r.reflection, timestamp: new Date().toISOString() } })
     });
   } catch (err) {}
-}
-
-async function submitAnswers() {
-  const ta = document.getElementById('current-answer');
-  if (ta) answers[currentQuestion] = ta.value;
-  state = 'loading-mirror';
-  render();
-  
-  // MODIFIED: Enforced 2.5s Labor Illusion
-  const startTime = Date.now();
-
-  try {
-    const mirrorPrompt = MIRROR_PROMPT + "\n\nRestate the recommendation in one sentence.";
-    const mirror = await callAPI("", buildAnswersText() + "\n\n" + mirrorPrompt);
-    
-    try {
-      const cleanMirror = mirror.replace(new RegExp('`{3}json|`{3}', 'g'), '').trim();
-      const parsedMirror = JSON.parse(cleanMirror);
-      mirrorText = parsedMirror.recommendation || mirror.trim();
-    } catch (e) {
-      mirrorText = mirror.trim();
-    }
-    
-    state = 'mirror';
-  } catch (err) {
-    console.error("Mirror Error:", err);
-    alert("Error: " + err.message);
-    state = 'question';
-    currentQuestion = 4;
-  }
-  
-  // MODIFIED: Ensure the user sits through the terminal anxiety 
-  const elapsed = Date.now() - startTime;
-  if (elapsed < 2500) {
-    await new Promise(r => setTimeout(r, 2500 - elapsed));
-  }
-
-  render();
-  scrollToApp();
-}
-
-function confirmMirror() {
-  clarifyAnswer = '';
-  scoreAnswers();
-}
-
-function rejectMirror() {
-  const el = document.getElementById('clarify-extra');
-  if (el) el.style.display = 'block';
-}
-
-async function submitWithClarification() {
-  const ta = document.getElementById('clarify-answer');
-  if (ta) clarifyAnswer = ta.value;
-  if (!clarifyAnswer.trim()) {
-    if (ta) ta.style.borderColor = 'var(--accent)';
-    return;
-  }
-  scoreAnswers();
 }
 
 async function scoreAnswers() {
