@@ -457,22 +457,20 @@
     .hud-container { margin-bottom: 32px; }
     .hud-track { position: relative; padding-top: 8px; }
     .hud-node { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 20%; z-index: 2; position: relative; }
-    .hud-label { font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-400); text-align: center; line-height: 1.3; }
+    .hud-label { font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-400); text-align: center; line-height: 1.3; margin-top: 6px; }
     
     .hud-past .gear-cog { color: var(--black); }
     .hud-past .gear-assembly { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); }
     .hud-past .hud-label { color: var(--black); }
     
-    .hud-active .gear-cog { color: var(--score-mid); animation: spin-cw 6s linear infinite; }
-    .hud-active .gear-assembly { filter: drop-shadow(0 0 12px rgba(217, 119, 6, 0.4)); transform: scale(1.15); }
-    .hud-active .hud-label { color: var(--score-mid); font-weight: 700; }
+    .hud-active .gear-cog { color: var(--gray-800); animation: spin-cw 6s linear infinite; }
+    .hud-active .gear-assembly { filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15)); transform: scale(1.15); }
+    .hud-active .hud-label { color: var(--black); font-weight: 700; }
     
     .hud-future .gear-cog { color: var(--gray-200); }
     .hud-future .gear-assembly { filter: none; }
 
     .hud-node .gear-assembly { width: 32px; height: 32px; }
-    @media (min-width: 768px) { .hud-node .gear-assembly { width: 36px; height: 36px; } }
-
     .req-accordion { margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
     .req-acc-btn { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--black); background: none; border: none; cursor: pointer; padding: 8px 0; font-weight: 700; width: 100%; text-align: left; transition: opacity 0.2s; }
     .req-acc-btn:hover { opacity: 0.7; }
@@ -684,13 +682,12 @@
     }
     .gear-assembly {
       position: relative;
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
-      border-radius: 50%;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .gear-cog {
       position: absolute;
@@ -707,6 +704,7 @@
       justify-content: center;
     }
 
+    /* PURE ROTATION - No Scaling or CSS Transforms inside keyframes */
     @keyframes spin-cw { 
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); } 
@@ -725,66 +723,64 @@
 
     /* PASS */
     .node-pass { cursor: pointer; } 
-    .node-pass .gear-assembly {
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); 
-      transition: all 0.2s ease;
-    }
-    .node-pass:hover .gear-assembly {
-      transform: translateY(-2px) scale(1.15); 
-      filter: drop-shadow(0 8px 16px rgba(22, 163, 74, 0.3));
-    }
-    .node-pass.active .gear-assembly {
-      transform: translateY(0) scale(1.15);
-      filter: drop-shadow(0 0 16px rgba(22, 163, 74, 0.5)); 
-    }
     .node-pass .gear-cog {
       color: var(--score-high);
       animation: spin-cw 12s linear infinite; 
+      filter: drop-shadow(0 2px 4px rgba(22, 163, 74, 0.3));
+      transition: filter 0.3s ease;
+    }
+    .node-pass:hover .gear-assembly {
+      transform: translateY(-4px) scale(1.1); 
+    }
+    .node-pass:hover .gear-cog {
+      filter: drop-shadow(0 8px 12px rgba(22, 163, 74, 0.4));
+    }
+    .node-pass.active .gear-assembly {
+      transform: translateY(0) scale(1.2);
+    }
+    .node-pass.active .gear-cog {
+      filter: drop-shadow(0 0 16px rgba(22, 163, 74, 0.5)); 
     }
     .node-pass:nth-child(even) .gear-cog { animation: spin-ccw 12s linear infinite; }
     .node-pass .gear-icon-inner { color: var(--white); }
-    .node-pass .gear-label { color: var(--black); transition: color 0.2s; }
+    .node-pass .gear-label { color: var(--black); transition: color 0.2s; margin-top: 6px; }
     .node-pass:hover .gear-label { color: var(--score-high); }
 
     /* STALL */
-    @keyframes stall-pulse {
-      0% { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12)); }
-      50% { filter: drop-shadow(0 0 16px rgba(200, 57, 43, 0.6)); }
-      100% { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12)); }
-    }
-
     .node-stall { cursor: pointer; } 
     .node-stall .gear-assembly {
       transform: scale(1.3);
-      animation: stall-pulse 2s infinite; 
-      transition: transform 0.2s ease;
-    }
-    .node-stall:hover .gear-assembly {
-      transform: translateY(-2px) scale(1.4); 
-      animation: none; 
-      filter: drop-shadow(0 10px 20px rgba(200, 57, 43, 0.4));
-    }
-    .node-stall.active .gear-assembly {
-      transform: translateY(0) scale(1.4);
-      animation: none; 
-      filter: drop-shadow(0 0 20px rgba(200, 57, 43, 0.6)); 
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .node-stall .gear-cog {
       color: var(--score-low);
       animation: jammed 2.5s ease-in-out infinite; 
+      filter: drop-shadow(0 4px 8px rgba(200, 57, 43, 0.4));
+      transition: filter 0.3s ease;
+    }
+    .node-stall:hover .gear-assembly {
+      transform: translateY(-4px) scale(1.4); 
+    }
+    .node-stall:hover .gear-cog {
+      filter: drop-shadow(0 12px 20px rgba(200, 57, 43, 0.5));
+    }
+    .node-stall.active .gear-assembly {
+      transform: translateY(0) scale(1.4);
+    }
+    .node-stall.active .gear-cog {
+      filter: drop-shadow(0 0 24px rgba(200, 57, 43, 0.6)); 
     }
     .node-stall .gear-icon-inner { color: var(--white); }
     .node-stall .gear-label {
       color: var(--score-low);
       font-weight: 700;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     /* LOCK */
-    .node-lock .gear-cog { color: var(--gray-200); }
-    .node-lock .gear-assembly { filter: none; }
+    .node-lock .gear-cog { color: var(--gray-200); filter: drop-shadow(0 1px 2px rgba(0,0,0,0.05)); }
     .node-lock .gear-icon-inner { color: var(--gray-400); }
-    .node-lock .gear-label { color: var(--gray-400); }
+    .node-lock .gear-label { color: var(--gray-400); margin-top: 6px; }
 
     .gear-label {
       font-family: 'DM Mono', monospace;
@@ -1568,7 +1564,7 @@ function renderQuestion(container) {
   const hasText = currentWords > 0;
   const isLast = currentQuestion === QUESTIONS.length - 1;
 
-  const gearLabels = ["Root Cause", "Hard Limit", "Trade Offs", "Risk Owner", "Metric"];
+  const gearLabels = ["Root Cause", "Hard Limit", "Trade Offs", "Risk Owner", "Backfire Metric"];
   let hudNodesHtml = '';
   
   for (let i = 0; i < 5; i++) {
@@ -1579,7 +1575,7 @@ function renderQuestion(container) {
       icon = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     } else if (i === currentQuestion) {
       stateClass = 'hud-active';
-      icon = `<div style="width:6px; height:6px; background:var(--score-mid); border-radius:50%;"></div>`;
+      icon = `<div style="width:6px; height:6px; background:var(--gray-800); border-radius:50%;"></div>`;
     } else {
       stateClass = 'hud-future';
       icon = `<div style="width:4px; height:4px; background:var(--gray-200); border-radius:50%;"></div>`;
@@ -1588,9 +1584,28 @@ function renderQuestion(container) {
     hudNodesHtml += `
       <div class="hud-node ${stateClass}">
         <div class="gear-assembly">
-          <svg class="gear-cog" viewBox="-3 -3 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="8" fill="var(--white)"/>
-            <path transform="translate(12 12) scale(1.25) translate(-12 -12)" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49-.12-.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z" fill="currentColor"/>
+          <svg class="gear-cog" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <mask id="hole-hud-${i}">
+                <rect width="100" height="100" fill="white"/>
+                <circle cx="50" cy="50" r="26" fill="black"/>
+              </mask>
+              <radialGradient id="sheen-hud-${i}" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="white" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="black" stop-opacity="0.25"/>
+              </radialGradient>
+              <g id="gear-shape-hud-${i}">
+                <circle cx="50" cy="50" r="38"/>
+                <rect x="40" y="4" width="20" height="92" rx="4"/>
+                <rect x="40" y="4" width="20" height="92" rx="4" transform="rotate(45 50 50)"/>
+                <rect x="40" y="4" width="20" height="92" rx="4" transform="rotate(90 50 50)"/>
+                <rect x="40" y="4" width="20" height="92" rx="4" transform="rotate(135 50 50)"/>
+              </g>
+            </defs>
+            <use href="#gear-shape-hud-${i}" fill="currentColor" mask="url(#hole-hud-${i})"/>
+            <use href="#gear-shape-hud-${i}" fill="url(#sheen-hud-${i})" mask="url(#hole-hud-${i})"/>
+            <circle cx="50" cy="50" r="26" fill="var(--white)"/>
+            <circle cx="50" cy="50" r="26" stroke="rgba(0,0,0,0.12)" stroke-width="3"/>
           </svg>
           <div class="gear-icon-inner">${icon}</div>
         </div>
@@ -1625,8 +1640,8 @@ function renderQuestion(container) {
         
         <div class="hud-container">
           <div class="hud-track">
-            <div style="position: absolute; top: 24px; left: 10%; right: 10%; height: 2px; background: var(--gray-200); z-index: 0;"></div>
-            <div style="position: absolute; top: 24px; left: 10%; width: ${lineWidth}%; height: 2px; background: var(--black); z-index: 1; transition: width 0.5s ease;"></div>
+            <div style="position: absolute; top: 28px; left: 10%; right: 10%; height: 2px; background: var(--gray-200); z-index: 0;"></div>
+            <div style="position: absolute; top: 28px; left: 10%; width: ${lineWidth}%; height: 2px; background: var(--black); z-index: 1; transition: width 0.5s ease;"></div>
             <div style="display:flex; justify-content: space-between; position:relative; z-index: 2;">
               ${hudNodesHtml}
             </div>
@@ -1781,16 +1796,16 @@ function renderResults(container) {
     if (stallGearNum === 0 || i < stallGearNum) {
       stateClass = 'node-pass';
       statusArg = 'pass';
-      iconHtml = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      iconHtml = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     } else if (i === stallGearNum) {
       stateClass = 'node-stall';
       statusArg = 'stalled';
-      iconHtml = `<svg width="8" height="8" viewBox="0 0 16 16" fill="none"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      iconHtml = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
       stallTag = `<div class="stall-tag">STALLED</div>`;
     } else {
       stateClass = 'node-lock';
       statusArg = 'locked';
-      iconHtml = `<svg width="8" height="10" viewBox="0 0 14 16" fill="none"><path d="M3 6V4.5C3 2.567 4.567 1 6.5 1V1C8.433 1 10 2.567 10 4.5V6M1 6H12V15H1V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`;
+      iconHtml = `<svg width="10" height="12" viewBox="0 0 14 16" fill="none"><path d="M3 6V4.5C3 2.567 4.567 1 6.5 1V1C8.433 1 10 2.567 10 4.5V6M1 6H12V15H1V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`;
     }
 
     let gearCircleColor = (stallGearNum === 0 || i < stallGearNum) ? 'var(--white)' : (i === stallGearNum ? 'var(--score-low)' : 'var(--gray-100)');
@@ -1798,9 +1813,28 @@ function renderResults(container) {
     gearNodesHtml += `
       <div class="gear-node ${stateClass}" id="node-${i}" onclick="openAccordion(${i}, '${statusArg}', true)">
         <div class="gear-assembly">
-          <svg class="gear-cog" viewBox="-3 -3 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="8" fill="${gearCircleColor}"/>
-            <path transform="translate(12 12) scale(1.25) translate(-12 -12)" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49-.12-.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z" fill="currentColor"/>
+          <svg class="gear-cog" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <mask id="hole-res-${i}">
+                <rect width="100" height="100" fill="white"/>
+                <circle cx="50" cy="50" r="26" fill="black"/>
+              </mask>
+              <radialGradient id="sheen-res-${i}" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="white" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="black" stop-opacity="0.25"/>
+              </radialGradient>
+              <g id="gear-shape-res-${i}">
+                <circle cx="50" cy="50" r="38"/>
+                <rect x="40" y="4" width="20" height="92" rx="4"/>
+                <rect x="40" y="4" width="20" height="92" rx="4" transform="rotate(45 50 50)"/>
+                <rect x="40" y="4" width="20" height="92" rx="4" transform="rotate(90 50 50)"/>
+                <rect x="40" y="4" width="20" height="92" rx="4" transform="rotate(135 50 50)"/>
+              </g>
+            </defs>
+            <use href="#gear-shape-res-${i}" fill="currentColor" mask="url(#hole-res-${i})"/>
+            <use href="#gear-shape-res-${i}" fill="url(#sheen-res-${i})" mask="url(#hole-res-${i})"/>
+            <circle cx="50" cy="50" r="26" fill="${gearCircleColor}"/>
+            <circle cx="50" cy="50" r="26" stroke="rgba(0,0,0,0.12)" stroke-width="3"/>
           </svg>
           <div class="gear-icon-inner">${iconHtml}</div>
         </div>
@@ -2200,7 +2234,7 @@ function openAccordion(gearId, status, fromClick = false) {
   if (targetNode) targetNode.classList.add('active');
   activeGear = gearId;
 
-  const gearNames = ["Root Cause", "Hard Limit", "Trade Offs", "Risk Owner", "Metric"];
+  const gearNames = ["Root Cause", "Hard Limit", "Trade Offs", "Risk Owner", "Backfire Metric"];
   const currentName = gearNames[gearId - 1];
 
   panel.className = `accordion-panel open state-${status}`;
@@ -2217,7 +2251,7 @@ function openAccordion(gearId, status, fromClick = false) {
         LOCKED: LOGIC STALLED
       </div>
       <div style="font-size: 15px; color: var(--gray-600); line-height: 1.6;">
-        You cannot evaluate <strong>${currentName}</strong> until your <strong>${stallName}</strong> is secure. Clear Gear 0${window.currentStallGear} to unlock this intelligence.
+        You cannot proceed to <strong>${currentName}</strong> until your logic for <strong>${stallName}</strong> is sound. Resolve Gear 0${window.currentStallGear} to unlock this feedback.
       </div>
     `;
     
@@ -2542,7 +2576,7 @@ async function submitAnswers() {
     const mirror = await callAPI("", buildAnswersText() + "\n\n" + mirrorPrompt);
     
     try {
-      const cleanMirror = mirror.replace(/```json|```/g, '').trim();
+      const cleanMirror = mirror.replace(new RegExp('`{3}json|`{3}', 'g'), '').trim();
       const parsedMirror = JSON.parse(cleanMirror);
       mirrorText = parsedMirror.recommendation || mirror.trim();
     } catch (e) {
@@ -2588,7 +2622,7 @@ async function scoreAnswers() {
     if (currentScenario && currentScenario.paths) {
       const pathSysPrompt = "You are a strategic analyzer. Map the user's recommendation to the correct path key. Return valid JSON only.";
       const pathTextRes = await callAPI(pathSysPrompt, buildPathIdentificationMessage());
-      const cleanPathText = pathTextRes.replace(/```json|```/g, '').trim();
+      const cleanPathText = pathTextRes.replace(new RegExp('`{3}json|`{3}', 'g'), '').trim();
       try {
         const pathData = JSON.parse(cleanPathText);
         identifiedPath = pathData.identified_path;
@@ -2632,7 +2666,7 @@ async function scoreAnswers() {
         };
     } else {
         const text = await callAPI(SYSTEM_PROMPT, buildScoringMessage(identifiedPath));
-        const clean = text.replace(/```json|```/g, '').trim();
+        const clean = text.replace(new RegExp('`{3}json|`{3}', 'g'), '').trim();
         results = JSON.parse(clean);
         
         if (!results.scoring_evidence) results.scoring_evidence = {};
