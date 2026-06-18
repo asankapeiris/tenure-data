@@ -659,6 +659,31 @@
       .results-layout { grid-template-columns: 1fr; }
     }
 
+    /* VERDICT & REFLECTION GRID */
+    .verdict-reflection-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 24px;
+      align-items: stretch;
+    }
+
+    .vr-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* REVEAL ANIMATIONS */
+    .reveal-hidden {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* RESULTS - CORE */
     .score-display {
       display: flex;
@@ -709,6 +734,7 @@
       line-height: 1.65;
       font-style: italic;
       font-family: 'DM Serif Display', serif;
+      flex: 1;
     }
 
     /* HORIZONTAL VISUALIZER */
@@ -776,7 +802,7 @@
       justify-content: center;
     }
 
-    /* PURE ROTATION - No Scaling or CSS Transforms inside keyframes */
+    /* PURE ROTATION */
     @keyframes spin-cw { 
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); } 
@@ -793,14 +819,40 @@
       40% { transform: rotate(0deg); }
     }
 
+    /* TESTING (Spool Up) */
+    .node-testing .gear-assembly {
+      transform: scale(1.15);
+    }
+    .node-testing .gear-cog {
+      color: var(--gray-800);
+      animation: spin-cw 1.2s linear infinite;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+    }
+    .node-testing:nth-child(even) .gear-cog { animation: spin-ccw 1.2s linear infinite; }
+    .node-testing .gear-icon-inner { color: var(--white); }
+    .node-testing .gear-label { color: var(--gray-800); font-weight: 700; margin-top: 6px; }
+
     /* PASS */
     .node-pass { cursor: pointer; } 
-    .node-pass .gear-cog {
+    
+    .node-pass.pumping .gear-assembly {
+      transform: scale(1.2);
+    }
+    .node-pass.pumping .gear-cog {
+      color: var(--score-high);
+      animation: spin-cw 1.2s linear infinite; 
+      filter: drop-shadow(0 0 16px rgba(22, 163, 74, 0.6));
+    }
+    .node-pass.pumping:nth-child(even) .gear-cog { animation: spin-ccw 1.2s linear infinite; }
+
+    .node-pass.idle .gear-cog {
       color: var(--score-high);
       animation: spin-cw 12s linear infinite; 
       filter: drop-shadow(0 2px 4px rgba(22, 163, 74, 0.3));
       transition: filter 0.3s ease;
     }
+    .node-pass.idle:nth-child(even) .gear-cog { animation: spin-ccw 12s linear infinite; }
+
     .node-pass:hover .gear-assembly {
       transform: translateY(-4px) scale(1.1); 
     }
@@ -813,7 +865,6 @@
     .node-pass.active .gear-cog {
       filter: drop-shadow(0 0 16px rgba(22, 163, 74, 0.5)); 
     }
-    .node-pass:nth-child(even) .gear-cog { animation: spin-ccw 12s linear infinite; }
     .node-pass .gear-icon-inner { color: var(--white); }
     .node-pass .gear-label { color: var(--black); transition: color 0.2s; margin-top: 6px; }
     .node-pass:hover .gear-label { color: var(--score-high); }
@@ -940,8 +991,9 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
-      margin-top: 24px;
-      padding-top: 40px;
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
     }
 
     .progression-line {
@@ -983,7 +1035,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 40px;
       align-items: start;
-      /* MODIFIED: Increased from 8px to 24px to prevent clipping of text at the top */
       padding-top: 24px;
     }
 
@@ -1030,7 +1081,6 @@
     .clarify-label {
       font-family: 'DM Mono', monospace; font-size: 10px;
       text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent);
-      /* MODIFIED: Added 8px margin to give the label independent breathing room */
       margin-bottom: 8px;
     }
     .clarify-question { font-size: 17px; color: var(--black); font-weight: 400; line-height: 1.6; }
@@ -1341,6 +1391,7 @@
 
       /* RESULTS */
       .score-number { font-size: 60px; }
+      .verdict-reflection-grid { grid-template-columns: 1fr; gap: 24px; }
 
       /* BUTTONS */
       .action-buttons { flex-direction: column; }
@@ -1563,6 +1614,22 @@ function scrollToApp() {
   }
 }
 
+// Replaces any 'alert' with a styled UI notification
+function showErrorBox(msg) {
+  const existing = document.getElementById('error-box');
+  if (existing) existing.remove();
+  const div = document.createElement('div');
+  div.id = 'error-box';
+  div.style.cssText = "position:fixed; top:24px; left:50%; transform:translateX(-50%); background:var(--score-low); color:white; padding:16px 24px; border-radius:4px; z-index:9999; font-family:'DM Mono', monospace; font-size:13px; box-shadow:0 8px 24px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.2);";
+  div.innerHTML = msg + `<span style="margin-left:24px; cursor:pointer; font-weight:bold; opacity:0.8; transition:opacity 0.2s;" onclick="this.parentElement.remove()" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">[X]</span>`;
+  document.body.appendChild(div);
+  
+  // Auto-remove after 6 seconds
+  setTimeout(() => {
+    if(div.parentElement) div.remove();
+  }, 6000);
+}
+
 // --- RENDER ENGINE ---
 function render() {
   const container = document.getElementById('app-content');
@@ -1586,7 +1653,6 @@ function render() {
       container.innerHTML = `<div class="loading-state"><div class="loading-text" style="color:var(--accent)">A rendering error occurred. Please check the browser console for details. Error: ${e.message}</div></div>`;
     } 
     
-    // MODIFIED: Wait a beat before removing fade-out so the browser registers the new DOM at 0% opacity
     setTimeout(() => {
       container.classList.remove('fade-out');
     }, 50);
@@ -1886,32 +1952,11 @@ function renderResults(container) {
 
   const gearLabelsHtml = ["Root<br>Cause", "Hard<br>Limit", "Trade<br>Offs", "Risk<br>Owner", "Backfire<br>Metric"];
   let gearNodesHtml = '';
+  const lockIconHtml = `<svg width="10" height="12" viewBox="0 0 14 16" fill="none"><path d="M3 6V4.5C3 2.567 4.567 1 6.5 1V1C8.433 1 10 2.567 10 4.5V6M1 6H12V15H1V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`;
   
   for (let i = 1; i <= 5; i++) {
-    let stateClass = '';
-    let iconHtml = '';
-    let stallTag = '';
-    let statusArg = '';
-
-    if (stallGearNum === 0 || i < stallGearNum) {
-      stateClass = 'node-pass';
-      statusArg = 'pass';
-      iconHtml = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-    } else if (i === stallGearNum) {
-      stateClass = 'node-stall';
-      statusArg = 'stalled';
-      iconHtml = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-      stallTag = `<div class="stall-tag">STALLED</div>`;
-    } else {
-      stateClass = 'node-lock';
-      statusArg = 'locked';
-      iconHtml = `<svg width="10" height="12" viewBox="0 0 14 16" fill="none"><path d="M3 6V4.5C3 2.567 4.567 1 6.5 1V1C8.433 1 10 2.567 10 4.5V6M1 6H12V15H1V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`;
-    }
-
-    let gearCircleColor = (stallGearNum === 0 || i < stallGearNum) ? 'var(--white)' : (i === stallGearNum ? 'var(--score-low)' : 'var(--gray-100)');
-
     gearNodesHtml += `
-      <div class="gear-node ${stateClass}" id="node-${i}" onclick="openAccordion(${i}, '${statusArg}', true)">
+      <div class="gear-node node-lock" id="node-${i}" onclick="openAccordion(${i}, 'locked', true)">
         <div class="gear-assembly">
           <svg class="gear-cog" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -1933,32 +1978,25 @@ function renderResults(container) {
             </defs>
             <use href="#gear-shape-res-${i}" fill="currentColor" mask="url(#hole-res-${i})"/>
             <use href="#gear-shape-res-${i}" fill="url(#sheen-res-${i})" mask="url(#hole-res-${i})"/>
-            <circle cx="50" cy="50" r="26" fill="${gearCircleColor}"/>
+            <circle class="gear-bg-circle" cx="50" cy="50" r="26" fill="var(--gray-100)"/>
             <circle cx="50" cy="50" r="26" stroke="rgba(0,0,0,0.12)" stroke-width="3"/>
           </svg>
-          <div class="gear-icon-inner">${iconHtml}</div>
+          <div class="gear-icon-inner">${lockIconHtml}</div>
         </div>
         <div class="gear-label">${gearLabelsHtml[i-1]}</div>
-        ${stallTag}
       </div>
     `;
   }
-
-  let fillPct = 100;
-  if (stallGearNum !== 0) {
-    fillPct = (stallGearNum - 1) * 25; 
-  }
-  const lineWidth = fillPct * 0.8;
 
   const gearVisualizerHtml = `
     <div class="visualizer-section">
       <div class="visualizer-header-row">
         <div class="visualizer-header">The Logic Engine</div>
-        <div class="visualizer-hint">(Click any unlocked gear to inspect)</div>
+        <div class="visualizer-hint" id="visualizer-hint">(Evaluating strategy...)</div>
       </div>
       <div class="gear-track">
         <div style="position: absolute; top: 32px; left: 10%; right: 10%; height: 2px; background: var(--gray-200); z-index: 0;"></div>
-        <div style="position: absolute; top: 32px; left: 10%; width: ${lineWidth}%; height: 2px; background: var(--score-high); z-index: 1; transition: width 0.5s ease;"></div>
+        <div id="logic-track-line" style="position: absolute; top: 32px; left: 10%; width: 0%; height: 2px; background: var(--score-high); z-index: 1; transition: width 1.2s ease;"></div>
         ${gearNodesHtml}
       </div>
       <div id="dynamic-panel" class="accordion-panel"></div>
@@ -1970,28 +2008,44 @@ function renderResults(container) {
       <div class="results-left">
         <div class="section-label">Results — ${currentScenario.title}</div>
         
-        <div class="score-display">
-          <div class="score-number" style="color:${scoreColor}">${r.score}</div>
-          <div class="score-denom">/10</div>
-        </div>
-        
-        <div style="font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
-          <span style="color: var(--accent);">Detected Strategy:</span> ${detectedStrategyLabel}
-        </div>
-
-        <div class="results-section">
-          <div class="results-section-label">The Verdict</div>
-          <div style="font-size: 16px; color: var(--black); line-height: 1.6; font-weight: 400;">${r.why}</div>
-        </div>
-
+        <!-- 1. LOGIC ENGINE (Appears first) -->
         ${gearVisualizerHtml}
 
-        <div class="results-section">
-          <div class="results-section-label">One thing to think about</div>
-          <div class="reflection-box">${r.reflection}</div>
+        <!-- 2A. SCORE & STRATEGY HEADER -->
+        <div id="score-header-section" class="reveal-hidden" style="margin-bottom: 32px;">
+          <div class="score-display">
+            <div class="score-number" style="color:${scoreColor}">${r.score}</div>
+            <div class="score-denom">/10</div>
+          </div>
+          
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--accent);">Detected Strategy:</span> ${detectedStrategyLabel}
+          </div>
         </div>
 
-        <div class="action-row">
+        <!-- 2B. VERDICT & REFLECTION GRID -->
+        <div class="verdict-reflection-grid">
+          
+          <!-- Left Column: Verdict -->
+          <div id="verdict-section" class="reveal-hidden vr-column">
+            <div class="results-section" style="margin-bottom: 0; padding-bottom: 0; border: none; flex: 1;">
+              <div class="results-section-label">The Verdict</div>
+              <div style="font-size: 16px; color: var(--black); line-height: 1.6; font-weight: 400;">${r.why}</div>
+            </div>
+          </div>
+
+          <!-- Right Column: Reflection -->
+          <div id="reflection-section" class="reveal-hidden vr-column">
+            <div class="results-section" style="margin-bottom: 0; padding-bottom: 0; border: none; flex: 1; display: flex; flex-direction: column;">
+              <div class="results-section-label">One thing to think about</div>
+              <div class="reflection-box">${r.reflection}</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 3. ACTIONS SECTION -->
+        <div id="actions-section" class="reveal-hidden action-row">
           <div class="progression-line">Most people score a 6 their first time. By their third scenario they think differently.</div>
           <div class="action-buttons">
             <button class="btn-primary" onclick="tryAnother()">
@@ -2003,19 +2057,105 @@ function renderResults(container) {
             </button>
           </div>
         </div>
+
       </div>
 
-      <div class="results-right">
+      <!-- 4. DASHBOARD SECTION (Hidden initially) -->
+      <div class="results-right reveal-hidden" id="dashboard-section">
         ${renderDashboard()}
       </div>
     </div>
   `;
 
   setTimeout(() => {
-      const targetGear = stallGearNum === 0 ? 5 : stallGearNum;
-      const statusArg = stallGearNum === 0 ? 'pass' : 'stalled';
-      openAccordion(targetGear, statusArg, false);
-  }, 50);
+      playReveal(stallGearNum);
+  }, 300);
+}
+
+// THE CLIMAX: Staggered Gear Reveal Logic
+async function playReveal(stallNum) {
+  const trackLine = document.getElementById('logic-track-line');
+  if (!trackLine) return;
+
+  const passIcon = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const stallIcon = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const testingIcon = `<div style="width:8px; height:8px; background:var(--gray-800); border-radius:50%;"></div>`;
+  const hint = document.getElementById('visualizer-hint');
+
+  let limit = stallNum === 0 ? 5 : stallNum;
+
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 1; i <= limit; i++) {
+    const node = document.getElementById(`node-${i}`);
+    if (!node) continue;
+
+    const bgCircle = node.querySelector('.gear-bg-circle');
+    const iconContainer = node.querySelector('.gear-icon-inner');
+
+    node.classList.remove('node-lock');
+    node.classList.add('node-testing');
+    if (bgCircle) bgCircle.setAttribute('fill', 'var(--white)');
+    if (iconContainer) iconContainer.innerHTML = testingIcon;
+    
+    await new Promise(r => setTimeout(r, 1500));
+
+    if (stallNum === 0 || i < stallNum) {
+      node.classList.remove('node-testing');
+      node.classList.add('node-pass', 'pumping');
+      if (iconContainer) iconContainer.innerHTML = passIcon;
+      node.setAttribute('onclick', `openAccordion(${i}, 'pass', true)`);
+      
+      if (i < 5) {
+        trackLine.style.width = `${i * 20}%`;
+        await new Promise(r => setTimeout(r, 1200));
+      } else {
+        await new Promise(r => setTimeout(r, 1200));
+      }
+      
+      node.classList.remove('pumping');
+      node.classList.add('idle');
+
+    } else if (i === stallNum) {
+      node.classList.remove('node-testing');
+      node.classList.add('node-stall');
+      if (bgCircle) bgCircle.setAttribute('fill', 'var(--score-low)');
+      if (iconContainer) iconContainer.innerHTML = stallIcon;
+      node.setAttribute('onclick', `openAccordion(${i}, 'stalled', true)`);
+      
+      const stallTag = document.createElement('div');
+      stallTag.className = 'stall-tag';
+      stallTag.innerText = 'STALLED';
+      node.appendChild(stallTag);
+
+      break; 
+    }
+  }
+
+  if (hint) {
+    hint.innerText = "(Click any unlocked gear to inspect)";
+  }
+  
+  await new Promise(r => setTimeout(r, 500)); 
+  
+  const scoreHeaderSec = document.getElementById('score-header-section');
+  if (scoreHeaderSec) scoreHeaderSec.classList.add('reveal-visible');
+
+  await new Promise(r => setTimeout(r, 400)); 
+
+  const verdictSec = document.getElementById('verdict-section');
+  if (verdictSec) verdictSec.classList.add('reveal-visible');
+
+  await new Promise(r => setTimeout(r, 400)); 
+
+  const reflectionSec = document.getElementById('reflection-section');
+  if (reflectionSec) reflectionSec.classList.add('reveal-visible');
+  
+  const actionsSec = document.getElementById('actions-section');
+  if (actionsSec) actionsSec.classList.add('reveal-visible');
+  
+  const dashboardSec = document.getElementById('dashboard-section');
+  if (dashboardSec) dashboardSec.classList.add('reveal-visible');
 }
 
 function renderDashboard() {
@@ -2243,23 +2383,18 @@ function handleAnswerInput(value) {
   const ta = document.getElementById('current-answer');
   const prevCount = prevWordCounts[currentQuestion];
 
-  // DOPAMINE HIT: Trigger exact moment they cross the threshold
   if (prevCount < q.min && words >= q.min) {
     if (ta) {
-      // Remove it first in case they are typing very fast back and forth
       ta.classList.remove('glow-pulse');
-      // Trigger reflow to restart animation
       void ta.offsetWidth; 
       ta.classList.add('glow-pulse');
       
-      // Cleanup class after animation completes (2s)
       setTimeout(() => {
         if (ta) ta.classList.remove('glow-pulse');
       }, 2000);
     }
   }
 
-  // Update previous count tracker
   prevWordCounts[currentQuestion] = words;
 
   if (countEl) {
@@ -2350,7 +2485,7 @@ async function submitAnswers() {
     state = 'mirror';
   } catch (err) {
     console.error("Mirror Error:", err);
-    alert("Error: " + err.message);
+    showErrorBox("Analyzing Mirror Failed: " + err.message);
     state = 'question';
     currentQuestion = 4;
   }
@@ -2392,7 +2527,6 @@ function openAccordion(gearId, status, fromClick = false) {
   const nodes = document.querySelectorAll('.gear-node');
   if (!panel) return;
   
-  // If the user clicks the gear that is already active, force the scroll down but do NOT close it.
   if (activeGear === gearId) {
     if (fromClick) {
       setTimeout(() => {
@@ -2658,7 +2792,7 @@ async function callAPI(systemPrompt, userMessage, maxRetries = 5) {
         if (!localKey) {
           localKey = prompt("Local Testing: Paste your Gemini API key:");
           if (!localKey) {
-            alert("Analyzing logic cancelled. You need a key to analyze logic locally.");
+            showErrorBox("Analyzing logic cancelled. You need a key to analyze logic locally.");
             throw new Error("No key provided.");
           }
           sessionStorage.setItem('gemini_local_key', localKey);
@@ -2690,7 +2824,7 @@ async function callAPI(systemPrompt, userMessage, maxRetries = 5) {
           sessionStorage.removeItem('gemini_local_key'); 
           const errData = await response.json();
           console.error("Google API Error:", errData);
-          alert("API Error: " + (errData.error?.message || "Check the console for details."));
+          showErrorBox("API Error: " + (errData.error?.message || "Check the console for details."));
           throw new Error(errData.error?.message || "Local API call failed");
         }
         
@@ -2747,7 +2881,6 @@ async function scoreAnswers() {
   state = 'loading-results';
   render();
   
-  // MODIFIED: Enforced 2.5s Labor Illusion
   const startTime = Date.now();
 
   try {
@@ -2819,13 +2952,12 @@ async function scoreAnswers() {
     logToAirtable(results);
   } catch (err) {
     console.error("Score Error:", err);
-    alert("Error: " + err.message);
+    showErrorBox("Evaluation Error: " + err.message);
     state = 'mirror'; 
     render();
     return;
   }
   
-  // MODIFIED: Ensure the user sits through the terminal anxiety 
   const elapsed = Date.now() - startTime;
   if (elapsed < 2500) {
     await new Promise(r => setTimeout(r, 2500 - elapsed));
