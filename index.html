@@ -689,7 +689,7 @@
       display: flex;
       align-items: flex-end;
       gap: 16px;
-      margin-bottom: 14px;
+      margin-bottom: 4px; /* Reduced to bring content up */
     }
 
     .score-number {
@@ -722,7 +722,7 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--gray-400);
-      margin-bottom: 20px;
+      margin-bottom: 12px; /* Reduced to bring content up */
     }
 
     .reflection-box {
@@ -739,15 +739,15 @@
 
     /* HORIZONTAL VISUALIZER */
     .visualizer-section {
-      margin-bottom: 20px;
-      padding-bottom: 20px;
+      margin-bottom: 16px; /* Reduced from 20px */
+      padding-bottom: 16px; /* Reduced from 20px */
       border-bottom: 1px solid var(--border);
     }
     .visualizer-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 12px; /* Reduced from 24px */
     }
     .visualizer-header {
       font-family: 'DM Mono', monospace; 
@@ -2003,6 +2003,7 @@ function renderResults(container) {
     </div>
   `;
 
+  // Applying tightened spacing logic here (16px margin)
   container.innerHTML = `
     <div class="results-layout">
       <div class="results-left">
@@ -2012,13 +2013,13 @@ function renderResults(container) {
         ${gearVisualizerHtml}
 
         <!-- 2A. SCORE & STRATEGY HEADER -->
-        <div id="score-header-section" class="reveal-hidden" style="margin-bottom: 32px;">
+        <div id="score-header-section" class="reveal-hidden" style="margin-bottom: 16px;">
           <div class="score-display">
             <div class="score-number" style="color:${scoreColor}">${r.score}</div>
             <div class="score-denom">/10</div>
           </div>
           
-          <div style="font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); padding-bottom: 10px; border-bottom: 1px solid var(--border);">
             <span style="color: var(--accent);">Detected Strategy:</span> ${detectedStrategyLabel}
           </div>
         </div>
@@ -2236,6 +2237,25 @@ function renderDashboard() {
   }
 
   const perspectivesData = getPerspectivesData(history);
+  
+  // START STRATEGIC MATRIX CALCULATION
+  let totalFound = 0;
+  let totalAvailable = 0;
+  
+  perspectivesData.forEach(p => {
+    totalFound += p.pathsPlayed;
+    totalAvailable += p.totalPaths;
+  });
+  
+  const completionPct = totalAvailable > 0 ? (totalFound / totalAvailable) * 100 : 0;
+  let statusLabel = "Single-Threaded Logic";
+  if (completionPct === 100) {
+    statusLabel = "Full-Stack Strategist";
+  } else if (completionPct > 50) {
+    statusLabel = "Concurrent Thinker";
+  }
+  // END STRATEGIC MATRIX CALCULATION
+  
   const perspectivesHtml = perspectivesData.map(p => {
     const pathsHtml = Object.entries(p.pathData).map(([pKey, pInfo]) => {
       if (pInfo.bestScore !== null) {
@@ -2254,11 +2274,11 @@ function renderDashboard() {
         return `
           <div class="perspective-row">
             <div class="perspective-name">
-              <span class="perspective-icon" style="color: var(--gray-400)">○</span>
-              <span>${pInfo.label}</span>
+              <span class="perspective-icon" style="color: var(--gray-400)">🔒</span>
+              <span>[ BLIND SPOT ]</span>
             </div>
             <div class="perspective-dot-leader"></div>
-            <a class="perspective-cta" onclick="jumpToPerspective('${p.id}')">[ Try this perspective ↗ ]</a>
+            <a class="perspective-cta" onclick="jumpToPerspective('${p.id}')">[ Unlock ↗ ]</a>
           </div>
         `;
       }
@@ -2272,24 +2292,41 @@ function renderDashboard() {
     `;
   }).join('');
 
+  // NEW GEAR STALL RATE CALCULATION
+  let stallCounts = [0, 0, 0, 0, 0];
+  let totalRunsCalc = history.length;
+  
+  history.forEach(entry => {
+    const s = entry.score;
+    if (s <= 5) stallCounts[0]++;
+    else if (s === 6) stallCounts[1]++;
+    else if (s === 7) stallCounts[2]++;
+    else if (s === 8) stallCounts[3]++;
+    else if (s === 9) stallCounts[4]++;
+  });
+
   const weakSpotData = [
-    { label: 'Defining the real problem', runs: history.length, avgLen: history.reduce((s,e) => s + (e.a1||'').split(' ').length, 0) / history.length },
-    { label: 'Naming the constraint', runs: history.length, avgLen: history.reduce((s,e) => s + (e.a2||'').split(' ').length, 0) / history.length },
-    { label: 'Making trade-offs concrete', runs: history.length, avgLen: history.reduce((s,e) => s + (e.a3||'').split(' ').length, 0) / history.length },
-    { label: 'Owning the recommendation', runs: history.length, avgLen: history.reduce((s,e) => s + (e.a4||'').split(' ').length, 0) / history.length },
-    { label: 'Specifying the metric', runs: history.length, avgLen: history.reduce((s,e) => s + (e.a5||'').split(' ').length, 0) / history.length },
+    { label: 'Root Cause', stallPct: totalRunsCalc > 0 ? Math.round((stallCounts[0] / totalRunsCalc) * 100) : 0 },
+    { label: 'Hard Limit', stallPct: totalRunsCalc > 0 ? Math.round((stallCounts[1] / totalRunsCalc) * 100) : 0 },
+    { label: 'Trade Offs', stallPct: totalRunsCalc > 0 ? Math.round((stallCounts[2] / totalRunsCalc) * 100) : 0 },
+    { label: 'Risk Owner', stallPct: totalRunsCalc > 0 ? Math.round((stallCounts[3] / totalRunsCalc) * 100) : 0 },
+    { label: 'Backfire Metric', stallPct: totalRunsCalc > 0 ? Math.round((stallCounts[4] / totalRunsCalc) * 100) : 0 },
   ];
-  const maxLen = Math.max(...weakSpotData.map(d => d.avgLen));
+
+  const maxStallPct = Math.max(...weakSpotData.map(d => d.stallPct));
+
   const weakSpotRows = weakSpotData.map(d => {
-    const fillPct = Math.round((d.avgLen / maxLen) * 100);
+    const isHighest = maxStallPct > 0 && d.stallPct === maxStallPct;
+    const fillColor = isHighest ? 'var(--score-low)' : 'var(--black)';
+    
     return `
       <div class="weak-spot-item">
         <div class="weak-spot-label">
           <span>${d.label}</span>
-          <span style="color:var(--gray-400);">${fillPct < 40 ? 'Concise' : 'Detailed'}</span>
+          <span style="color:var(--gray-400);">${d.stallPct}% Stall Rate</span>
         </div>
         <div class="weak-spot-track">
-          <div class="weak-spot-fill" style="width:${fillPct}%;background:var(--black)"></div>
+          <div class="weak-spot-fill" style="width:${d.stallPct}%;background:${fillColor}"></div>
         </div>
       </div>
     `;
@@ -2310,14 +2347,15 @@ function renderDashboard() {
         </div>
         <div class="dashboard-divider"></div>
         <div class="dashboard-card">
-          <div class="dashboard-card-label">Perspectives Mastered</div>
+          <div class="dashboard-card-label">Your Strategic Matrix</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; margin-bottom: 16px; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.1em;">Status: <span style="color: var(--black); font-weight: 700;">${statusLabel}</span> (${totalFound}/${totalAvailable} Paths Found)</div>
           <div class="perspectives-list">
             ${perspectivesHtml || '<div class="dashboard-empty">No data yet.</div>'}
           </div>
         </div>
         <div class="dashboard-divider"></div>
         <div class="dashboard-card">
-          <div class="dashboard-card-label">Depth per section</div>
+          <div class="dashboard-card-label">Your Structural Flaws</div>
           ${history.length >= 1 ? `
           <div class="dash-delivery-wrap">
             <span class="dash-delivery-label">Communication</span>
