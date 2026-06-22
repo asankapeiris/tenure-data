@@ -2045,25 +2045,25 @@ function renderResults(container) {
 
         </div>
 
-        <!-- 3. ACTIONS SECTION -->
-        <div id="actions-section" class="reveal-hidden action-row">
-          <div class="progression-line">Most people score a 6 their first time. By their third scenario they think differently.</div>
-          <div class="action-buttons">
-            <button class="btn-primary" onclick="tryAnother()">
-              ${scenarioCount < 3 ? `Scenario ${scenarioCount + 1} of 3` : 'Try a new scenario'}
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="btn-secondary" onclick="retryScenario()">
-              Retry this scenario
-            </button>
-          </div>
-        </div>
-
       </div>
 
       <!-- 4. DASHBOARD SECTION (Hidden initially) -->
       <div class="results-right reveal-hidden" id="dashboard-section">
         ${renderDashboard()}
+      </div>
+    </div>
+
+    <!-- 3. ACTIONS SECTION (Moved Outside the Layout Grid) -->
+    <div id="actions-section" class="reveal-hidden action-row">
+      <div class="progression-line">Most people score a 6 their first time. By their third scenario they think differently.</div>
+      <div class="action-buttons">
+        <button class="btn-primary" onclick="tryAnother()">
+          ${scenarioCount < 3 ? `Scenario ${scenarioCount + 1} of 3` : 'Try a new scenario'}
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="btn-secondary" onclick="retryScenario()">
+          Retry this scenario
+        </button>
       </div>
     </div>
   `;
@@ -2336,6 +2336,22 @@ function renderDashboard() {
     <div class="dashboard-block">
       <div class="dashboard-title">Your progress</div>
       <div class="dashboard-grid">
+        <div class="dashboard-card">
+          <div class="dashboard-card-label">Runs</div>
+          <div class="streak-display">
+            <span class="streak-number">${totalRuns}</span>
+            <span class="streak-unit">completed</span>
+          </div>
+          <div class="streak-note">
+            ${totalRuns < 3
+              ? `${3 - totalRuns} more to go. Most people think differently by their third.`
+              : avgScore >= 8
+                ? `Averaging ${avgScore}. You're in the top tier.`
+                : `Averaging ${avgScore}. Keep going.`
+            }
+          </div>
+        </div>
+        <div class="dashboard-divider"></div>
         ${biasHtml}
         <div class="dashboard-card">
           <div class="dashboard-card-label">Score over time</div>
@@ -2344,14 +2360,6 @@ function renderDashboard() {
                <div class="score-bar-label" style="text-align:right;margin-top:4px">latest →</div>`
             : `<div class="dashboard-empty">Run another scenario to see your trend.</div>`
           }
-        </div>
-        <div class="dashboard-divider"></div>
-        <div class="dashboard-card">
-          <div class="dashboard-card-label">Your Strategic Matrix</div>
-          <div style="font-family: 'DM Mono', monospace; font-size: 11px; margin-bottom: 16px; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.1em;">Status: <span style="color: var(--black); font-weight: 700;">${statusLabel}</span> (${totalFound}/${totalAvailable} Paths Found)</div>
-          <div class="perspectives-list">
-            ${perspectivesHtml || '<div class="dashboard-empty">No data yet.</div>'}
-          </div>
         </div>
         <div class="dashboard-divider"></div>
         <div class="dashboard-card">
@@ -2368,18 +2376,10 @@ function renderDashboard() {
         </div>
         <div class="dashboard-divider"></div>
         <div class="dashboard-card">
-          <div class="dashboard-card-label">Runs</div>
-          <div class="streak-display">
-            <span class="streak-number">${totalRuns}</span>
-            <span class="streak-unit">completed</span>
-          </div>
-          <div class="streak-note">
-            ${totalRuns < 3
-              ? `${3 - totalRuns} more to go. Most people think differently by their third.`
-              : avgScore >= 8
-                ? `Averaging ${avgScore}. You're in the top tier.`
-                : `Averaging ${avgScore}. Keep going.`
-            }
+          <div class="dashboard-card-label">Your Strategic Matrix</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; margin-bottom: 16px; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.1em;">Status: <span style="color: var(--black); font-weight: 700;">${statusLabel}</span> (${totalFound}/${totalAvailable} Paths Found)</div>
+          <div class="perspectives-list">
+            ${perspectivesHtml || '<div class="dashboard-empty">No data yet.</div>'}
           </div>
         </div>
       </div>
