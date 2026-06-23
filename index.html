@@ -471,6 +471,16 @@
     .hud-active .hud-label { color: var(--black); font-weight: 700; }
     
     .hud-future .gear-cog { color: var(--gray-200); }
+    
+    /* Add this below .hud-future */
+    .hud-loading .gear-cog { 
+      color: var(--gray-400); 
+      animation: spin-cw 3s linear infinite; 
+      /* CRITICAL: Do not add drop-shadows or scaling here. It starves the main thread. */
+    }
+    .hud-loading .hud-label { 
+      color: var(--gray-600); 
+    }
 
     .hud-node .gear-assembly { width: 36px; height: 36px; }
     @media (min-width: 768px) { .hud-node .gear-assembly { width: 44px; height: 44px; } }
@@ -1837,27 +1847,97 @@ function renderQuestion(container) {
 }
 
 function renderLoading(container) {
-  let phrases = [];
-  if (state === 'loading-mirror') {
-    phrases = [
-      "] parsing raw input...",
-      "[sys] stripping corporate jargon...",
-      "[sys] synthesizing core logic...",
-      "extracting final recommendation..."
-    ];
-  } else if (state === 'loading-results') {
-    phrases = [
-      "] parsing strategic markers...",
-      "[sys] cross-referencing benchmarks...",
-      "[sys] evaluating trade-off severity...",
-      "locking in final verdict..."
-    ];
+  const currentPhrases = (state === 'loading-mirror') ? [
+    "] parsing raw input...",
+    "[sys] stripping corporate jargon...",
+    "[sys] synthesizing core logic...",
+    "extracting final recommendation..."
+  ] : [
+    "] ingestion complete. parsing strategic markers...",
+    "[sys] cross-referencing response vectors against benchmarks...",
+    "[sys] mapping trade-off weight profiles...",
+    "[sys] compilation successful. engaging mechanical logic engine..."
+  ];
+
+  // 1. Rebuild the HUD with ALL gears in an active processing state
+  const gearLabels = ["Root Cause", "Hard Limit", "Trade Offs", "Risk Owner", "Metric"];
+  let hudNodesHtml = '';
+  
+  for (let i = 0; i < 5; i++) {
+    const stateClass = 'hud-loading'; // <-- THE FIX
+    const icon = `<div style="width:8px; height:8px; background:var(--gray-800); border-radius:50%;"></div>`;
+    
+    hudNodesHtml += `
+      <div class="hud-node ${stateClass}">
+        <div class="gear-assembly">
+          <svg class="gear-cog" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <mask id="hole-load-${i}">
+                <rect width="100" height="100" fill="white"/>
+                <circle cx="50" cy="50" r="26" fill="black"/>
+              </mask>
+              <radialGradient id="sheen-load-${i}" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="white" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="black" stop-opacity="0.25"/>
+              </radialGradient>
+              <g id="gear-shape-load-${i}">
+                <circle cx="50" cy="50" r="38"/>
+                <rect x="40" y="4" width="20" height="92" rx="4"/>
+                <rect x="40" y="4" width="20" height="92" rx="4" transform="rotate(45 50 50)"/>
+                <rect x="40" y="4" width="20" height="92" rx="4" transform="rotate(90 50 50)"/>
+                <rect x="40" y="4" width="20" height="92" rx="4" transform="rotate(135 50 50)"/>
+              </g>
+            </defs>
+            <use href="#gear-shape-load-${i}" fill="currentColor" mask="url(#hole-load-${i})"/>
+            <use href="#gear-shape-load-${i}" fill="url(#sheen-load-${i})" mask="url(#hole-load-${i})"/>
+            <circle cx="50" cy="50" r="26" fill="var(--white)"/>
+            <circle cx="50" cy="50" r="26" stroke="rgba(0,0,0,0.12)" stroke-width="3"/>
+          </svg>
+          <div class="gear-icon-inner">${icon}</div>
+        </div>
+        <div class="hud-label">${gearLabels[i]}</div>
+      </div>
+    `;
   }
 
+  const isMobile = window.innerWidth <= 768;
+
+  // 2. Inject the Terminal into the right-hand column under the gear track
   container.innerHTML = `
-    <div style="padding: 60px 24px;">
-      <div class="terminal-window" id="terminal-container">
-        <div id="terminal-cursor-line"><span class="terminal-cursor"></span></div>
+    <div class="question-layout">
+      ${isMobile ? `
+      <div class="scenario-mobile-toggle">
+        <button class="scenario-toggle-btn" onclick="toggleScenario()">
+          <span>${currentScenario.title}</span>
+          <span class="toggle-icon">${scenarioCollapsed ? '↓ Read scenario' : '↑ Hide scenario'}</span>
+        </button>
+        ${!scenarioCollapsed ? `<div class="scenario-card scenario-mobile">
+          ${renderScenarioSelect()}
+          <div class="scenario-text">${currentScenario.text}</div>
+        </div>` : ''}
+      </div>
+      ` : `
+      <div class="scenario-card scenario-desktop">
+        ${renderScenarioSelect()}
+        <div class="scenario-text">${currentScenario.text}</div>
+      </div>
+      `}
+      <div class="question-right">
+        
+        <div class="hud-container">
+          <div class="hud-track">
+            <div style="position: absolute; top: 28px; left: 10%; right: 10%; height: 2px; background: var(--gray-200); z-index: 0;"></div>
+            <div style="position: absolute; top: 28px; left: 10%; width: 80%; height: 2px; background: var(--black); z-index: 1; transition: width 0.5s ease;"></div>
+            <div style="display:flex; justify-content: space-between; position:relative; z-index: 2;">
+              ${hudNodesHtml}
+            </div>
+          </div>
+        </div>
+
+        <div class="terminal-window" id="terminal-container" style="margin: 0; max-width: 100%;">
+          <div id="terminal-cursor-line"><span class="terminal-cursor"></span></div>
+        </div>
+        
       </div>
     </div>
   `;
@@ -1868,10 +1948,12 @@ function renderLoading(container) {
     window.terminalResolve = resolve;
   });
 
+  if (loadingInterval) clearInterval(loadingInterval);
+
   loadingInterval = setInterval(() => {
     const tc = document.getElementById('terminal-container');
     const cl = document.getElementById('terminal-cursor-line');
-    if (tc && cl && step < phrases.length) {
+    if (tc && cl && step < currentPhrases.length) {
       const prevLines = tc.querySelectorAll('.terminal-line.active');
       prevLines.forEach(l => { 
         l.classList.remove('active'); 
@@ -1879,7 +1961,7 @@ function renderLoading(container) {
 
       const newLine = document.createElement('div');
       newLine.className = 'terminal-line active';
-      newLine.innerText = phrases[step];
+      newLine.innerText = currentPhrases[step];
       tc.insertBefore(newLine, cl);
       step++;
     } else {
@@ -1992,7 +2074,7 @@ function renderResults(container) {
     <div class="visualizer-section">
       <div class="visualizer-header-row">
         <div class="visualizer-header">The Logic Engine</div>
-        <div class="visualizer-hint" id="visualizer-hint">(Evaluating strategy...)</div>
+        <div class="visualizer-hint" id="visualizer-hint">(Engine engaged. Executing logic checks...)</div>
       </div>
       <div class="gear-track">
         <div style="position: absolute; top: 32px; left: 10%; right: 10%; height: 2px; background: var(--gray-200); z-index: 0;"></div>
