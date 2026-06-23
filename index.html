@@ -1570,6 +1570,8 @@ let renderTimeout = null;
 window.currentStallGear = null;
 window.terminalSequenceDone = null;
 window.terminalResolve = null;
+window.activeCoachingGear = null;
+window.activeCoachingText = '';
 
 // --- CONSTANTS ---
 const GEARS = [
@@ -1817,6 +1819,13 @@ function renderQuestion(container) {
             <strong>The Requirement:</strong> ${GEARS[currentQuestion].text}
           </div>
         </div>
+
+        ${window.activeCoachingGear === currentQuestion + 1 && window.activeCoachingText ? `
+        <div style="background: var(--accent-light); border-left: 3px solid var(--score-low); padding: 16px; margin-bottom: 16px; font-size: 14px; color: var(--gray-800);">
+          <div style="font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; color: var(--score-low); margin-bottom: 8px;">Previous Logic Failure</div>
+          ${window.activeCoachingText}
+        </div>
+        ` : ''}
 
         <div class="single-question">
           <div class="question-label">
@@ -2091,10 +2100,8 @@ function renderResults(container) {
       <div class="results-left">
         <div class="section-label">Results — ${currentScenario.title}</div>
         
-        <!-- 1. LOGIC ENGINE (Appears first) -->
         ${gearVisualizerHtml}
 
-        <!-- 2A. SCORE & STRATEGY HEADER -->
         <div id="score-header-section" class="reveal-hidden" style="margin-bottom: 16px;">
           <div class="score-display">
             <div class="score-number" style="color:${scoreColor}">${r.score}</div>
@@ -2106,10 +2113,8 @@ function renderResults(container) {
           </div>
         </div>
 
-        <!-- 2B. VERDICT & REFLECTION GRID -->
         <div class="verdict-reflection-grid">
           
-          <!-- Left Column: Verdict -->
           <div id="verdict-section" class="reveal-hidden vr-column">
             <div class="results-section" style="margin-bottom: 0; padding-bottom: 0; border: none; flex: 1;">
               <div class="results-section-label">The Verdict</div>
@@ -2117,7 +2122,6 @@ function renderResults(container) {
             </div>
           </div>
 
-          <!-- Right Column: Reflection -->
           <div id="reflection-section" class="reveal-hidden vr-column">
             <div class="results-section" style="margin-bottom: 0; padding-bottom: 0; border: none; flex: 1; display: flex; flex-direction: column;">
               <div class="results-section-label">One thing to think about</div>
@@ -2129,13 +2133,11 @@ function renderResults(container) {
 
       </div>
 
-      <!-- 4. DASHBOARD SECTION (Hidden initially) -->
       <div class="results-right reveal-hidden" id="dashboard-section">
         ${renderDashboard()}
       </div>
     </div>
 
-    <!-- 3. ACTIONS SECTION (Moved Outside the Layout Grid) -->
     <div id="actions-section" class="reveal-hidden action-row">
       <div class="progression-line">Most people score a 6 their first time. By their third scenario they think differently.</div>
       <div class="action-buttons">
@@ -2476,6 +2478,8 @@ function handleScenarioChange(id) {
     currentScenario = selected;
     answers = ['', '', '', '', ''];
     prevWordCounts = [0, 0, 0, 0, 0];
+    window.activeCoachingGear = null;
+    window.activeCoachingText = '';
     results = null;
     mirrorText = '';
     clarifyAnswer = '';
@@ -2767,6 +2771,8 @@ function tryAnother() {
   currentScenario = pickScenario(prev);
   answers = ['', '', '', '', ''];
   prevWordCounts = [0, 0, 0, 0, 0];
+  window.activeCoachingGear = null;
+  window.activeCoachingText = '';
   results = null;
   mirrorText = '';
   clarifyAnswer = '';
@@ -2778,14 +2784,17 @@ function tryAnother() {
 }
 
 function retryScenario() {
-  answers = ['', '', '', '', ''];
-  prevWordCounts = [0, 0, 0, 0, 0];
+  if (window.currentStallGear && results && results.feedback_map) {
+    window.activeCoachingGear = window.currentStallGear;
+    window.activeCoachingText = results.feedback_map[`gear_${window.activeCoachingGear}`] || '';
+  }
+  
   results = null;
   mirrorText = '';
   clarifyAnswer = '';
   currentQuestion = 0;
   scenarioCollapsed = false;
-  state = 'brief';
+  state = 'question';
   render();
   scrollToApp();
 }
