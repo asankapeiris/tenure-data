@@ -838,7 +838,6 @@
       animation: spin-cw 1.2s linear infinite;
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
     }
-    .node-testing:nth-child(even) .gear-cog { animation: spin-ccw 1.2s linear infinite; }
     .node-testing .gear-icon-inner { color: var(--white); }
     .node-testing .gear-label { color: var(--gray-800); font-weight: 700; margin-top: 6px; }
 
@@ -853,7 +852,6 @@
       animation: spin-cw 1.2s linear infinite; 
       filter: drop-shadow(0 0 16px rgba(22, 163, 74, 0.6));
     }
-    .node-pass.pumping:nth-child(even) .gear-cog { animation: spin-ccw 1.2s linear infinite; }
 
     .node-pass.idle .gear-cog {
       color: var(--score-high);
@@ -861,7 +859,6 @@
       filter: drop-shadow(0 2px 4px rgba(22, 163, 74, 0.3));
       transition: filter 0.3s ease;
     }
-    .node-pass.idle:nth-child(even) .gear-cog { animation: spin-ccw 12s linear infinite; }
 
     .node-pass:hover .gear-assembly {
       transform: translateY(-4px) scale(1.1); 
@@ -1730,18 +1727,42 @@ function renderQuestion(container) {
   let hudNodesHtml = '';
   
   for (let i = 0; i < 5; i++) {
-    let stateClass = '';
-    let icon = '';
-    if (i < currentQuestion) {
-      stateClass = 'hud-past';
-      icon = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-    } else if (i === currentQuestion) {
-      stateClass = 'hud-active';
-      icon = `<div style="width:8px; height:8px; background:var(--gray-800); border-radius:50%;"></div>`;
-    } else {
-      stateClass = 'hud-future';
-      icon = `<div style="width:6px; height:6px; background:var(--gray-200); border-radius:50%;"></div>`;
-    }
+        let stateClass = '';
+        let icon = '';
+        
+        if (window.activeCoachingGear) {
+          // --- RETRY MODE: THE ARENA ---
+          const stallIndex = window.activeCoachingGear - 1;
+          
+          if (i < stallIndex) {
+            stateClass = 'node-pass idle';
+            icon = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+          } else if (i === stallIndex) {
+            stateClass = 'node-stall';
+            icon = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+          } else {
+            stateClass = 'node-lock hud-future';
+            icon = `<div style="width:6px; height:6px; background:var(--gray-200); border-radius:50%;"></div>`;
+          }
+
+          // Maintain active visual pointers for the current question
+          if (i < currentQuestion) stateClass += ' hud-past';
+          else if (i === currentQuestion) stateClass += ' hud-active';
+          else stateClass += ' hud-future';
+          
+        } else {
+          // --- STANDARD MODE ---
+          if (i < currentQuestion) {
+            stateClass = 'hud-past';
+            icon = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+          } else if (i === currentQuestion) {
+            stateClass = 'hud-active';
+            icon = `<div style="width:8px; height:8px; background:var(--gray-800); border-radius:50%;"></div>`;
+          } else {
+            stateClass = 'hud-future';
+            icon = `<div style="width:6px; height:6px; background:var(--gray-200); border-radius:50%;"></div>`;
+          }
+        }
 
     hudNodesHtml += `
       <div class="hud-node ${stateClass}">
@@ -2131,23 +2152,23 @@ function renderResults(container) {
 
         </div>
 
+        <div id="actions-section" class="reveal-hidden action-row">
+          <div class="progression-line">Most people score a 6 their first time. By their third scenario they think differently.</div>
+          <div class="action-buttons">
+            <button class="btn-primary" onclick="retryScenario()">
+              Retry this scenario
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="btn-secondary" onclick="tryAnother()">
+              ${scenarioCount < 3 ? `Skip to Scenario ${scenarioCount + 1} of 3` : 'Try a new scenario'}
+            </button>
+          </div>
+        </div>
+
       </div>
 
       <div class="results-right reveal-hidden" id="dashboard-section">
         ${renderDashboard()}
-      </div>
-    </div>
-
-    <div id="actions-section" class="reveal-hidden action-row">
-      <div class="progression-line">Most people score a 6 their first time. By their third scenario they think differently.</div>
-      <div class="action-buttons">
-        <button class="btn-primary" onclick="tryAnother()">
-          ${scenarioCount < 3 ? `Scenario ${scenarioCount + 1} of 3` : 'Try a new scenario'}
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="btn-secondary" onclick="retryScenario()">
-          Retry this scenario
-        </button>
       </div>
     </div>
   `;
@@ -2218,7 +2239,7 @@ async function playReveal(stallNum) {
   }
 
   if (hint) {
-    hint.innerText = "(Click any unlocked gear to inspect)";
+    hint.innerText = "(Click any gear to review the logic)";
   }
   
   await new Promise(r => setTimeout(r, 500)); 
