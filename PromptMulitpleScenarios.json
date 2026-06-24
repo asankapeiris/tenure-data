@@ -102,7 +102,7 @@
     "}",
     "",
     "DELIVERY FEEDBACK RULES:",
-    "- TARGET LOCK: You MUST evaluate and rewrite ONLY the user's exact Recommendation answer. Do not evaluate their Problem, Constraints, Options, or Metrics inputs here.",
+    "- TARGET LOCK (STRICT MEMORY ISOLATION): You are strictly forbidden from evaluating or quoting the Problem, Constraints, Options, or Metrics text in this section. You MUST isolate, evaluate, and rewrite ONLY the literal text the user provided for their Recommendation.",
     "- STRICTLY FORBIDDEN: Do not mention spelling, grammar, punctuation, or minor phrasing tweaks. You are evaluating EXECUTIVE AUTHORITY, not copy-editing.",
     "- SEPARATE STRATEGY FROM STRUCTURE: Do not call a sentence 'incomplete' or 'fragmented' just because it missed a strategic Gear. If their sentence is structurally complete, evaluate its tone, not its missing logic.",
     "- THE 'SHARP' CRITERIA: A user earns a SHARP grade for brevity, impact, and declarative confidence.",
