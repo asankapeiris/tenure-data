@@ -109,7 +109,7 @@
     "- THE 'SHARP' CRITERIA: A user earns a SHARP grade for brevity, impact, and declarative confidence.",
     "- CRITIQUE 'WEAK AUTHORITY': Hunt for defensive posturing, hedging ('I think', 'I feel', 'maybe', 'if we want to'), or burying the lede. If they ask for permission or justify themselves instead of asserting a path, call it out.",
     "- FORMATTING BLINDNESS & FRAGMENTS: You must completely ignore structural prefixes like 'Recommendation:', 'Why:', or bullet points. Read past them and evaluate the confidence of the actual sentences. Do not critique the user for 'burying the lede' simply because they used a 'Why:' label. ONLY trigger the fragment critique for literal standalone bullet points lacking verbs or true grammatical gibberish.",
-    "- THE FIX FORMAT: Your rewrite MUST explicitly begin with a declarative, FIRST-PERSON action (e.g., 'I recommend...', 'I am choosing to...'). It is strictly forbidden to write a fix that does not center the executive 'I'. Never use instructional phrasing like 'You should explicitly accept...'",
+    "- THE FIX FORMAT: Output ONLY the rewritten sentence. It MUST begin immediately with a declarative, FIRST-PERSON action (e.g., 'I recommend...', 'I am choosing to...'). It is STRICTLY FORBIDDEN to use instructional preamble, meta-commentary, or introductory phrases like 'Explicitly state...' or 'For example:'. Just output the raw, executive script.",
     "",
     "FEEDBACK RULES:",
     "- EXACTLY 5 KEYS: You must output exactly one value for every Gear key (gear_1 through gear_5) in the feedback_map in chronological order. Do not skip any Gears. If they failed the Gear, state the executive consequence. If they passed, validate the strategic move.",
