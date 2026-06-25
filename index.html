@@ -1148,32 +1148,6 @@
       margin-bottom: 12px;
     }
 
-    /* DASHBOARD DELIVERY BAR */
-    .dash-delivery-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 16px;
-      margin-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .dash-delivery-label {
-      font-size: 13px;
-      color: var(--gray-600);
-      font-weight: 300;
-    }
-
-    .dash-delivery-status {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .status-solid { color: var(--black); }
-    .status-rambling { color: var(--accent); }
-
     .score-history-chart {
       display: flex;
       align-items: flex-end;
@@ -1555,7 +1529,7 @@ let currentScenario = null;
 let answers = ['', '', '', '', ''];
 let prevWordCounts = [0, 0, 0, 0, 0];
 let currentQuestion = 0;
-let state = 'brief';
+let state = 'question';
 let results = null;
 let mirrorText = '';
 let clarifyAnswer = '';
@@ -1623,6 +1597,21 @@ function scrollToApp() {
   }
 }
 
+function loadDraftForScenario(scenarioId) {
+  try {
+    const savedDraft = localStorage.getItem(`tenure_draft_${scenarioId}`);
+    if (savedDraft) {
+      answers = JSON.parse(savedDraft);
+      if (!Array.isArray(answers) || answers.length !== 5) throw new Error();
+    } else {
+      answers = ['', '', '', '', ''];
+    }
+  } catch (e) {
+    answers = ['', '', '', '', ''];
+  }
+  prevWordCounts = answers.map(ans => countWords(ans || ''));
+}
+
 // Replaces any 'alert' with a styled UI notification
 function showErrorBox(msg) {
   const existing = document.getElementById('error-box');
@@ -1685,33 +1674,6 @@ function renderScenarioSelect() {
 }
 
 // --- RENDER VIEWS ---
-function renderBrief(container) {
-  if (!currentScenario) {
-    container.innerHTML = '<div class="loading-state">No scenario available. Please check data connection.</div>';
-    return;
-  }
-  container.innerHTML = `
-    <div class="brief-layout">
-      <div class="scenario-card">
-        ${renderScenarioSelect()}
-        <div class="scenario-text">${currentScenario.text}</div>
-      </div>
-      <div class="brief-right">
-        <div class="brief-content">
-          <p class="brief-line">A business situation with no clean answer.</p>
-          <p class="brief-line">Answer five questions as if you're being asked to defend your thinking.</p>
-          <p class="brief-line">You'll get a score, specific feedback, and one thing to sit with.</p>
-          <p class="brief-goal">The goal: get clear enough on your thinking that you could defend it in a room where people disagree with you.</p>
-        </div>
-        <button class="btn-submit" onclick="startQuestions()">
-          Start answering
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
-  `;
-}
-
 function renderQuestion(container) {
   const questions = getQuestions();
   const q = questions[currentQuestion];
@@ -1856,7 +1818,7 @@ function renderQuestion(container) {
           <textarea
             id="current-answer"
             placeholder="${DIRECTIVES[currentQuestion]}"
-            oninput="handleAnswerInput(this.value)"
+            oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'; handleAnswerInput(this.value);"
           >${answers[currentQuestion]}</textarea>
           <div class="word-count ${meetsMin ? 'word-count-met' : ''}" id="word-count">
             ${currentWords} / ${q.min} words ${hasText && !meetsMin ? '(A bit short)' : ''}
@@ -2272,12 +2234,6 @@ function renderDashboard() {
   const totalRuns = history.length;
   const avgScore = Math.round(history.reduce((s, e) => s + e.score, 0) / history.length * 10) / 10;
 
-  const latestHistory = history[history.length - 1];
-  let needsPolish = false;
-  if (latestHistory && latestHistory.delivery_feedback) {
-    needsPolish = latestHistory.delivery_feedback.toLowerCase().includes('the fix:');
-  }
-
   const maxScore = 10;
   const chartBars = recentScores.map((entry, i) => {
     const heightPct = (entry.score / maxScore) * 100;
@@ -2469,11 +2425,6 @@ function renderDashboard() {
         <div class="dashboard-divider"></div>
         <div class="dashboard-card">
           <div class="dashboard-card-label">Your Structural Flaws</div>
-          ${history.length >= 1 ? `
-          <div class="dash-delivery-wrap">
-            <span class="dash-delivery-label">Communication</span>
-            <span class="dash-delivery-status ${needsPolish ? 'status-rambling' : 'status-solid'}">${needsPolish ? 'WORDY' : 'SHARP'}</span>
-          </div>` : ''}
           ${history.length >= 2
             ? `<div class="weak-spots-list">${weakSpotRows}</div>`
             : `<div class="dashboard-empty">Run 2+ scenarios to see patterns.</div>`
@@ -2497,15 +2448,14 @@ function handleScenarioChange(id) {
   const selected = SCENARIOS.find(s => s.id === id);
   if (selected) {
     currentScenario = selected;
-    answers = ['', '', '', '', ''];
-    prevWordCounts = [0, 0, 0, 0, 0];
+    loadDraftForScenario(id);
     window.activeCoachingGear = null;
     window.activeCoachingText = '';
     results = null;
     mirrorText = '';
     clarifyAnswer = '';
     currentQuestion = 0;
-    state = 'brief';
+    state = 'question';
     render();
   }
 }
@@ -2519,6 +2469,11 @@ function startQuestions() {
 
 function handleAnswerInput(value) {
   answers[currentQuestion] = value;
+  
+  if (currentScenario && currentScenario.id) {
+    localStorage.setItem(`tenure_draft_${currentScenario.id}`, JSON.stringify(answers));
+  }
+
   const q = getQuestions()[currentQuestion];
   const words = countWords(value);
   const meetsMin = words >= q.min;
@@ -2737,16 +2692,6 @@ function openAccordion(gearId, status, fromClick = false) {
       <div class="rule-label" style="color: var(--score-low); margin-bottom: 8px;">The Fatal Gap</div>
       <div style="font-size: 15px; color: var(--black); line-height: 1.6;">${feedback}</div>
     `;
-    
-    if (results.delivery_feedback) {
-      const parsedDelivery = results.delivery_feedback.replace(/\*\*The Fix:\*\*/gi, '<strong>The Fix:</strong>').replace(/The Fix:/gi, '<strong>The Fix:</strong>').replace(/\*\*The Flaw:\*\*/gi, '<strong>The Flaw:</strong>').replace(/The Flaw:/gi, '<strong>The Flaw:</strong>');
-      gapHtml += `
-        <div style="margin-top: 24px; padding: 20px; background: var(--white); border-left: 2px solid var(--score-low);">
-          <div style="font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--score-low); margin-bottom: 8px;">Delivery & Authority Check</div>
-          <div style="font-size: 14px; color: var(--gray-800); line-height: 1.5;">${parsedDelivery}</div>
-        </div>
-      `;
-    }
   } else if (status === 'pass') {
     gapHtml = `
       <div class="acc-divider"></div>
@@ -2790,8 +2735,7 @@ function openAccordion(gearId, status, fromClick = false) {
 function tryAnother() {
   const prev = currentScenario ? currentScenario.id : null;
   currentScenario = pickScenario(prev);
-  answers = ['', '', '', '', ''];
-  prevWordCounts = [0, 0, 0, 0, 0];
+  loadDraftForScenario(currentScenario.id);
   window.activeCoachingGear = null;
   window.activeCoachingText = '';
   results = null;
@@ -2799,7 +2743,7 @@ function tryAnother() {
   clarifyAnswer = '';
   currentQuestion = 0;
   scenarioCollapsed = false;
-  state = 'brief';
+  state = 'question';
   render();
   scrollToApp();
 }
@@ -2824,14 +2768,13 @@ function jumpToPerspective(scenarioId) {
   const selected = SCENARIOS.find(s => s.id === scenarioId);
   if (selected) {
     currentScenario = selected;
-    answers = ['', '', '', '', ''];
-    prevWordCounts = [0, 0, 0, 0, 0];
+    loadDraftForScenario(scenarioId);
     results = null;
     mirrorText = '';
     clarifyAnswer = '';
     currentQuestion = 0;
     scenarioCollapsed = false;
-    state = 'brief'; 
+    state = 'question'; 
     render();
     scrollToApp();
   }
@@ -3059,10 +3002,9 @@ async function scoreAnswers() {
             gear_2: "Logic stalled before this gear could be evaluated.", 
             gear_3: "Logic stalled before this gear could be evaluated.", 
             gear_4: "Logic stalled before this gear could be evaluated.", 
-            gear_5: "Logic stalled before this gear could be evaluated."
-          },
-          delivery_feedback: "The Flaw: You negotiated with reality. The Fix: Answer the prompt based strictly on the facts and constraints provided.",
-          reflection: "What happens to your credibility when you refuse to answer the question the board actually asked?"
+          gear_5: "Logic stalled before this gear could be evaluated."
+        },
+        reflection: "What happens to your credibility when you refuse to answer the question the board actually asked?"
         };
     } else if (identifiedPath === 'gibberish') {
         results = {
@@ -3075,10 +3017,9 @@ async function scoreAnswers() {
             gear_2: "Logic stalled before this gear could be evaluated.", 
             gear_3: "Logic stalled before this gear could be evaluated.", 
             gear_4: "Logic stalled before this gear could be evaluated.", 
-            gear_5: "Logic stalled before this gear could be evaluated."
-          },
-          delivery_feedback: null,
-          reflection: "What happens to your credibility when you treat high-stakes decisions like a joke?"
+          gear_5: "Logic stalled before this gear could be evaluated."
+        },
+        reflection: "What happens to your credibility when you treat high-stakes decisions like a joke?"
         };
     } else {
         const text = await callAPI(SYSTEM_PROMPT, buildScoringMessage(identifiedPath));
@@ -3096,7 +3037,6 @@ async function scoreAnswers() {
       score: results.score, 
       identified_path: identifiedPath,
       a1: answers[0], a2: answers[1], a3: answers[2], a4: answers[3], a5: answers[4], 
-      delivery_feedback: results.delivery_feedback,
       ts: new Date().toISOString() 
     });
     logToAirtable(results);
@@ -3144,7 +3084,8 @@ async function initAppData() {
     MIRROR_PROMPT = promptData.mirror_prompt.join('\n');
     
     currentScenario = pickScenario();
-    state = 'brief';
+    loadDraftForScenario(currentScenario.id);
+    state = 'question';
     render(); 
   } catch (err) {
     console.error("Init Error:", err);
