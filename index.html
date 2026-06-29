@@ -1544,6 +1544,19 @@ window.terminalResolve = null;
 window.activeCoachingGear = null;
 window.activeCoachingText = '';
 
+let userId = localStorage.getItem('tenure_uid');
+if (!userId) {
+  userId = 'usr_' + Math.random().toString(36).substr(2, 9);
+  localStorage.setItem('tenure_uid', userId);
+}
+let sessionId = 'sess_' + Math.random().toString(36).substr(2, 9);
+
+let scenarioStartTime = Date.now();
+let currentQuestionStartTime = Date.now();
+let timeSpentPerQ = [0, 0, 0, 0, 0]; 
+let reqStartTime = null;
+let reqTimeSpent = [0, 0, 0, 0, 0];
+
 // --- CONSTANTS ---
 const GEARS = [
   { title: "Spot the Landmine", goal: "Root Cause vs. Surface Noise.", text: "Stop reacting to the Noise and find the Breakdown. Identify the specific flaw in the system that will guarantee this happens again if left untouched." },
@@ -1794,7 +1807,7 @@ function renderQuestion(container) {
         </div>
 
         <div class="req-accordion">
-          <button class="req-acc-btn" onclick="document.getElementById('req-content').classList.toggle('open')">
+          <button class="req-acc-btn" onclick="toggleReqAccordion()">
             <span style="color:var(--accent);">+</span> HOW TO SCORE A 10
           </button>
           <div id="req-content" class="req-acc-content">
@@ -2456,6 +2469,13 @@ function handleScenarioChange(id) {
     clarifyAnswer = '';
     currentQuestion = 0;
     state = 'question';
+    
+    // --- NEW TELEMETRY RESETS ---
+    timeSpentPerQ = [0, 0, 0, 0, 0];
+    reqTimeSpent = [0, 0, 0, 0, 0];
+    scenarioStartTime = Date.now();
+    currentQuestionStartTime = Date.now();
+    
     render();
   }
 }
@@ -2525,10 +2545,15 @@ function toggleScenario() {
 function prevQuestion() {
   const ta = document.getElementById('current-answer');
   if (ta) answers[currentQuestion] = ta.value;
+  
+  finalizeCurrentQuestionTimers();
+  
   currentQuestion--;
   state = 'question';
   render();
   scrollToApp();
+  
+  currentQuestionStartTime = Date.now();
 }
 
 function nextQuestion() {
@@ -2539,16 +2564,23 @@ function nextQuestion() {
     ta.placeholder = 'Please answer this question before continuing.';
     return;
   }
+  
+  finalizeCurrentQuestionTimers();
+  
   currentQuestion++;
   state = 'question';
   render();
   scrollToApp();
+  
+  currentQuestionStartTime = Date.now();
 }
 
 async function submitAnswers() {
   const ta = document.getElementById('current-answer');
   if (ta) answers[currentQuestion] = ta.value;
   
+  finalizeCurrentQuestionTimers();
+
   window.terminalSequenceDone = null;
   state = 'loading-mirror';
   render();
@@ -2616,10 +2648,43 @@ async function submitWithClarification() {
 
 function closeAccordion() {
   const panel = document.getElementById('dynamic-panel');
+  const reqContent = document.getElementById('req-content');
   const nodes = document.querySelectorAll('.gear-node');
+  
   if (panel) panel.classList.remove('open');
   nodes.forEach(n => n.classList.remove('active'));
   activeGear = null;
+
+  if (reqContent && reqContent.classList.contains('open')) {
+    reqContent.classList.remove('open');
+    if (reqStartTime) {
+      reqTimeSpent[currentQuestion] += (Date.now() - reqStartTime);
+      reqStartTime = null;
+    }
+  }
+}
+
+function toggleReqAccordion() {
+  const content = document.getElementById('req-content');
+  const isOpen = content.classList.contains('open');
+  
+  if (isOpen) {
+    content.classList.remove('open');
+    if (reqStartTime) {
+      reqTimeSpent[currentQuestion] += (Date.now() - reqStartTime);
+      reqStartTime = null;
+    }
+  } else {
+    content.classList.add('open');
+    reqStartTime = Date.now();
+  }
+}
+
+function finalizeCurrentQuestionTimers() {
+  if (currentQuestionStartTime > 0) {
+    timeSpentPerQ[currentQuestion] += (Date.now() - currentQuestionStartTime);
+  }
+  closeAccordion(); 
 }
 
 function openAccordion(gearId, status, fromClick = false) {
@@ -2744,6 +2809,13 @@ function tryAnother() {
   currentQuestion = 0;
   scenarioCollapsed = false;
   state = 'question';
+  
+  // --- NEW TELEMETRY RESETS ---
+  timeSpentPerQ = [0, 0, 0, 0, 0];
+  reqTimeSpent = [0, 0, 0, 0, 0];
+  scenarioStartTime = Date.now();
+  currentQuestionStartTime = Date.now();
+  
   render();
   scrollToApp();
 }
@@ -2760,6 +2832,13 @@ function retryScenario() {
   currentQuestion = 0;
   scenarioCollapsed = false;
   state = 'question';
+  
+  // --- NEW TELEMETRY RESETS ---
+  timeSpentPerQ = [0, 0, 0, 0, 0];
+  reqTimeSpent = [0, 0, 0, 0, 0];
+  scenarioStartTime = Date.now();
+  currentQuestionStartTime = Date.now();
+  
   render();
   scrollToApp();
 }
@@ -2775,6 +2854,13 @@ function jumpToPerspective(scenarioId) {
     currentQuestion = 0;
     scenarioCollapsed = false;
     state = 'question'; 
+    
+    // --- NEW TELEMETRY RESETS ---
+    timeSpentPerQ = [0, 0, 0, 0, 0];
+    reqTimeSpent = [0, 0, 0, 0, 0];
+    scenarioStartTime = Date.now();
+    currentQuestionStartTime = Date.now();
+    
     render();
     scrollToApp();
   }
@@ -2960,15 +3046,77 @@ async function callAPI(systemPrompt, userMessage, maxRetries = 5) {
   }
 }
 
-async function logToAirtable(r) {
+async function logToAirtable(r, isAbandoned = false) {
   try {
+    const totalTimeSec = Math.round((Date.now() - scenarioStartTime) / 1000);
+    const qTimes = timeSpentPerQ.map(ms => Math.round(ms / 1000));
+    const reqTimes = reqTimeSpent.map(ms => Math.round(ms / 1000));
+
+    // Calculate Attempt Number based on local history
+    const history = loadHistory();
+    let attemptNum = history.filter(h => h.scenario === (currentScenario ? currentScenario.title : "")).length;
+    // Abandoned runs haven't been pushed to history yet, so we add 1 to the historical count
+    if (isAbandoned) attemptNum += 1; 
+    // Fallback safety to ensure it's never 0
+    if (attemptNum === 0) attemptNum = 1; 
+
+    let payloadFields = { 
+      user_id: userId,
+      session_id: sessionId,
+      scenario: currentScenario ? currentScenario.title : "Unknown", 
+      attempt_num: attemptNum,
+      status: isAbandoned ? "Abandoned" : "Completed",
+      total_time_sec: totalTimeSec,
+      
+      answer_1: answers[0] || "", 
+      answer_2: answers[1] || "", 
+      answer_3: answers[2] || "", 
+      answer_4: answers[3] || "", 
+      answer_5: answers[4] || "", 
+      
+      time_q1_sec: qTimes[0],
+      time_q2_sec: qTimes[1],
+      time_q3_sec: qTimes[2],
+      time_q4_sec: qTimes[3],
+      time_q5_sec: qTimes[4],
+
+      req_time_q1_sec: reqTimes[0],
+      req_time_q2_sec: reqTimes[1],
+      req_time_q3_sec: reqTimes[2],
+      req_time_q4_sec: reqTimes[3],
+      req_time_q5_sec: reqTimes[4],
+      timestamp: new Date().toISOString()
+    };
+
+    if (!isAbandoned && r) {
+      payloadFields.mirror_rejected = clarifyAnswer.trim().length > 0;
+      payloadFields.clarification_text = clarifyAnswer;
+      payloadFields.score = r.score;
+      payloadFields.why = r.why;
+      payloadFields.feedback_map = JSON.stringify(r.feedback_map || {});
+      payloadFields.reflection = r.reflection;
+    }
+
     await fetch('https://api.airtable.com/v0/appEtSfz6BDhJkdVW/tblAr37nL5AxVrXnS', {
       method: 'POST',
-      headers: { 'Authorization': 'Bearer patnEerrg1Mn2IP3s.6fee2928f0004f51e410213e563a8ed8f28ed215161252e99eaf0c2fa8749215', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fields: { scenario: currentScenario.title, answer_1: answers[0], answer_2: answers[1], answer_3: answers[2], answer_4: answers[3], answer_5: answers[4], score: r.score, why: r.why, feedback: JSON.stringify(r.feedback_map || {}), reflection: r.reflection, timestamp: new Date().toISOString() } })
+      keepalive: isAbandoned,
+      headers: { 
+        'Authorization': 'Bearer patnEerrg1Mn2IP3s.6fee2928f0004f51e410213e563a8ed8f28ed215161252e99eaf0c2fa8749215', 
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify({ fields: payloadFields })
     });
-  } catch (err) {}
+  } catch (err) {
+    console.error("Airtable Logging Error:", err);
+  }
 }
+
+window.addEventListener('beforeunload', () => {
+  if (state === 'question' || state === 'loading-mirror' || state === 'mirror' || state === 'loading-results') {
+    finalizeCurrentQuestionTimers();
+    logToAirtable(null, true);
+  }
+});
 
 async function scoreAnswers() {
   state = 'loading-results';
@@ -3086,6 +3234,10 @@ async function initAppData() {
     currentScenario = pickScenario();
     loadDraftForScenario(currentScenario.id);
     state = 'question';
+    timeSpentPerQ = [0, 0, 0, 0, 0];
+    reqTimeSpent = [0, 0, 0, 0, 0];
+    scenarioStartTime = Date.now();
+    currentQuestionStartTime = Date.now();
     render(); 
   } catch (err) {
     console.error("Init Error:", err);
