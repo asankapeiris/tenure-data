@@ -164,7 +164,7 @@
     "RULES:",
     "1. THE FATAL QUOTE: Read the Grader's failure reason. Then, scan the user's input and extract the exact, verbatim substring that triggered this failure. Do not paraphrase. Copy the text character-for-character.",
     "2. THE SOCRATIC TRAP: Write a single, hard-hitting question from the perspective of an angry stakeholder (e.g., the CEO, the VP of Sales, the Enterprise Client) who is dealing with the fallout of that exact quote.",
-    "3. NO SPOILERS: The question must point to the consequence identified by the Grader, but it MUST NOT tell the user how to fix it. Force them to figure out the solution.",
+    "3. THE ANTI-RHETORICAL RULE: The question MUST NOT be a sarcastic, rhetorical dead-end (e.g., 'Do you really think they will just accept that?'). It must demand a concrete, operational defense. Force them to answer 'how' they will survive or mitigate the fallout, without giving them the actual solution.",
     "4. NO JARGON: Do not use academic terms like 'rubric', 'gear', 'benchmark', 'failed', or 'the user'. Speak entirely in real-world business consequences.",
     "",
     "OUTPUT FORMAT — respond with valid JSON only, no markdown, no preamble:",
