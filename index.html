@@ -2857,7 +2857,18 @@ function openAccordion(gearId, status, fromClick = false) {
 function tryAnother() {
   if (state === 'results' && !exitActionLogged && currentAirtableRecordId) {
     exitActionLogged = true;
-    patchAirtableRecord({ exit_action: "Next Scenario" });
+    let patchData = { exit_action: "Next Scenario" };
+    
+    // --- THE FIX: Patch diagnostic data before wiping ---
+    if (diagnosticRequested) {
+      patchData.diagnostic_requested = true;
+      if (diagnosticClickTime && diagnosticRenderTime) patchData.diagnostic_time_to_click_sec = Math.round((diagnosticClickTime - diagnosticRenderTime) / 1000);
+      if (diagnosticApiLatency !== null) patchData.diagnostic_api_latency_sec = diagnosticApiLatency;
+      if (fatalQuoteCaptured) patchData.fatal_quote_captured = fatalQuoteCaptured;
+      if (socraticTrapCaptured) patchData.socratic_trap_captured = socraticTrapCaptured;
+      if (diagnosticExitAction) patchData.diagnostic_exit_action = diagnosticExitAction;
+    }
+    patchAirtableRecord(patchData);
   }
 
   const prev = currentScenario ? currentScenario.id : null;
@@ -2988,6 +2999,22 @@ function retryScenario() {
   // If they clicked the bottom button instead of the terminal one
   if (!diagnosticExitAction && currentDiagnosticTrace) {
     diagnosticExitAction = "Fixed Logic (Bottom)";
+  }
+  
+  // --- THE FIX: Separate exit_action from diagnostic_exit_action ---
+  if (state === 'results' && !exitActionLogged && currentAirtableRecordId) {
+    exitActionLogged = true;
+    let patchData = { exit_action: "Retry Scenario" };
+    
+    if (diagnosticRequested) {
+      patchData.diagnostic_requested = true;
+      if (diagnosticClickTime && diagnosticRenderTime) patchData.diagnostic_time_to_click_sec = Math.round((diagnosticClickTime - diagnosticRenderTime) / 1000);
+      if (diagnosticApiLatency !== null) patchData.diagnostic_api_latency_sec = diagnosticApiLatency;
+      if (fatalQuoteCaptured) patchData.fatal_quote_captured = fatalQuoteCaptured;
+      if (socraticTrapCaptured) patchData.socratic_trap_captured = socraticTrapCaptured;
+      if (diagnosticExitAction) patchData.diagnostic_exit_action = diagnosticExitAction;
+    }
+    patchAirtableRecord(patchData);
   }
   
   results = null;
@@ -3254,6 +3281,7 @@ async function logToAirtable(r, isAbandoned = false) {
     if (isAbandoned) attemptNum += 1; 
     if (attemptNum === 0) attemptNum = 1; 
 
+    // 1. Base payload (No strict or select fields included by default)
     let payloadFields = { 
       user_id: userId,
       session_id: sessionId,
@@ -3279,14 +3307,27 @@ async function logToAirtable(r, isAbandoned = false) {
       req_time_q3_sec: reqTimes[2],
       req_time_q4_sec: reqTimes[3],
       req_time_q5_sec: reqTimes[4],
-      timestamp: new Date().toISOString(),
-      diagnostic_requested: diagnosticRequested,
-      diagnostic_time_to_click_sec: (diagnosticClickTime && diagnosticRenderTime) ? Math.round((diagnosticClickTime - diagnosticRenderTime) / 1000) : null,
-      diagnostic_api_latency_sec: diagnosticApiLatency,
-      fatal_quote_captured: fatalQuoteCaptured,
-      socratic_trap_captured: socraticTrapCaptured,
-      diagnostic_exit_action: diagnosticExitAction
+      timestamp: new Date().toISOString()
     };
+
+    // 2. THE CLEAN DROP: Only inject if the diagnostic was actually used
+    if (diagnosticRequested) {
+      payloadFields.diagnostic_requested = true;
+      
+      const timeToClick = (diagnosticClickTime && diagnosticRenderTime) ? Math.round((diagnosticClickTime - diagnosticRenderTime) / 1000) : null;
+      if (timeToClick !== null) {
+        payloadFields.diagnostic_time_to_click_sec = timeToClick;
+      }
+      
+      if (diagnosticApiLatency !== null) {
+        payloadFields.diagnostic_api_latency_sec = diagnosticApiLatency;
+      }
+    }
+
+    // 3. THE CLEAN DROP: Only inject string/select fields if they aren't empty
+    if (fatalQuoteCaptured) payloadFields.fatal_quote_captured = fatalQuoteCaptured;
+    if (socraticTrapCaptured) payloadFields.socratic_trap_captured = socraticTrapCaptured;
+    if (diagnosticExitAction) payloadFields.diagnostic_exit_action = diagnosticExitAction;
 
     if (!isAbandoned && r) {
       payloadFields.mirror_rejected = clarifyAnswer.trim().length > 0;
@@ -3301,10 +3342,11 @@ async function logToAirtable(r, isAbandoned = false) {
       method: 'POST',
       keepalive: isAbandoned,
       headers: { 
-        'Authorization': 'Bearer patnEerrg1Mn2IP3s.6fee2928f0004f51e410213e563a8ed8f28ed215161252e99eaf0c2fa8749215', 
+        'Authorization': 'Bearer pata2FgEajSGN3yPi.7140a2ac6d758f6a764e3e44ba4703891dcbc16da0dd220a8a74d07223aabc24', 
         'Content-Type': 'application/json' 
       },
-      body: JSON.stringify({ fields: payloadFields })
+      // --- THE FIX: Typecast added to the root of the JSON body ---
+      body: JSON.stringify({ fields: payloadFields, typecast: true })
     });
 
     if (!isAbandoned && response.ok) {
@@ -3319,15 +3361,21 @@ async function logToAirtable(r, isAbandoned = false) {
 async function patchAirtableRecord(patchFields) {
   if (!currentAirtableRecordId) return;
   try {
-    await fetch(`https://api.airtable.com/v0/appEtSfz6BDhJkdVW/tblAr37nL5AxVrXnS/${currentAirtableRecordId}`, {
+    const response = await fetch(`https://api.airtable.com/v0/appEtSfz6BDhJkdVW/tblAr37nL5AxVrXnS/${currentAirtableRecordId}`, {
       method: 'PATCH',
       keepalive: true, // Crucial for transitions
       headers: { 
-        'Authorization': 'Bearer patnEerrg1Mn2IP3s.6fee2928f0004f51e410213e563a8ed8f28ed215161252e99eaf0c2fa8749215', 
+        'Authorization': 'Bearer pata2FgEajSGN3yPi.7140a2ac6d758f6a764e3e44ba4703891dcbc16da0dd220a8a74d07223aabc24', 
         'Content-Type': 'application/json' 
       },
-      body: JSON.stringify({ fields: patchFields })
+      // --- THE FIX: Typecast forces Airtable to accept new select strings ---
+      body: JSON.stringify({ fields: patchFields, typecast: true })
     });
+    
+    if (!response.ok) {
+        const errData = await response.json();
+        console.error("Airtable Silent Patch Failure:", errData);
+    }
   } catch (err) {
     console.error("Airtable Patch Error:", err);
   }
@@ -3339,7 +3387,18 @@ window.addEventListener('beforeunload', () => {
     finalizeCurrentQuestionTimers();
     logToAirtable(null, true);
   } else if (state === 'results' && currentAirtableRecordId && !exitActionLogged) {
-    patchAirtableRecord({ exit_action: "Bounced" });
+    let patchData = { exit_action: "Bounced" };
+    
+    // --- THE FIX: Patch diagnostic data on tab close ---
+    if (diagnosticRequested) {
+      patchData.diagnostic_requested = true;
+      if (diagnosticClickTime && diagnosticRenderTime) patchData.diagnostic_time_to_click_sec = Math.round((diagnosticClickTime - diagnosticRenderTime) / 1000);
+      if (diagnosticApiLatency !== null) patchData.diagnostic_api_latency_sec = diagnosticApiLatency;
+      if (fatalQuoteCaptured) patchData.fatal_quote_captured = fatalQuoteCaptured;
+      if (socraticTrapCaptured) patchData.socratic_trap_captured = socraticTrapCaptured;
+      if (diagnosticExitAction) patchData.diagnostic_exit_action = diagnosticExitAction;
+    }
+    patchAirtableRecord(patchData);
   }
 });
 
