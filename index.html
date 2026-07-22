@@ -3338,14 +3338,28 @@ async function logToAirtable(r, isAbandoned = false) {
       payloadFields.reflection = r.reflection;
     }
 
-    const response = await fetch('https://api.airtable.com/v0/appEtSfz6BDhJkdVW/tblAr37nL5AxVrXnS', {
+    const isLocal = window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    let url = '/.netlify/functions/log-session';
+    let headers = { 'Content-Type': 'application/json' };
+
+    if (isLocal) {
+      let localAirtableKey = sessionStorage.getItem('airtable_local_key');
+      if (!localAirtableKey) {
+        localAirtableKey = prompt("Local Testing: Paste your Airtable Personal Access Token (PAT):");
+        if (!localAirtableKey) {
+          console.warn("Airtable logging skipped: No token provided.");
+          return;
+        }
+        sessionStorage.setItem('airtable_local_key', localAirtableKey);
+      }
+      url = 'https://api.airtable.com/v0/appEtSfz6BDhJkdVW/tblAr37nL5AxVrXnS';
+      headers['Authorization'] = `Bearer ${localAirtableKey}`;
+    }
+
+    const response = await fetch(url, {
       method: 'POST',
       keepalive: isAbandoned,
-      headers: { 
-        'Authorization': 'Bearer pata2FgEajSGN3yPi.7140a2ac6d758f6a764e3e44ba4703891dcbc16da0dd220a8a74d07223aabc24', 
-        'Content-Type': 'application/json' 
-      },
-      // --- THE FIX: Typecast added to the root of the JSON body ---
+      headers: headers,
       body: JSON.stringify({ fields: payloadFields, typecast: true })
     });
 
@@ -3361,15 +3375,30 @@ async function logToAirtable(r, isAbandoned = false) {
 async function patchAirtableRecord(patchFields) {
   if (!currentAirtableRecordId) return;
   try {
-    const response = await fetch(`https://api.airtable.com/v0/appEtSfz6BDhJkdVW/tblAr37nL5AxVrXnS/${currentAirtableRecordId}`, {
-      method: 'PATCH',
-      keepalive: true, // Crucial for transitions
-      headers: { 
-        'Authorization': 'Bearer pata2FgEajSGN3yPi.7140a2ac6d758f6a764e3e44ba4703891dcbc16da0dd220a8a74d07223aabc24', 
-        'Content-Type': 'application/json' 
-      },
-      // --- THE FIX: Typecast forces Airtable to accept new select strings ---
-      body: JSON.stringify({ fields: patchFields, typecast: true })
+    const isLocal = window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    let url = '/.netlify/functions/patch-session';
+    let method = 'POST';
+    let headers = { 'Content-Type': 'application/json' };
+    let body = { recordId: currentAirtableRecordId, fields: patchFields, typecast: true };
+
+    if (isLocal) {
+      let localAirtableKey = sessionStorage.getItem('airtable_local_key');
+      if (!localAirtableKey) {
+        localAirtableKey = prompt("Local Testing: Paste your Airtable Personal Access Token (PAT):");
+        if (!localAirtableKey) return;
+        sessionStorage.setItem('airtable_local_key', localAirtableKey);
+      }
+      url = `https://api.airtable.com/v0/appEtSfz6BDhJkdVW/tblAr37nL5AxVrXnS/${currentAirtableRecordId}`;
+      method = 'PATCH';
+      headers['Authorization'] = `Bearer ${localAirtableKey}`;
+      body = { fields: patchFields, typecast: true };
+    }
+
+    const response = await fetch(url, {
+      method: method,
+      keepalive: true,
+      headers: headers,
+      body: JSON.stringify(body)
     });
     
     if (!response.ok) {
